@@ -26,6 +26,7 @@
     "nodemon": "^3.1.14"
   },
   "dependencies": {
+    "morgan": "^1.10.1",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",
     "cookie-parser": "^1.4.7",
