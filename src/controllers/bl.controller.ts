@@ -32,8 +32,11 @@ export const uploadBillOfLading = async (
 
   const version = lastBL ? lastBL.version + 1 : 1;
 
+  const customer = booking.customer as unknown as IUser;
+
   const bill = new BillOfLading({
     booking: bookingId,
+    bookingNumber: booking.bookingNumber,
     type,
     documentUrl: result.secure_url,
     documentPublicId: result.public_id,
@@ -42,9 +45,8 @@ export const uploadBillOfLading = async (
     uploadedBy: req.user!._id,
     fileSize,
     customer: booking.customer,
+    customerName: customer.fullname,
   });
-
-  const customer = booking.customer as unknown as IUser;
 
   const { error } = await sendBillOfLadingNotification(
     customer.email,

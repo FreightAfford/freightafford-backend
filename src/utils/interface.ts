@@ -37,6 +37,8 @@ export interface AuthenticateRequest extends Request {
 
 export interface IFreightRequest extends Document {
   customer: Types.ObjectId;
+  customerName: string;
+  customerEmail: string;
   booking: Types.ObjectId;
   originPort: string;
   destinationPort: string;
@@ -60,10 +62,13 @@ export interface IBooking extends Document {
   carrierBookingNumber: string;
   freightRequest: Types.ObjectId;
   customer: Types.ObjectId;
+  customerName: string;
+  customerEmail: string;
   shippingLine: string;
   vessel: string;
   sailingDate: Date;
   status: string;
+  containers: string[];
 }
 
 export interface ITrackingEvent extends Document {
@@ -78,7 +83,10 @@ export interface ITrackingEvent extends Document {
 export interface IInvoice extends Document {
   invoiceNumber: string;
   booking: Types.ObjectId;
+  bookingNumber: string;
   customer: Types.ObjectId;
+  customerName: string;
+  customerEmail: string;
   uploadedBy: Types.ObjectId;
   documentUrl: string;
   documentPublicId: string;

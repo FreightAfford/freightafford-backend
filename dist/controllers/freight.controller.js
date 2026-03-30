@@ -22,6 +22,8 @@ export const createFreightRequest = async (req, res, next) => {
     }
     const request = await FreightRequest.create({
         customer: req.user._id,
+        customerName: req.user.fullname,
+        customerEmail: req.user.email,
         originPort,
         destinationPort,
         commodity,
@@ -55,7 +57,7 @@ export const getAllFreightRequests = async (req, res, next) => {
         .json({ status: "success", results: requests.length, data: requests });
 };
 export const acceptFreightRequest = async (req, res, next) => {
-    const request = await FreightRequest.findById(req.params.id);
+    const request = await FreightRequest.findById(req.params.id).populate("customer", "fullname email");
     if (!request)
         return next(new AppError("Freight request not found", 404));
     const user = await User.findById(request.customer);
@@ -65,10 +67,13 @@ export const acceptFreightRequest = async (req, res, next) => {
         return next(new AppError("Request cannot be accepted", 400));
     request.status = "accepted";
     request.adminActionAt = new Date();
+    const customer = request.customer;
     const booking = await Booking.create({
         bookingNumber: generateBookingNumber(),
         freightRequest: request._id,
         customer: request.customer,
+        customerName: customer.fullname,
+        customerEmail: customer.email,
     });
     request.booking = booking._id;
     const { error } = await sendCustomerAcceptedNotification(user.email, user.fullname, booking.bookingNumber);
@@ -135,7 +140,7 @@ export const rejectFreightRequest = async (req, res, next) => {
 };
 export const respondToCounter = async (req, res, next) => {
     const { decision } = req.body;
-    const request = await FreightRequest.findById(req.params.id);
+    const request = await FreightRequest.findById(req.params.id).populate("customer", "fullname email");
     if (!request)
         return next(new AppError("Freight request not found", 404));
     if (request.customer.toString() !== req.user?._id.toString())
@@ -149,6 +154,7 @@ export const respondToCounter = async (req, res, next) => {
     else
         return next(new AppError("Invalid decision", 400));
     request.customerDecisionAt = new Date();
+    const customer = request.customer;
     const { error } = await sendAdminCustomerDecisionNotification(["freightaffords@gmail.com", "devfranklinandrew@gmail.com"], req.user.fullname, decision);
     if (error)
         return next(new AppError("Unable to send response to counter offer request notification.", 400));
@@ -156,6 +162,8 @@ export const respondToCounter = async (req, res, next) => {
         bookingNumber: generateBookingNumber(),
         freightRequest: request._id,
         customer: request.customer,
+        customerName: customer.fullname,
+        customerEmail: customer.email,
     });
     request.booking = booking._id;
     await request.save();

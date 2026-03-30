@@ -10,6 +10,7 @@ import morgan from "morgan";
 import envConfig from "./configurations/env.configuration.js";
 import AppError from "./errors/app.error.js";
 import globalErrorHandler from "./errors/global.error.js";
+import amendmentRouter from "./routers/amendment.router.js";
 import authRouter from "./routers/auth.router.js";
 import BLRouter from "./routers/bl.router.js";
 import bookingRouter from "./routers/booking.router.js";
@@ -43,6 +44,7 @@ const appConfig = (app: Application) => {
   app.use("/api/v1/bl", BLRouter);
   app.use("/api/v1/invoice", invoiceRouter);
   app.use("/api/v1/pipeline", pipelineRouter);
+  app.use("/api/v1/amendment", amendmentRouter);
 
   app.use((req, res, next) =>
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)),

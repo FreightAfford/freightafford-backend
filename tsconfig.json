@@ -8,6 +8,8 @@
     "declaration": false,
     "sourceMap": true,
     "isolatedModules": true
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true
   },
   "include": ["src/**/*.ts"]
 }

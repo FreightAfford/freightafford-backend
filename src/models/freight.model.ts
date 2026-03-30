@@ -9,6 +9,8 @@ const freightRequestSchema = new Schema<IFreightRequest>(
       required: true,
       index: true,
     },
+    customerName: { type: String, required: true },
+    customerEmail: { type: String, required: true },
     booking: {
       type: Schema.Types.ObjectId,
       ref: "Booking",

@@ -18,8 +18,10 @@ export const uploadBillOfLading = async (req, res, next) => {
         createdAt: -1,
     });
     const version = lastBL ? lastBL.version + 1 : 1;
+    const customer = booking.customer;
     const bill = new BillOfLading({
         booking: bookingId,
+        bookingNumber: booking.bookingNumber,
         type,
         documentUrl: result.secure_url,
         documentPublicId: result.public_id,
@@ -28,8 +30,8 @@ export const uploadBillOfLading = async (req, res, next) => {
         uploadedBy: req.user._id,
         fileSize,
         customer: booking.customer,
+        customerName: customer.fullname,
     });
-    const customer = booking.customer;
     const { error } = await sendBillOfLadingNotification(customer.email, customer.fullname, booking.bookingNumber, bill.status, bill.type);
     if (error)
         return next(new AppError("Couldn't send bill of lading notification", 400));

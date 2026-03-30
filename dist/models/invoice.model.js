@@ -13,6 +13,9 @@ const invoiceSchema = new Schema({
         required: true,
         index: true,
     },
+    bookingNumber: { type: String, required: true },
+    customerName: { type: String, required: true },
+    customerEmail: { type: String, required: true },
     customer: {
         type: Schema.Types.ObjectId,
         ref: "User",

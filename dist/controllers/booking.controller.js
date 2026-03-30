@@ -1,6 +1,7 @@
 import AppError from "../errors/app.error.js";
 import Booking from "../models/booking.model.js";
-import { sendBookingScheduleNotification, sendShipmentStatusUpdate, } from "../services/booking.services.js";
+import { sendBookingScheduleNotification, sendContainerNumbersNotification, sendShipmentStatusUpdate, } from "../services/booking.services.js";
+import { canModifyContainers, isValidContainer, normalizeContainers, validateContainers, } from "../utils/container.js";
 import { createTrackingEvent } from "./tracking.controller.js";
 export const getMyBookings = async (req, res, next) => {
     const bookings = await Booking.find({ customer: req.user._id })
@@ -89,6 +90,79 @@ export const updateBookingStatus = async (req, res, next) => {
         status: "success",
         message: "Booking status updated",
         data: booking,
+    });
+};
+export const addContainers = async (req, res, next) => {
+    const { bookingId } = req.params;
+    let { containers } = req.body;
+    if (!Array.isArray(containers) || containers.length === 0)
+        return next(new AppError("Containers are required", 400));
+    containers = normalizeContainers(containers);
+    if (isValidContainer(containers))
+        return next(new AppError("Invalid container format", 400));
+    const booking = await Booking.findById(bookingId);
+    if (!booking)
+        return next(new AppError("Booking not found", 404));
+    if (!canModifyContainers(booking.status))
+        return next(new AppError(`Cannot modify containers when booking is '${booking.status}'`, 403));
+    const existing = booking.containers || [];
+    const merged = normalizeContainers([...existing, ...containers]);
+    booking.containers = merged;
+    await booking.save();
+    res.status(200).json({
+        status: "success",
+        message: "Containers added successfully",
+        containers: booking.containers,
+    });
+};
+export const removeContainers = async (req, res, next) => {
+    const { bookingId } = req.params;
+    let { containers } = req.body;
+    if (!Array.isArray(containers) || containers.length === 0)
+        return next(new AppError("Containers are required", 400));
+    containers = normalizeContainers(containers);
+    const booking = await Booking.findById(bookingId);
+    if (!booking)
+        return next(new AppError("Booking not found", 404));
+    if (!canModifyContainers(booking.status))
+        return next(new AppError(`Cannot modify containers when booking is '${booking.status}'`, 403));
+    booking.containers = (booking.containers || []).filter((c) => !containers.includes(c));
+    await booking.save();
+    res.status(200).json({
+        status: "success",
+        message: "Containers removed successfully",
+        containers: booking.containers,
+    });
+};
+export const replaceContainers = async (req, res, next) => {
+    const { bookingId } = req.params;
+    let { containers } = req.body;
+    if (!Array.isArray(containers) || containers.length === 0)
+        return next(new AppError("Containers are required", 400));
+    containers = normalizeContainers(containers);
+    if (!validateContainers(containers))
+        return next(new AppError("Invalid container format", 400));
+    const booking = await Booking.findById(bookingId)
+        .populate("customer", "fullname email")
+        .populate("freightRequest", "originPort destinationPort");
+    if (!booking)
+        return next(new AppError("Booking not found", 404));
+    if (!canModifyContainers(booking.status)) {
+        return res.status(403).json({
+            message: `Cannot modify containers when booking is '${booking.status.replace("_", " ").toUpperCase()}'`,
+        });
+    }
+    booking.containers = containers;
+    const customer = booking.customer;
+    const request = booking.freightRequest;
+    const { error } = await sendContainerNumbersNotification(customer.email, customer.fullname, booking.bookingNumber, request.originPort, request.destinationPort, booking.containers);
+    if (error)
+        return next(new AppError("Unable to update container manifest. Try again.", 400));
+    await booking.save();
+    res.status(200).json({
+        status: "success",
+        message: "Containers updated successfully",
+        containers: booking.containers,
     });
 };
 //# sourceMappingURL=booking.controller.js.map

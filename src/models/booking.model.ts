@@ -10,6 +10,8 @@ const bookingSchema = new Schema<IBooking>(
       required: true,
     },
     customer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    customerName: { type: String, required: true },
+    customerEmail: { type: String, required: true },
     shippingLine: {
       type: String,
       enum: ["Maersk", "CMA CGM", "MSC", "Hapag-Lloyd"],
@@ -30,6 +32,7 @@ const bookingSchema = new Schema<IBooking>(
       ],
       default: "awaiting_confirmation",
     },
+    containers: { type: [String], default: [] },
   },
   { timestamps: true },
 );

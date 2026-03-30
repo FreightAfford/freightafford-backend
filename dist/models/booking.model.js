@@ -7,6 +7,8 @@ const bookingSchema = new Schema({
         required: true,
     },
     customer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    customerName: { type: String, required: true },
+    customerEmail: { type: String, required: true },
     shippingLine: {
         type: String,
         enum: ["Maersk", "CMA CGM", "MSC", "Hapag-Lloyd"],
@@ -27,6 +29,7 @@ const bookingSchema = new Schema({
         ],
         default: "awaiting_confirmation",
     },
+    containers: { type: [String], default: [] },
 }, { timestamps: true });
 const Booking = model("Booking", bookingSchema);
 export default Booking;

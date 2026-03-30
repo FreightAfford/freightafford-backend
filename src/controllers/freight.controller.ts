@@ -10,7 +10,7 @@ import {
   sendCustomerCounterNotification,
   sendCustomerRejectedNotification,
 } from "../services/freight.services.js";
-import type { AuthenticateRequest } from "../utils/interface.js";
+import type { AuthenticateRequest, IUser } from "../utils/interface.js";
 
 const generateBookingNumber = () => {
   const random = Math.floor(100000 + Math.random() * 900000);
@@ -51,6 +51,8 @@ export const createFreightRequest = async (
 
   const request = await FreightRequest.create({
     customer: req.user!._id,
+    customerName: req.user!.fullname,
+    customerEmail: req.user!.email,
     originPort,
     destinationPort,
     commodity,
@@ -102,7 +104,10 @@ export const acceptFreightRequest = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const request = await FreightRequest.findById(req.params.id);
+  const request = await FreightRequest.findById(req.params.id).populate(
+    "customer",
+    "fullname email",
+  );
 
   if (!request) return next(new AppError("Freight request not found", 404));
 
@@ -116,10 +121,14 @@ export const acceptFreightRequest = async (
   request.status = "accepted";
   request.adminActionAt = new Date();
 
+  const customer = request.customer as unknown as IUser;
+
   const booking = await Booking.create({
     bookingNumber: generateBookingNumber(),
     freightRequest: request._id,
     customer: request.customer,
+    customerName: customer.fullname,
+    customerEmail: customer.email,
   });
 
   request.booking = booking._id;
@@ -251,7 +260,10 @@ export const respondToCounter = async (
 ) => {
   const { decision } = req.body;
 
-  const request = await FreightRequest.findById(req.params.id);
+  const request = await FreightRequest.findById(req.params.id).populate(
+    "customer",
+    "fullname email",
+  );
 
   if (!request) return next(new AppError("Freight request not found", 404));
 
@@ -268,6 +280,8 @@ export const respondToCounter = async (
   else return next(new AppError("Invalid decision", 400));
 
   request.customerDecisionAt = new Date();
+
+  const customer = request.customer as unknown as IUser;
 
   const { error } = await sendAdminCustomerDecisionNotification(
     ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
@@ -287,6 +301,8 @@ export const respondToCounter = async (
     bookingNumber: generateBookingNumber(),
     freightRequest: request._id,
     customer: request.customer,
+    customerName: customer.fullname,
+    customerEmail: customer.email,
   });
 
   request.booking = booking._id;

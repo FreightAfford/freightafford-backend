@@ -34,7 +34,10 @@ export const uploadInvoice = async (req, res, next) => {
     const invoice = new Invoice({
         invoiceNumber: await generateInvoiceNumber(),
         booking: booking._id,
+        bookingNumber: booking.bookingNumber,
         customer: booking.customer._id,
+        customerName: customer.fullname,
+        customerEmail: customer.email,
         uploadedBy: adminId,
         documentUrl: uploaded.secure_url,
         documentPublicId: uploaded.public_id,
