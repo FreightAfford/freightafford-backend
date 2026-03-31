@@ -18,7 +18,7 @@ export const createAmendment = async (req, res, next) => {
         return next(new AppError(`Cannot submit amendment for ${booking.status} booking`, 400));
     let result;
     if (req.file)
-        result = await uploadToCloudinary(req.file, "amendment_docs");
+        result = await uploadToCloudinary(file, "amendment_docs");
     const amendmentType = file ? "pdf" : "text";
     const amendment = await Amendment.create({
         booking: bookingId,
@@ -28,7 +28,7 @@ export const createAmendment = async (req, res, next) => {
         content: content || null,
         fileUrl: result?.secure_url || null,
         filePublicId: result?.public_id || null,
-        fileSize: result?.bytes || req.file?.size || null,
+        fileSize: result?.bytes || file?.size || null,
     });
     return res.status(200).json({
         status: "success",

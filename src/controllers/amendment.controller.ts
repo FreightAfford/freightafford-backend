@@ -36,7 +36,7 @@ export const createAmendment = async (
 
   let result: any;
 
-  if (req.file) result = await uploadToCloudinary(req.file, "amendment_docs");
+  if (req.file) result = await uploadToCloudinary(file, "amendment_docs");
 
   const amendmentType = file ? "pdf" : "text";
 
@@ -48,7 +48,7 @@ export const createAmendment = async (
     content: content || null,
     fileUrl: result?.secure_url || null,
     filePublicId: result?.public_id || null,
-    fileSize: result?.bytes || req.file?.size || null,
+    fileSize: result?.bytes || file?.size || null,
   });
 
   return res.status(200).json({

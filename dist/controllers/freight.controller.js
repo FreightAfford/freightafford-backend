@@ -143,7 +143,7 @@ export const respondToCounter = async (req, res, next) => {
     const request = await FreightRequest.findById(req.params.id).populate("customer", "fullname email");
     if (!request)
         return next(new AppError("Freight request not found", 404));
-    if (request.customer.toString() !== req.user?._id.toString())
+    if (request.customer !== req.user?._id)
         return next(new AppError("You are not allowed to respond to this counter", 403));
     if (request.status !== "countered")
         return next(new AppError("No counter offer to respond to", 400));
