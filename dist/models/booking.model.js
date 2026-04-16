@@ -17,9 +17,7 @@ const bookingSchema = new Schema({
     carrierBookingNumber: {
         type: String,
         unique: true,
-        partialFilterExpression: {
-            carrierBookingNumber: { $exist: true, $ne: null },
-        },
+        sparse: true,
     },
     vessel: { type: String },
     sailingDate: { type: Date },
