@@ -2,12 +2,16 @@ import crypto from "crypto";
 import type { NextFunction, Request, Response } from "express";
 import envConfig from "../configurations/env.configuration.js";
 import AppError from "../errors/app.error.js";
+import Booking from "../models/booking.model.js";
+import FreightRequest from "../models/freight.model.js";
+import Invoice from "../models/invoice.model.js";
 import User from "../models/user.model.js";
 import {
   passwordResetEmail,
   resendOTPEmail,
   sendOTPEmail,
 } from "../services/auth.email.js";
+import ApiFeatures from "../utils/api.features.js";
 import type { AuthenticateRequest } from "../utils/interface.js";
 import { generateJWT } from "../utils/jwt.js";
 import { generateOTP, hashToken } from "../utils/otp.js";
@@ -16,6 +20,7 @@ import {
   formatPhoneNumber,
   normalizePhoneNumber,
 } from "../utils/phoneFormat.js";
+import { allowedUserFilters } from "../utils/whitelists.js";
 
 const MAX_OTP_ATTEMPTS = 5;
 const MAX_RESEND_LIMIT = 3;
@@ -229,11 +234,35 @@ export const getAllUsers = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const users = await User.find().sort({ createdAt: -1 });
+  const baseFilter = {};
 
-  res
-    .status(200)
-    .json({ status: "success", results: users.length, data: users });
+  const totalAll = await User.countDocuments(baseFilter);
+
+  const countFeatures = new ApiFeatures(User.find(baseFilter), req.query)
+    .filter(allowedUserFilters)
+    .search(["fullname", "email", "companyName", "phoneNumber", "country"]);
+
+  const total = await countFeatures.query.countDocuments();
+
+  const baseQuery = User.find(baseFilter);
+
+  const features = new ApiFeatures(baseQuery, req.query)
+    .filter(allowedUserFilters)
+    .search(["fullname", "email", "companyName", "phoneNumber", "country"])
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const users = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    results: users.length,
+    total,
+    totalAll,
+    page: Number(req.query.page) || 1,
+    data: users,
+  });
 };
 
 export const getSingleUser = async (
@@ -247,7 +276,23 @@ export const getSingleUser = async (
 
   if (!user) return next(new AppError("User not found", 404));
 
-  res.status(200).json({ status: "success", data: user });
+  const [requestsCounts, bookingsCounts, invoicesCounts] = await Promise.all([
+    FreightRequest.countDocuments({ customer: userId }),
+    Booking.countDocuments({ customer: userId }),
+    Invoice.countDocuments({ customer: userId }),
+  ]);
+
+  if (user.phoneNumber) user.phoneNumber = formatPhoneNumber(user.phoneNumber);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+      requests: requestsCounts,
+      bookings: bookingsCounts,
+      invoices: invoicesCounts,
+    },
+  });
 };
 
 export const forgotPassword = async (
@@ -337,30 +382,93 @@ export const updateUserProfile = async (
 ) => {
   const { fullname, phoneNumber, country, companyName, companyAddress } =
     req.body;
-  const user = await User.findById(req.user!._id);
 
+  const userId = req.user._id;
+
+  const user = await User.findById(userId);
   if (!user) return next(new AppError("User not found", 404));
 
-  const normalized = normalizePhoneNumber(phoneNumber);
+  let normalizedPhone = user.phoneNumber;
 
-  if (!normalized) return next(new AppError("Invalid phone number", 400));
+  if (phoneNumber) {
+    const normalized = normalizePhoneNumber(phoneNumber);
+    if (!normalized) {
+      return next(new AppError("Invalid phone number", 400));
+    }
+    normalizedPhone = normalized;
+  }
 
-  const update = await User.findByIdAndUpdate(
-    user._id,
-    {
-      fullname,
-      phoneNumber: normalized,
-      country,
-      companyName,
-      companyAddress,
-    },
-    { new: true, runValidators: true },
-  ).select("-password -otp -passwordResetToken");
+  const updateData = {
+    fullname,
+    phoneNumber: normalizedPhone,
+    country,
+    companyName,
+    companyAddress,
+  };
+
+  const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+    new: true,
+    runValidators: true,
+  }).select("-password -otp -passwordResetToken");
 
   res.status(200).json({
     status: "success",
     message: "Profile updated successfully",
-    data: update,
+    data: updatedUser,
+  });
+};
+
+export const updateUserByAdmin = async (
+  req: AuthenticateRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { userId } = req.params;
+
+  const {
+    fullname,
+    email,
+    status,
+    phoneNumber,
+    country,
+    companyName,
+    companyAddress,
+  } = req.body;
+
+  const user = await User.findById(userId);
+  if (!user) return next(new AppError("User not found", 404));
+
+  let normalizedPhone = user.phoneNumber;
+
+  if (phoneNumber) {
+    const normalized = normalizePhoneNumber(phoneNumber);
+    if (!normalized) {
+      return next(new AppError("Invalid phone number", 400));
+    }
+    normalizedPhone = normalized;
+  }
+
+  const updateData: any = {
+    fullname,
+    phoneNumber: normalizedPhone,
+    country,
+    companyName,
+    companyAddress,
+  };
+
+  // Admin-only fields
+  if (email) updateData.email = email;
+  if (status) updateData.status = status;
+
+  const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+    new: true,
+    runValidators: true,
+  }).select("-password -otp -passwordResetToken");
+
+  res.status(200).json({
+    status: "success",
+    message: "User updated successfully",
+    data: updatedUser,
   });
 };
 

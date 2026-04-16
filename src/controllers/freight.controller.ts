@@ -10,7 +10,9 @@ import {
   sendCustomerCounterNotification,
   sendCustomerRejectedNotification,
 } from "../services/freight.services.js";
+import ApiFeatures from "../utils/api.features.js";
 import type { AuthenticateRequest, IUser } from "../utils/interface.js";
+import { allowedFreightFilters } from "../utils/whitelists.js";
 
 const generateBookingNumber = () => {
   const random = Math.floor(100000 + Math.random() * 900000);
@@ -71,18 +73,128 @@ export const createFreightRequest = async (
   });
 };
 
+// ADMIN & CSO: Update Request
+export const updateFreightRequest = async (
+  req: AuthenticateRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { requestId } = req.params;
+
+  const {
+    originPort,
+    destinationPort,
+    commodity,
+    cargoReadyDate,
+    cargoWeight,
+    proposedPrice,
+    notes,
+    containerSize,
+    containerQuantity,
+    status,
+    adminCounterPrice,
+    counterReason,
+    rejectionReason,
+  } = req.body;
+
+  const request = await FreightRequest.findById(requestId);
+
+  if (!request) return next(new AppError("Freight request not found", 404));
+
+  if (["accepted", "rejected", "expired"].includes(request.status))
+    return next(new AppError("Cannot update a finalized freight request", 400));
+
+  const updatedData: any = {};
+
+  if (originPort) updatedData.originPort = originPort.toLowerCase();
+  if (destinationPort)
+    updatedData.destinationPort = destinationPort.toLowerCase();
+  if (commodity) updatedData.commodity = commodity.toLowerCase();
+  if (cargoReadyDate) updatedData.cargoReadyDate = cargoReadyDate;
+  if (cargoWeight) updatedData.cargoWeight = cargoWeight;
+  if (proposedPrice) updatedData.proposedPrice = proposedPrice;
+  if (notes !== undefined) updatedData.notes = notes;
+  if (containerSize) updatedData.containerSize = containerSize;
+  if (containerQuantity) updatedData.containerQuantity = containerQuantity;
+
+  if (status) {
+    updatedData.status = status;
+
+    if (status === "countered") {
+      if (!adminCounterPrice || !counterReason)
+        return next(
+          new AppError(
+            "Counter price and reason are required for counter offers",
+            400,
+          ),
+        );
+
+      updatedData.adminCounterPrice = adminCounterPrice;
+      updatedData.counterReason = counterReason;
+      updatedData.adminActionAt = new Date();
+    }
+
+    if (status === "rejected") {
+      if (!rejectionReason)
+        return next(new AppError("Rejection reason is required", 400));
+
+      updatedData.rejectionReason = rejectionReason;
+      updatedData.adminActionAt = new Date();
+    }
+
+    if (status === "accepted") updatedData.adminActionAt = new Date();
+  }
+
+  const updatedRequest = await FreightRequest.findByIdAndUpdate(
+    requestId,
+    updatedData,
+    { new: true, runValidators: true },
+  );
+
+  res.status(200).json({
+    status: "success",
+    message: "Freight request updated successfully",
+    data: updatedRequest,
+  });
+};
+
 export const getMyFreightRequest = async (
   req: AuthenticateRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const requests = await FreightRequest.find({ customer: req.user!._id })
-    .populate("customer")
-    .sort({ createdAt: -1 });
+  const baseFilter = { customer: req.user._id };
 
-  res
-    .status(200)
-    .json({ status: "success", results: requests.length, data: requests });
+  const totalAll = await FreightRequest.countDocuments(baseFilter);
+
+  const countFeatures = new ApiFeatures(
+    FreightRequest.find(baseFilter),
+    req.query,
+  )
+    .filter(allowedFreightFilters)
+    .search(["originPort", "destinationPort", "commodity", "status"]);
+
+  const total = await countFeatures.query.countDocuments();
+
+  const baseQuery = FreightRequest.find(baseFilter).populate("customer");
+  console.log(req.query);
+  const features = new ApiFeatures(baseQuery, req.query)
+    .filter(allowedFreightFilters)
+    .search(["originPort", "destinationPort", "commodity", "status"])
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const requests = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    results: requests.length,
+    total,
+    totalAll,
+    page: Number(req.query.page) || 1,
+    data: requests,
+  });
 };
 
 export const getAllFreightRequests = async (
@@ -90,13 +202,55 @@ export const getAllFreightRequests = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const requests = await FreightRequest.find()
-    .populate("customer", "fullname companyName")
-    .sort({ createdAt: -1 });
+  const baseFilter = {};
 
-  res
-    .status(200)
-    .json({ status: "success", results: requests.length, data: requests });
+  const totalAll = await FreightRequest.countDocuments(baseFilter);
+
+  const countFeatures = new ApiFeatures(
+    FreightRequest.find(baseFilter),
+    req.query,
+  )
+    .filter(allowedFreightFilters)
+    .search([
+      "originPort",
+      "destinationPort",
+      "commodity",
+      "status",
+      "customerName",
+      "customerEmail",
+    ]);
+
+  const total = await countFeatures.query.countDocuments();
+
+  const baseQuery = FreightRequest.find(baseFilter).populate(
+    "customer",
+    "fullname companyName",
+  );
+
+  const features = new ApiFeatures(baseQuery, req.query)
+    .filter(allowedFreightFilters)
+    .search([
+      "originPort",
+      "destinationPort",
+      "commodity",
+      "status",
+      "customerName",
+      "customerEmail",
+    ])
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const requests = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    results: requests.length,
+    total,
+    totalAll,
+    page: Number(req.query.page) || 1,
+    data: requests,
+  });
 };
 
 export const acceptFreightRequest = async (

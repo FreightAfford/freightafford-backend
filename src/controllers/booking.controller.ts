@@ -6,6 +6,7 @@ import {
   sendContainerNumbersNotification,
   sendShipmentStatusUpdate,
 } from "../services/booking.services.js";
+import ApiFeatures from "../utils/api.features.js";
 import {
   canModifyContainers,
   isValidContainer,
@@ -17,6 +18,7 @@ import type {
   IFreightRequest,
   IUser,
 } from "../utils/interface.js";
+import { allowedBookingFilters } from "../utils/whitelists.js";
 import { createTrackingEvent } from "./tracking.controller.js";
 
 export const getMyBookings = async (
@@ -24,14 +26,38 @@ export const getMyBookings = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const bookings = await Booking.find({ customer: req.user!._id })
-    .populate("freightRequest")
-    .populate("customer")
-    .sort({ createdAt: -1 });
+  const baseFilter = { customer: req.user!._id };
 
-  res
-    .status(200)
-    .json({ status: "success", results: bookings.length, data: bookings });
+  const totalAll = await Booking.countDocuments(baseFilter);
+
+  const countFeatures = new ApiFeatures(Booking.find(baseFilter), req.query)
+    .filter(allowedBookingFilters)
+    .search(["bookingNumber", "shippingLine", "status"]);
+
+  const total = await countFeatures.query.countDocuments();
+
+  const baseQuery = Booking.find(baseFilter).populate(
+    "freightRequest",
+    "status commodity",
+  );
+
+  const features = new ApiFeatures(baseQuery, req.query)
+    .filter(allowedBookingFilters)
+    .search(["bookingNumber", "shippingLine", "status"])
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const bookings = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    results: bookings.length,
+    total,
+    totalAll,
+    page: Number(req.query.page || 1),
+    data: bookings,
+  });
 };
 
 // ADMIN: Get All Bookings
@@ -40,14 +66,50 @@ export const getAllBookings = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const bookings = await Booking.find()
-    .populate("customer", "fullname email companyName")
-    .populate("freightRequest")
-    .sort({ createdAt: -1 });
+  const baseFilter = {};
 
-  res
-    .status(200)
-    .json({ status: "success", results: bookings.length, data: bookings });
+  const totalAll = await Booking.countDocuments(baseFilter);
+
+  const countFeatures = new ApiFeatures(Booking.find(baseFilter), req.query)
+    .filter(allowedBookingFilters)
+    .search([
+      "bookingNumber",
+      "shippingLine",
+      "status",
+      "customerName",
+      "customerEmail",
+    ]);
+
+  const total = await countFeatures.query.countDocuments();
+
+  const baseQuery = Booking.find(baseFilter).populate(
+    "freightRequest",
+    "status commodity",
+  );
+
+  const features = new ApiFeatures(baseQuery, req.query)
+    .filter(allowedBookingFilters)
+    .search([
+      "bookingNumber",
+      "shippingLine",
+      "status",
+      "customerName",
+      "customerEmail",
+    ])
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const bookings = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    results: bookings.length,
+    total,
+    totalAll,
+    page: Number(req.query.page) || 1,
+    data: bookings,
+  });
 };
 
 export const getSingleBooking = async (

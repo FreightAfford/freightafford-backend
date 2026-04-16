@@ -10,6 +10,7 @@ import {
   register,
   resendOTP,
   resetPassword,
+  updateUserByAdmin,
   updateUserProfile,
   verifyOTP,
 } from "../controllers/auth.controller.js";
@@ -55,6 +56,13 @@ authRouter.patch(
   "/update-profile",
   authenticate,
   catchAsync(updateUserProfile),
+);
+
+authRouter.patch(
+  "/users/:userId",
+  authenticate,
+  authorize("admin"),
+  catchAsync(updateUserByAdmin),
 );
 
 authRouter.patch("/change-password", authenticate, catchAsync(changePassword));

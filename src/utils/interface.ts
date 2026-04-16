@@ -24,6 +24,7 @@ export interface IUser extends Document {
   phoneNumber: string;
   companyAddress: string;
   country: string;
+  status: string;
 }
 
 export interface JwtPayload {

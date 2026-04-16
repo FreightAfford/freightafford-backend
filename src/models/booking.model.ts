@@ -17,7 +17,13 @@ const bookingSchema = new Schema<IBooking>(
       enum: ["Maersk", "CMA CGM", "MSC", "Hapag-Lloyd"],
       // required: true,
     },
-    carrierBookingNumber: { type: String, unique: true },
+    carrierBookingNumber: {
+      type: String,
+      unique: true,
+      partialFilterExpression: {
+        carrierBookingNumber: { $exist: true, $ne: null },
+      },
+    },
     vessel: { type: String },
     sailingDate: { type: Date },
     status: {

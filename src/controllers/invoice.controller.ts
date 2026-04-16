@@ -187,7 +187,7 @@ export const submitPaymentProof = async (
   let proofUpload: any;
 
   if (req.file)
-    proofUpload = await uploadToCloudinary(req.file, "payment-proofs");
+    proofUpload = await uploadToCloudinary(req.file, "payment_proofs");
 
   invoice.paymentReference = paymentReference;
   invoice.status = "awaiting_verification";

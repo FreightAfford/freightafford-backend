@@ -36,10 +36,15 @@ const userSchema = new Schema<IUser>(
     acceptedFreightRulesAt: { type: Date },
     passwordResetToken: { type: String, select: false },
     passwordResetExpiry: { type: Date, select: false },
-    companyName: { type: String, trim: true },
+    companyName: { type: String, lowercase: true, trim: true },
     phoneNumber: { type: String, trim: true },
-    companyAddress: { type: String, trim: true },
+    companyAddress: { type: String, lowercase: true, trim: true },
     country: { type: String, trim: true },
+    status: {
+      type: String,
+      enum: ["active", "inactive", "suspended"],
+      default: "active",
+    },
   },
   { timestamps: true },
 );
