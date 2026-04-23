@@ -5,7 +5,7 @@ import {
   getBookingTrackingEvents,
 } from "../controllers/tracking.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
-import catchAsync from "../utils/catch.async.js";
+import catchAsync from "../utils/catch-async.js";
 
 const trackingRouter = Router();
 

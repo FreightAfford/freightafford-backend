@@ -14,11 +14,7 @@ const bookingSchema = new Schema({
         enum: ["Maersk", "CMA CGM", "MSC", "Hapag-Lloyd"],
         // required: true,
     },
-    carrierBookingNumber: {
-        type: String,
-        unique: true,
-        sparse: true,
-    },
+    carrierBookingNumber: { type: String, unique: true, sparse: true },
     vessel: { type: String },
     sailingDate: { type: Date },
     status: {

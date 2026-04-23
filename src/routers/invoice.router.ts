@@ -9,14 +9,14 @@ import {
 } from "../controllers/invoice.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
 import { upload } from "../middlewares/multer.js";
-import catchAsync from "../utils/catch.async.js";
+import catchAsync from "../utils/catch-async.js";
 
 const invoiceRouter = Router();
 
 invoiceRouter.post(
   "/:bookingId",
   authenticate,
-  authorize("admin"),
+  authorize("admin", "cso"),
   upload.single("invoice"),
   catchAsync(uploadInvoice),
 );

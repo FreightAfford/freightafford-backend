@@ -1,7 +1,7 @@
 import AppError from "../errors/app.error.js";
 import { Amendment } from "../models/amendment.model.js";
 import Booking from "../models/booking.model.js";
-import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
+import { uploadToCloudinary } from "../utils/upload-to-cloudinary.js";
 export const createAmendment = async (req, res, next) => {
     const { bookingId, content } = req.body;
     const file = req.file;

@@ -13,7 +13,9 @@ import bookingRouter from "./routers/booking.router.js";
 import freightRouter from "./routers/freight.router.js";
 import invoiceRouter from "./routers/invoice.router.js";
 import pipelineRouter from "./routers/pipeline.router.js";
+import ticketRouter from "./routers/ticket.router.js";
 import trackingRouter from "./routers/tracking.router.js";
+import webhookRouter from "./routers/webhook.router.js";
 const appConfig = (app) => {
     app
         .use(cors({
@@ -34,6 +36,8 @@ const appConfig = (app) => {
     app.use("/api/v1/invoice", invoiceRouter);
     app.use("/api/v1/pipeline", pipelineRouter);
     app.use("/api/v1/amendment", amendmentRouter);
+    app.use("/api/v1/tickets", ticketRouter);
+    app.use("/api/webhook", webhookRouter);
     app.use((req, res, next) => next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)));
     app.use(globalErrorHandler);
 };

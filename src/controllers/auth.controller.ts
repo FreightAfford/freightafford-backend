@@ -10,8 +10,8 @@ import {
   passwordResetEmail,
   resendOTPEmail,
   sendOTPEmail,
-} from "../services/auth.email.js";
-import ApiFeatures from "../utils/api.features.js";
+} from "../services/auth-email.service.js";
+import ApiFeatures from "../utils/api-features.js";
 import type { AuthenticateRequest } from "../utils/interface.js";
 import { generateJWT } from "../utils/jwt.js";
 import { generateOTP, hashToken } from "../utils/otp.js";
@@ -19,7 +19,7 @@ import { comparePassword, hashPassword } from "../utils/password.js";
 import {
   formatPhoneNumber,
   normalizePhoneNumber,
-} from "../utils/phoneFormat.js";
+} from "../utils/phone-format.js";
 import { allowedUserFilters } from "../utils/whitelists.js";
 
 const MAX_OTP_ATTEMPTS = 5;

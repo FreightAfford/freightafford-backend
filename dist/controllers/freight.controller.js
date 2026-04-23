@@ -2,8 +2,8 @@ import AppError from "../errors/app.error.js";
 import Booking from "../models/booking.model.js";
 import FreightRequest from "../models/freight.model.js";
 import User from "../models/user.model.js";
-import { sendAdminCustomerDecisionNotification, sendAdminFreightRequestNotification, sendCustomerAcceptedNotification, sendCustomerCounterNotification, sendCustomerRejectedNotification, } from "../services/freight.services.js";
-import ApiFeatures from "../utils/api.features.js";
+import { sendAdminCustomerDecisionNotification, sendAdminFreightRequestNotification, sendCustomerAcceptedNotification, sendCustomerCounterNotification, sendCustomerRejectedNotification, } from "../services/freight.service.js";
+import ApiFeatures from "../utils/api-features.js";
 import { allowedFreightFilters } from "../utils/whitelists.js";
 const generateBookingNumber = () => {
     const random = Math.floor(100000 + Math.random() * 900000);

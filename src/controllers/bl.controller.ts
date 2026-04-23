@@ -3,9 +3,9 @@ import cloudinary from "../configurations/cloudinary.configuration.js";
 import AppError from "../errors/app.error.js";
 import BillOfLading from "../models/bl.model.js";
 import Booking from "../models/booking.model.js";
-import { sendBillOfLadingNotification } from "../services/booking.services.js";
+import { sendBillOfLadingNotification } from "../services/booking.service.js";
 import type { AuthenticateRequest, IUser } from "../utils/interface.js";
-import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
+import { uploadToCloudinary } from "../utils/upload-to-cloudinary.js";
 
 export const uploadBillOfLading = async (
   req: AuthenticateRequest,

@@ -16,7 +16,7 @@ import {
 } from "../controllers/auth.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
 import { authRateLimiter } from "../middlewares/rate.limiter.js";
-import catchAsync from "../utils/catch.async.js";
+import catchAsync from "../utils/catch-async.js";
 
 const authRouter = Router();
 
@@ -30,11 +30,16 @@ authRouter.post("/login", authRateLimiter, catchAsync(login));
 
 authRouter.get("/me", authenticate, catchAsync(getMe));
 
-authRouter.get("/", authenticate, authorize("admin"), catchAsync(getAllUsers));
+authRouter.get(
+  "/",
+  authenticate,
+  authorize("admin", "cso"),
+  catchAsync(getAllUsers),
+);
 authRouter.get(
   "/:userId",
   authenticate,
-  authorize("admin"),
+  authorize("admin", "cso"),
   catchAsync(getSingleUser),
 );
 

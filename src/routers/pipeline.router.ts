@@ -10,7 +10,7 @@ const pipelineRouter = Router();
 pipelineRouter.get(
   "/admin",
   authenticate,
-  authorize("admin"),
+  authorize("admin", "cso"),
   getAdminOverview,
 );
 pipelineRouter.get(

@@ -10,7 +10,7 @@ import {
   updateBookingStatus,
 } from "../controllers/booking.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
-import catchAsync from "../utils/catch.async.js";
+import catchAsync from "../utils/catch-async.js";
 
 const bookingRouter = Router();
 
@@ -19,7 +19,7 @@ bookingRouter.use(authenticate);
 bookingRouter.get("/me", catchAsync(getMyBookings));
 bookingRouter.get("/:id/single", catchAsync(getSingleBooking));
 
-bookingRouter.use(authorize("admin"));
+bookingRouter.use(authorize("admin", "cso"));
 
 bookingRouter.get("/admin", catchAsync(getAllBookings));
 bookingRouter.patch("/admin/:id/shipping", catchAsync(updateBookingShipping));

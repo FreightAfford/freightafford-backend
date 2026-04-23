@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { deleteTrackingEvent, getBookingTracking, getBookingTrackingEvents, } from "../controllers/tracking.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
-import catchAsync from "../utils/catch.async.js";
+import catchAsync from "../utils/catch-async.js";
 const trackingRouter = Router();
 trackingRouter.use(authenticate);
 trackingRouter.get("/bookings/:bookingId", catchAsync(getBookingTracking));

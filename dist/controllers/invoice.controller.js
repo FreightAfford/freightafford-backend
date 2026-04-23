@@ -1,8 +1,8 @@
 import AppError from "../errors/app.error.js";
 import Booking from "../models/booking.model.js";
 import Invoice from "../models/invoice.model.js";
-import { sendSubmitPaymentProofNotification, sendUploadInvoiceNotification, sendVerifyPaymentNotification, } from "../services/invoice.services.js";
-import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
+import { sendSubmitPaymentProofNotification, sendUploadInvoiceNotification, sendVerifyPaymentNotification, } from "../services/invoice.service.js";
+import { uploadToCloudinary } from "../utils/upload-to-cloudinary.js";
 export const generateInvoiceNumber = async () => {
     const count = await Invoice.countDocuments();
     const number = String(count + 1).padStart(5, "0");

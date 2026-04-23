@@ -10,7 +10,7 @@ import {
   respondToCounter,
 } from "../controllers/freight.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
-import catchAsync from "../utils/catch.async.js";
+import catchAsync from "../utils/catch-async.js";
 
 const freightRouter = Router();
 
@@ -26,10 +26,14 @@ freightRouter.get(
   authorize("customer"),
   catchAsync(getMyFreightRequest),
 );
-freightRouter.get("/", authorize("admin"), catchAsync(getAllFreightRequests));
+freightRouter.get(
+  "/",
+  authorize("admin", "cso"),
+  catchAsync(getAllFreightRequests),
+);
 freightRouter.get(
   "/:id",
-  authorize("admin", "customer"),
+  authorize("admin", "customer", "cso"),
   catchAsync(getFreightRequest),
 );
 freightRouter.patch(
@@ -39,12 +43,12 @@ freightRouter.patch(
 );
 freightRouter.patch(
   "/admin/:id/counter",
-  authorize("admin"),
+  authorize("admin", "cso"),
   catchAsync(counterFreightRequest),
 );
 freightRouter.patch(
   "/admin/:id/reject",
-  authorize("admin"),
+  authorize("admin", "cso"),
   catchAsync(rejectFreightRequest),
 );
 

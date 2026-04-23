@@ -6,13 +6,13 @@ import {
   sendSubmitPaymentProofNotification,
   sendUploadInvoiceNotification,
   sendVerifyPaymentNotification,
-} from "../services/invoice.services.js";
+} from "../services/invoice.service.js";
 import type {
   AuthenticateRequest,
   IFreightRequest,
   IUser,
 } from "../utils/interface.js";
-import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
+import { uploadToCloudinary } from "../utils/upload-to-cloudinary.js";
 
 export const generateInvoiceNumber = async () => {
   const count = await Invoice.countDocuments();

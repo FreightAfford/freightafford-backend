@@ -9,8 +9,8 @@ import {
   sendCustomerAcceptedNotification,
   sendCustomerCounterNotification,
   sendCustomerRejectedNotification,
-} from "../services/freight.services.js";
-import ApiFeatures from "../utils/api.features.js";
+} from "../services/freight.service.js";
+import ApiFeatures from "../utils/api-features.js";
 import type { AuthenticateRequest, IUser } from "../utils/interface.js";
 import { allowedFreightFilters } from "../utils/whitelists.js";
 

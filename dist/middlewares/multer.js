@@ -1,10 +1,28 @@
 import multer from "multer";
 const storage = multer.memoryStorage();
+const allowedMimeTypes = [
+    // pdf
+    "application/pdf",
+    // word
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    // excel
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    // text
+    "text/plain",
+    "text/csv",
+    // images
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+];
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === "application/pdf")
+    if (allowedMimeTypes.includes(file.mimetype))
         cb(null, true);
     else
-        cb(new Error("Only PDF Files are allowed"));
+        cb(new Error("Unsupported file format"));
 };
 export const upload = multer({
     storage,

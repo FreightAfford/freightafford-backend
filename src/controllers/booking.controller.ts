@@ -5,8 +5,8 @@ import {
   sendBookingScheduleNotification,
   sendContainerNumbersNotification,
   sendShipmentStatusUpdate,
-} from "../services/booking.services.js";
-import ApiFeatures from "../utils/api.features.js";
+} from "../services/booking.service.js";
+import ApiFeatures from "../utils/api-features.js";
 import {
   canModifyContainers,
   isValidContainer,
