@@ -49,7 +49,7 @@ const OTP_EMAIL_VERIFICATION_TEMPLATE = `
       <tr>
         <td class="footer">
           <p style="margin: 0 0 10px 0;">&copy; {{FULL_YEAR}} Freight Afford. All rights reserved.</p>
-          <p style="margin: 0;">Questions? Contact us at <a href="mailto:exports.ng@freightafford.com" style="color: #1E90FF; text-decoration: none;">exports.ng@freightafford.com</a></p>
+          <p style="margin: 0;">Questions? Contact us at <a href="mailto:exports.ng@info.freightafford.com" style="color: #1E90FF; text-decoration: none;">exports.ng@info.freightafford.com</a></p>
         </td>
       </tr>
     </table>

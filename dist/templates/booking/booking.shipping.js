@@ -73,7 +73,7 @@ const BOOKING_SHIPPING_UPDATE_TO_CUSTOMER = `
     <td class="footer">
       <p style="margin: 0 0 10px 0; font-weight: 600;">&copy; 2026 Freight Afford. All rights reserved.</p>
       <p style="margin: 0 0 15px 0;">You received this email because an action was performed on your account.</p>
-      <p style="margin: 0;">Need help? <a href="mailto:exports.ng@freightafford.com" style="color: #0f172a; text-decoration: none; font-weight: 600;">Contact Support</a></p>
+      <p style="margin: 0;">Need help? <a href="mailto:exports.ng@info.freightafford.com" style="color: #0f172a; text-decoration: none; font-weight: 600;">Contact Support</a></p>
     </td>
   </tr>
 

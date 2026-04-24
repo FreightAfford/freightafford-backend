@@ -16,7 +16,7 @@ export const replyToTicket = async (ticketId, adminUserId, message, files = []) 
     }
     const subject = `Re: [${ticket.ticket_id}] ${ticket.subject}`;
     const { data, error } = await resend.emails.send({
-        from: "FreightAfford Support <exports.ng@freightafford.com>",
+        from: "FreightAfford Support <exports.ng@info.freightafford.com>",
         to: ticket.customer_email,
         subject,
         text: message,
@@ -26,7 +26,7 @@ export const replyToTicket = async (ticketId, adminUserId, message, files = []) 
         throw new Error(error.message);
     const saveTicketMessage = await TicketMessage.create({
         ticket_id: ticket._id,
-        sender_email: "exports.ng@freightafford.com",
+        sender_email: "exports.ng@info.freightafford.com",
         direction: "outbound",
         subject,
         content: message,
