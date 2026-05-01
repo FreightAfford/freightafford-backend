@@ -2,6 +2,7 @@ import envConfig from "../configurations/env.configuration.js";
 import { assignCso } from "../services/assign-cso.service.js";
 import { resend } from "../services/email.service.js";
 import { findOrCreateTicket, touchTicket, } from "../services/find-or-create-ticket.service.js";
+import { processInboundAttachments } from "../services/process-inbound-attachments.service.js";
 import { saveInboundMessage } from "../services/save-inbound-message.service.js";
 import { sendTicketAcknowledgement } from "../services/send-ticket-acknowledgement.service.js";
 import { findThreadTicket } from "../utils/find-ticket-thread.js";
@@ -26,6 +27,10 @@ export const inboundWebhook = async (req, res, next) => {
         if (error)
             throw error;
         const email = normalizeInboundEmail(data);
+        email.attachments = await processInboundAttachments(result.data.email_id, data.attachments || []);
+        if (!email.attachments)
+            throw new Error("Error occured!");
+        console.log(email.attachments);
         await findThreadTicket(email);
         const createdTicket = await findOrCreateTicket(email);
         const ticket = createdTicket.ticket;

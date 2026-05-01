@@ -13,4 +13,17 @@ export const uploadToCloudinary = (file, folder = "bill_of_lading") => {
         streamifier.createReadStream(file.buffer).pipe(stream);
     });
 };
+export const uploadBufferToCloudinary = (buffer, folder = "tickets") => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream({
+            folder,
+            resource_type: "auto",
+        }, (err, res) => {
+            if (err)
+                return reject(err);
+            resolve(res);
+        });
+        streamifier.createReadStream(buffer).pipe(stream);
+    });
+};
 //# sourceMappingURL=upload-to-cloudinary.js.map

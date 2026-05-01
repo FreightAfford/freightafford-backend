@@ -13,3 +13,5 @@ export const allowedFreightFilters = [
 export const allowedBookingFilters = ["status", "shippingLine"];
 
 export const allowedUserFilters = ["role", "isEmailVerified", "country"];
+
+export const allowedTicketFilters = ["status", "assigned_to", "customer_email"];

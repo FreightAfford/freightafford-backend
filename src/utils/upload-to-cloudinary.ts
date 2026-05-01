@@ -20,3 +20,23 @@ export const uploadToCloudinary = (
     streamifier.createReadStream(file.buffer).pipe(stream);
   });
 };
+
+export const uploadBufferToCloudinary = (
+  buffer: Buffer,
+  folder = "tickets",
+) => {
+  return new Promise<any>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        resource_type: "auto",
+      },
+      (err, res) => {
+        if (err) return reject(err);
+        resolve(res);
+      },
+    );
+
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+};
