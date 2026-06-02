@@ -1,5 +1,6 @@
 import type { Request } from "express";
 import type { Document, Types } from "mongoose";
+import { Socket } from "socket.io";
 
 export type UserRole = "customer" | "admin";
 
@@ -33,6 +34,10 @@ export interface JwtPayload {
 }
 
 export interface AuthenticateRequest extends Request {
+  user?: IUser;
+}
+
+export interface AuthenticatedSocket extends Socket {
   user?: IUser;
 }
 

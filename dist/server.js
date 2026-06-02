@@ -1,15 +1,19 @@
 import express from "express";
+import http from "node:http";
 import appConfig from "./app.config.js";
 import dbConfig from "./configurations/db.configuration.js";
 import envConfig from "./configurations/env.configuration.js";
+import { initSocketServer } from "./socket.js";
 const app = express();
 const port = +envConfig.PORT || 9000;
 appConfig(app);
 let server;
 const startServer = async () => {
-    server = app.listen(port, () => {
+    server = http.createServer(app);
+    server.listen(port, () => {
         console.log(`Server is listening to PORT: ${port}`);
     });
+    initSocketServer(server);
     await dbConfig();
 };
 startServer();

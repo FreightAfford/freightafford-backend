@@ -30,7 +30,6 @@ export const inboundWebhook = async (req, res, next) => {
         email.attachments = await processInboundAttachments(result.data.email_id, data.attachments || []);
         if (!email.attachments)
             throw new Error("Error occured!");
-        console.log(email.attachments);
         await findThreadTicket(email);
         const createdTicket = await findOrCreateTicket(email);
         const ticket = createdTicket.ticket;

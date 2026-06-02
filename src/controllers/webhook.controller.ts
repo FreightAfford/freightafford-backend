@@ -50,7 +50,6 @@ export const inboundWebhook = async (
 
     if (!email.attachments) throw new Error("Error occured!");
 
-    console.log(email.attachments);
     await findThreadTicket(email);
 
     const createdTicket = await findOrCreateTicket(email);

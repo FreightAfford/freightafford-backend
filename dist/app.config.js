@@ -10,6 +10,7 @@ import amendmentRouter from "./routers/amendment.router.js";
 import authRouter from "./routers/auth.router.js";
 import BLRouter from "./routers/bl.router.js";
 import bookingRouter from "./routers/booking.router.js";
+import chatRouter from "./routers/chat.router.js";
 import freightRouter from "./routers/freight.router.js";
 import invoiceRouter from "./routers/invoice.router.js";
 import pipelineRouter from "./routers/pipeline.router.js";
@@ -38,6 +39,7 @@ const appConfig = (app) => {
     app.use("/api/v1/amendment", amendmentRouter);
     app.use("/api/v1/tickets", ticketRouter);
     app.use("/api/webhook", webhookRouter);
+    app.use("/api/v1/chat", chatRouter);
     app.use((req, res, next) => next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)));
     app.use(globalErrorHandler);
 };

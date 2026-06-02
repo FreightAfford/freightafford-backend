@@ -50,7 +50,6 @@ export const getCustomerOverview = async (req, res, next) => {
             },
         ]),
     ]);
-    console.log(invoiceStats);
     res.status(200).json({
         status: "success",
         data: {

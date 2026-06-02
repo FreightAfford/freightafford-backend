@@ -177,7 +177,7 @@ export const getMyFreightRequest = async (
   const total = await countFeatures.query.countDocuments();
 
   const baseQuery = FreightRequest.find(baseFilter).populate("customer");
-  console.log(req.query);
+
   const features = new ApiFeatures(baseQuery, req.query)
     .filter(allowedFreightFilters)
     .search(["originPort", "destinationPort", "commodity", "status"])

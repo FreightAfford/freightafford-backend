@@ -79,8 +79,6 @@ export const getCustomerOverview = async (
     ],
   );
 
-  console.log(invoiceStats);
-
   res.status(200).json({
     status: "success",
     data: {
