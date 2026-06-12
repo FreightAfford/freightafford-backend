@@ -12,7 +12,7 @@ export const uploadBillOfLading = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { bookingId, type } = req.body;
+  const { bookingId, type, status } = req.body;
 
   if (!req.file) return next(new AppError("No file uploaded", 400));
 
@@ -25,6 +25,7 @@ export const uploadBillOfLading = async (
   //   Upload to Cloudinary
   const result: any = await uploadToCloudinary(req.file);
   const fileSize = result.bytes || req.file.size;
+  const fileName = req.file.originalname;
 
   const lastBL = await BillOfLading.findOne({ booking: bookingId, type }).sort({
     createdAt: -1,
@@ -41,9 +42,10 @@ export const uploadBillOfLading = async (
     documentUrl: result.secure_url,
     documentPublicId: result.public_id,
     version,
-    status: type === "house" ? "draft" : "finalized",
+    status,
     uploadedBy: req.user!._id,
     fileSize,
+    fileName,
     customer: booking.customer,
     customerName: customer.fullname,
   });
@@ -81,7 +83,7 @@ export const getBookingBL = async (
       createdAt: -1,
     })
     .select(
-      "type documentUrl documentPublicId version status fileSize createdAt",
+      "type documentUrl documentPublicId version status fileSize fileName createdAt",
     );
 
   if (!bls.length)
@@ -124,7 +126,9 @@ export const getCustomerBLs = async (
     customer: customerId,
   })
     .sort({ createdAt: -1 })
-    .select("type documentUrl version status fileSize createdAt booking")
+    .select(
+      "type documentUrl version status fileSize fileName createdAt booking",
+    )
     .populate("booking", "bookingNumber");
 
   res.status(200).json({
@@ -141,7 +145,9 @@ export const getBLs = async (
 ) => {
   const bls = await BillOfLading.find()
     .sort({ createdAt: -1 })
-    .select("type documentUrl version status fileSize createdAt booking")
+    .select(
+      "type documentUrl version status fileSize fileName createdAt booking",
+    )
     .populate("booking", "bookingNumber");
 
   res.status(200).json({
