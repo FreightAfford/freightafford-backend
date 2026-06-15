@@ -17,7 +17,7 @@ const trackingEventSchema = new Schema({
     },
     description: { type: String, trim: true },
     eventDate: { type: Date, default: Date.now },
-    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    createdBy: { type: Schema.Types.Mixed },
 }, { timestamps: true });
 const TrackingEvent = model("TrackingEvent", trackingEventSchema);
 export default TrackingEvent;

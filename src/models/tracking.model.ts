@@ -20,7 +20,7 @@ const trackingEventSchema = new Schema<ITrackingEvent>(
     },
     description: { type: String, trim: true },
     eventDate: { type: Date, default: Date.now },
-    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    createdBy: { type: Schema.Types.Mixed },
   },
   { timestamps: true },
 );

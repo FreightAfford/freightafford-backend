@@ -17,7 +17,7 @@ import pipelineRouter from "./routers/pipeline.router.js";
 import ticketRouter from "./routers/ticket.router.js";
 import trackingRouter from "./routers/tracking.router.js";
 import webhookRouter from "./routers/webhook.router.js";
-const appConfig = (app) => {
+const appConfig = async (app) => {
     app
         .use(cors({
         credentials: true,
@@ -26,8 +26,11 @@ const appConfig = (app) => {
         .use(helmet())
         .use(express.json())
         .use(cookieParser());
-    if (envConfig.NODE_ENV === "development")
+    if (envConfig.NODE_ENV === "development") {
         app.use(morgan("dev"));
+        const { default: devRouter } = await import("./routers/dev.router.js");
+        app.use("/dev", devRouter);
+    }
     app.get("/", (req, res) => res.status(200).json({ message: "Freight Afford Server and API is live!" }));
     app.use("/api/v1/auth", authRouter);
     app.use("/api/v1/freight-request", freightRouter);

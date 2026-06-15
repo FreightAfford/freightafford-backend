@@ -3,6 +3,8 @@ import BILL_OF_LADING_SENT_BY_ADMIN from "../templates/booking/bl.booking.js";
 import BOOKING_SHIPPING_UPDATE_TO_CUSTOMER from "../templates/booking/booking.shipping.js";
 import BOOKING_SHIPPING_STATUS_TO_CUSTOMER from "../templates/booking/booking.status.js";
 import CONTAINER_NUMBER_UPDATE_BY_ADMIN from "../templates/booking/container.booking.js";
+import MONTHLY_REPORT_TO_ADMIN from "../templates/booking/monthly.report.js";
+import SAILING_REMINDER_TO_CUSTOMER from "../templates/booking/sailing.reminder.js";
 import { resend } from "./email.service.js";
 export const sendBookingScheduleNotification = async (email, fullname, carrierBookingNumber, shippingLine, vessel, sailingDate) => {
     return await resend.emails.send({
@@ -47,4 +49,38 @@ export const sendContainerNumbersNotification = async (email, fullname, bookingN
         .replace("{{DESTINATION_PORT}}", destinationPort)
         .replace("{{CONTAINER_NUMBERS}}", containerNumbers.join(", ")),
 });
+export const sendSailingReminderNotification = async (email, fullname, bookingNumber, shippingLine, vessel, originPort, destinationPort, sailingDate) => {
+    return resend.emails.send({
+        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        to: email,
+        subject: "Reminder: Your Shipment Sails in 7 Days",
+        html: SAILING_REMINDER_TO_CUSTOMER.replace("{{USERNAME}}", fullname.split(" ")[0])
+            .replace("{{BOOKING_NUMBER}}", bookingNumber)
+            .replace("{{SHIPPING_LINE}}", shippingLine || "TBA")
+            .replace("{{VESSEL}}", vessel || "TBA")
+            .replace("{{ORIGIN_PORT}}", originPort)
+            .replace("{{DESTINATION_PORT}}", destinationPort)
+            .replace("{{SAILING_DATE}}", sailingDate.toDateString()),
+    });
+};
+export const sendMonthlyReportToAdmins = async (recipients, monthLabel, totalShipments, totalRevenue, fileName, attachment) => {
+    return resend.emails.send({
+        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        to: recipients,
+        subject: `Monthly Sailed Shipments Report — ${monthLabel}`,
+        html: MONTHLY_REPORT_TO_ADMIN.replace("{{MONTH_LABEL}}", monthLabel)
+            .replace("{{MONTH_LABEL}}", monthLabel)
+            .replace("{{MONTH_LABEL}}", monthLabel)
+            .replace("{{TOTAL_SHIPMENTS}}", totalShipments.toString())
+            .replace("{{TOTAL_REVENUE}}", totalRevenue)
+            .replace("{{GENERATED_DATE}}", new Date().toDateString())
+            .replace("{{FILE_NAME}}", fileName),
+        attachments: [
+            {
+                filename: fileName,
+                content: attachment.toString("base64"),
+            },
+        ],
+    });
+};
 //# sourceMappingURL=booking.service.js.map

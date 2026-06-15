@@ -3,6 +3,7 @@ import http, { Server } from "node:http";
 import appConfig from "./app.config.js";
 import dbConfig from "./configurations/db.configuration.js";
 import envConfig from "./configurations/env.configuration.js";
+import { registerCrons } from "./jobs/crons/index.js";
 import { initSocketServer } from "./socket.js";
 
 const app = express();
@@ -25,6 +26,7 @@ const startServer = async () => {
 };
 
 startServer();
+registerCrons();
 
 process.on("uncaughtException", (error) => {
   console.error("uncaughtException:", error.name, error.message);
