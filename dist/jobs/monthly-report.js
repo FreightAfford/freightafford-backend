@@ -17,7 +17,7 @@ export const sendMonthlyReport = async () => {
     const recipientEmails = admins.map((a) => a.email);
     // ── Fetch sailed bookings for this month ──
     const bookings = await Booking.find({
-        status: "confirmed",
+        status: "in_transit",
         sailingDate: { $gte: startOfMonth, $lte: endOfMonth },
     })
         .populate("customer", "fullname")
