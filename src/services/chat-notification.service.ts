@@ -126,7 +126,12 @@ export const sendChatInitiatedNotification = async (
 
   return await resend.emails.send({
     from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
-    to: ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
+    to: [
+      "freightaffords@gmail.com",
+      "devfranklinandrew@gmail.com",
+      "alonsokelvin1@gmail.com",
+      "chiamaka.k@ewebalinternational.ng",
+    ],
     subject: `New Chat Session — ${customerName.toUpperCase()} is waiting`,
     html,
   });

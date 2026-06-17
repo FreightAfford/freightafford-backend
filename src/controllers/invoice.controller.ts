@@ -198,7 +198,12 @@ export const submitPaymentProof = async (
   }
 
   const { error } = await sendSubmitPaymentProofNotification(
-    ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
+    [
+      "freightaffords@gmail.com",
+      "devfranklinandrew@gmail.com",
+      "alonsokelvin1@gmail.com",
+      "chiamaka.k@ewebalinternational.ng",
+    ],
     invoice.invoiceNumber,
     invoice.paymentReference,
     invoice.status,

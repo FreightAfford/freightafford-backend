@@ -316,7 +316,12 @@ export const respondToCounter = async (req, res, next) => {
         return next(new AppError("Invalid decision", 400));
     request.customerDecisionAt = new Date();
     const customer = request.customer;
-    const { error } = await sendAdminCustomerDecisionNotification(["freightaffords@gmail.com", "devfranklinandrew@gmail.com"], req.user.fullname, decision);
+    const { error } = await sendAdminCustomerDecisionNotification([
+        "freightaffords@gmail.com",
+        "devfranklinandrew@gmail.com",
+        "alonsokelvin1@gmail.com",
+        "chiamaka.k@ewebalinternational.ng",
+    ], req.user.fullname, decision);
     if (error)
         return next(new AppError("Unable to send response to counter offer request notification.", 400));
     const booking = await Booking.create({

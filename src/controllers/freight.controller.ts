@@ -530,7 +530,12 @@ export const respondToCounter = async (
   const customer = request.customer as unknown as IUser;
 
   const { error } = await sendAdminCustomerDecisionNotification(
-    ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
+    [
+      "freightaffords@gmail.com",
+      "devfranklinandrew@gmail.com",
+      "alonsokelvin1@gmail.com",
+      "chiamaka.k@ewebalinternational.ng",
+    ],
     req.user.fullname,
     decision,
   );

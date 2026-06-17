@@ -52,7 +52,12 @@ export const sendAdminFreightRequestNotification = async (request: {
 
   return await resend.emails.send({
     from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
-    to: ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
+    to: [
+      "freightaffords@gmail.com",
+      "devfranklinandrew@gmail.com",
+      "alonsokelvin1@gmail.com",
+      "chiamaka.k@ewebalinternational.ng",
+    ],
     subject:
       request.quantity > 1
         ? `New Batch: ${request.quantity} Freight Requests Submitted`

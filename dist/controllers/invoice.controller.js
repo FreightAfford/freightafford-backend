@@ -117,7 +117,12 @@ export const submitPaymentProof = async (req, res, next) => {
         invoice.paymentProofUrl = proofUpload.secure_url;
         invoice.paymentProofPublicId = proofUpload.public_id;
     }
-    const { error } = await sendSubmitPaymentProofNotification(["freightaffords@gmail.com", "devfranklinandrew@gmail.com"], invoice.invoiceNumber, invoice.paymentReference, invoice.status);
+    const { error } = await sendSubmitPaymentProofNotification([
+        "freightaffords@gmail.com",
+        "devfranklinandrew@gmail.com",
+        "alonsokelvin1@gmail.com",
+        "chiamaka.k@ewebalinternational.ng",
+    ], invoice.invoiceNumber, invoice.paymentReference, invoice.status);
     if (error)
         return next(new AppError("Unable to send payment proof notification", 400));
     await invoice.save();
