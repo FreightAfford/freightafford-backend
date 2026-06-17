@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   acceptFreightRequest,
+  acceptFreightRequestBatch,
   counterFreightRequest,
   createFreightRequest,
   getAllFreightRequests,
@@ -51,7 +52,11 @@ freightRouter.patch(
   authorize("admin", "cso"),
   catchAsync(rejectFreightRequest),
 );
-
+freightRouter.patch(
+  "/batch/:batchId/accept",
+  authorize("admin", "cso"),
+  catchAsync(acceptFreightRequestBatch),
+);
 freightRouter.patch("/:id/respond", catchAsync(respondToCounter));
 
 export default freightRouter;

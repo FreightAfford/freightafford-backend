@@ -75,5 +75,70 @@ const FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE = `
 </body>
 </html>
 `;
-export default FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE;
+const CUSTOMER_BATCH_ACCEPTED_TEMPLATE = `
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Freight Requests Accepted</title>
+  <style type="text/css">
+  body { margin: 0; padding: 0; min-width: 100%; background-color: #f4f7f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  table { border-spacing: 0; font-family: sans-serif; color: #333333; }
+  td { padding: 0; }
+  img { border: 0; }
+  .wrapper { width: 100%; table-layout: fixed; background-color: #f4f7f9; padding-bottom: 40px; padding-top: 40px; }
+  .main { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; font-family: sans-serif; color: #333333; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .header { background-color: #0f172a; padding: 40px 20px; text-align: center; }
+  .content { padding: 40px 40px; line-height: 1.6; }
+  .footer { background-color: #f8fafc; padding: 30px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0; }
+  .button-container { padding: 30px 0; text-align: center; }
+  .button { background-color: #0f172a; color: #ffffff; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-size: 16px; }
+  .badge { display: inline-block; background-color: #d1fae5; color: #065f46; font-weight: bold; font-size: 13px; padding: 6px 14px; border-radius: 20px; margin-bottom: 15px; }
+  .booking-list { background-color: #f8fafc; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0; padding: 15px 25px; }
+  .booking-list ul { margin: 0; padding-left: 20px; color: #1e293b; font-weight: 600; font-size: 14px; }
+  h2 { color: #1e293b; font-size: 22px; margin-top: 0; margin-bottom: 20px; }
+  p { margin-bottom: 15px; color: #475569; }
+</style>
+</head>
+<body>
+  <center class="wrapper">
+    <table class="main" width="100%">
+      <tr>
+        <td class="header">
+          <img src="https://picsum.photos/seed/freight/200/50" alt="Freight Afford" width="180" style="max-width: 180px; display: block; margin: 0 auto;">
+        </td>
+      </tr>
+      <tr>
+        <td class="content">
+          <span class="badge">{{COUNT}} REQUESTS ACCEPTED</span>
+          <h2>Great news, {{FULLNAME}}!</h2>
+          <p><strong>{{COUNT}} of your freight requests</strong> have been accepted and booked. Here are your booking reference numbers:</p>
+          <div class="booking-list">
+            <ul>{{BOOKING_LIST}}</ul>
+          </div>
+          <p>You can track each booking individually in your dashboard.</p>
+          <table width="100%">
+            <tr>
+              <td class="button-container">
+                <a href="https://freightafford.com/app/customer/bookings" class="button">View My Bookings</a>
+              </td>
+            </tr>
+          </table>
+          <p>For more information, please contact the support team of <strong>Freight Afford</strong>.</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+          <p style="margin: 0 0 10px 0; font-weight: 600;">&copy; 2026 Freight Afford. All rights reserved.</p>
+          <p style="margin: 0 0 15px 0;">You received this email because an action was performed on your account.</p>
+          <p style="margin: 0;">Need help? <a href="mailto:exports.ng@info.freightafford.com" style="color: #0f172a; text-decoration: none; font-weight: 600;">Contact Support</a></p>
+        </td>
+      </tr>
+    </table>
+  </center>
+</body>
+</html>
+`;
+export { CUSTOMER_BATCH_ACCEPTED_TEMPLATE, FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE, };
 //# sourceMappingURL=request.accepted.js.map

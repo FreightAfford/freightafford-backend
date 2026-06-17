@@ -7,6 +7,7 @@ import {
   sendAdminCustomerDecisionNotification,
   sendAdminFreightRequestNotification,
   sendCustomerAcceptedNotification,
+  sendCustomerBatchAcceptedNotification,
   sendCustomerCounterNotification,
   sendCustomerRejectedNotification,
 } from "../services/freight.service.js";
@@ -35,23 +36,13 @@ export const createFreightRequest = async (
     notes,
     containerSize,
     containerQuantity,
+    quantity,
   } = req.body;
 
-  const { error } = await sendAdminFreightRequestNotification({
-    originPort,
-    destinationPort,
-    cargoWeight,
-    proposedPrice,
-    commodity,
-  });
+  const requestCount = Math.min(Math.max(Number(quantity) || 1, 1), 50);
+  const batchId = requestCount > 1 ? `batch_${Date.now()}` : null;
 
-  if (error) {
-    return next(
-      new AppError("Unable to send freight request notification", 400),
-    );
-  }
-
-  const request = await FreightRequest.create({
+  const baseDoc = {
     customer: req.user!._id,
     customerName: req.user!.fullname,
     customerEmail: req.user!.email,
@@ -64,12 +55,39 @@ export const createFreightRequest = async (
     notes,
     containerSize,
     containerQuantity,
+    batchId,
+    batchSize: requestCount > 1 ? requestCount : undefined,
+  };
+
+  const docsToInsert = Array.from({ length: requestCount }, () => baseDoc);
+
+  const createdRequests = await FreightRequest.insertMany(docsToInsert);
+
+  const { error } = await sendAdminFreightRequestNotification({
+    originPort,
+    destinationPort,
+    cargoWeight,
+    proposedPrice,
+    commodity,
+    quantity: requestCount,
+    batchId,
   });
+
+  if (error) {
+    // return next(
+    //   new AppError("Unable to send freight request notification", 400),
+    // );
+    // Requests are already created — don't fail the customer's request over an email issue.
+    console.error("Failed to send admin freight request notification:", error);
+  }
 
   res.status(201).json({
     status: "success",
-    message: "Freight request sent successfully.",
-    data: request,
+    message:
+      requestCount > 1
+        ? `${requestCount} freight requests sent successfully.`
+        : "Freight request sent successfully.",
+    data: requestCount > 1 ? createdRequests : createdRequests[0],
   });
 };
 
@@ -157,6 +175,78 @@ export const updateFreightRequest = async (
     data: updatedRequest,
   });
 };
+// ADMIN & CSO: Accept all requests in a batch at once
+export const acceptFreightRequestBatch = async (
+  req: AuthenticateRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { batchId } = req.params;
+
+  if (!batchId) {
+    return next(new AppError("batchId is required", 400));
+  }
+
+  const batchRequests = await FreightRequest.find({ batchId });
+
+  if (batchRequests.length === 0) {
+    return next(new AppError("Batch not found", 404));
+  }
+
+  const acceptableRequests = batchRequests.filter(
+    (r) => r.status === "pending" || r.status === "countered",
+  );
+
+  if (acceptableRequests.length === 0) {
+    return next(
+      new AppError("No acceptable requests found in this batch", 400),
+    );
+  }
+
+  const customer = await User.findById(acceptableRequests[0].customer);
+
+  if (!customer) return next(new AppError("User not found.", 404));
+
+  const createdBookings = [];
+
+  for (const request of acceptableRequests) {
+    const booking = await Booking.create({
+      bookingNumber: generateBookingNumber(),
+      freightRequest: request._id,
+      customer: request.customer,
+      customerName: customer.fullname,
+      customerEmail: customer.email,
+    });
+
+    request.status = "accepted";
+    request.adminActionAt = new Date();
+    request.booking = booking._id;
+    await request.save();
+
+    createdBookings.push(booking);
+  }
+
+  const { error } = await sendCustomerBatchAcceptedNotification(
+    customer.email,
+    customer.fullname,
+    createdBookings.map((b) => b.bookingNumber),
+  );
+
+  if (error) {
+    console.error(
+      "Batch accepted but notification email failed to send:",
+      error,
+    );
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: `${createdBookings.length} freight request(s) accepted and booked out of ${batchRequests.length} in this batch.`,
+    acceptedCount: createdBookings.length,
+    skippedCount: batchRequests.length - acceptableRequests.length,
+    data: { freightRequests: acceptableRequests, bookings: createdBookings },
+  });
+};
 
 export const getMyFreightRequest = async (
   req: AuthenticateRequest,
@@ -218,6 +308,7 @@ export const getAllFreightRequests = async (
       "status",
       "customerName",
       "customerEmail",
+      "batchId",
     ]);
 
   const total = await countFeatures.query.countDocuments();
@@ -236,6 +327,7 @@ export const getAllFreightRequests = async (
       "status",
       "customerName",
       "customerEmail",
+      "batchId",
     ])
     .sort()
     .limitFields()

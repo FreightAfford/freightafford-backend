@@ -39,6 +39,8 @@ const freightRequestSchema = new Schema({
         required: true,
     },
     containerQuantity: { type: Number, required: true, min: 1 },
+    batchId: { type: String, index: true, default: null },
+    batchSize: { type: Number, min: 1 },
     adminActionAt: Date,
     customerDecisionAt: Date,
 }, { timestamps: true });

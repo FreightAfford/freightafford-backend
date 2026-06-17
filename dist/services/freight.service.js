@@ -1,20 +1,36 @@
 import envConfig from "../configurations/env.configuration.js";
-import FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE from "../templates/freight/request.accepted.js";
+import { CUSTOMER_BATCH_ACCEPTED_TEMPLATE, FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE, } from "../templates/freight/request.accepted.js";
 import FREIGHTREQUEST_COUNTER_BY_ADMIN_TO_CUSTOMER_TEMPLATE from "../templates/freight/request.counter.js";
-import FREIGHTREQUEST_MADE_TO_ADMIN_TEMPLATE from "../templates/freight/request.js";
+import { FREIGHTREQUEST_BATCH_MADE_TO_ADMIN_TEMPLATE, FREIGHTREQUEST_MADE_TO_ADMIN_TEMPLATE, } from "../templates/freight/request.js";
 import FREIGHTREQUEST_REJECTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE from "../templates/freight/request.rejected.js";
 import FREIGHTREQUEST_RESPOND_BY_CUSTOMER_TO_ADMIN_TEMPLATE from "../templates/freight/request.respond.js";
 import { resend } from "./email.service.js";
 export const sendAdminFreightRequestNotification = async (request) => {
-    return await resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
-        to: ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
-        subject: "New Freight Request Submitted",
-        html: FREIGHTREQUEST_MADE_TO_ADMIN_TEMPLATE.replace("{{ORIGIN_PORT}}", request.originPort)
+    const dashboardLink = request.batchId
+        ? `https://freightafford.com/app/admin/requests?batchId=${request.batchId}`
+        : "https://freightafford.com/app/admin";
+    const html = request.quantity > 1
+        ? FREIGHTREQUEST_BATCH_MADE_TO_ADMIN_TEMPLATE.replace("{{QUANTITY}}", String(request.quantity))
+            .replace("{{QUANTITY}}", String(request.quantity))
+            .replace("{{QUANTITY}}", String(request.quantity))
+            .replace("{{ORIGIN_PORT}}", request.originPort)
             .replace("{{DESTINATION_PORT}}", request.destinationPort)
             .replace("{{COMMODITY}}", request.commodity)
             .replace("{{CARGO_WEIGHT}}", request.cargoWeight.toLocaleString())
-            .replace("{{PROPOSED_PRICE}}", request.proposedPrice.toLocaleString()),
+            .replace("{{PROPOSED_PRICE}}", request.proposedPrice.toLocaleString())
+            .replace("{{DASHBOARD_LINK}}", dashboardLink)
+        : FREIGHTREQUEST_MADE_TO_ADMIN_TEMPLATE.replace("{{ORIGIN_PORT}}", request.originPort)
+            .replace("{{DESTINATION_PORT}}", request.destinationPort)
+            .replace("{{COMMODITY}}", request.commodity)
+            .replace("{{CARGO_WEIGHT}}", request.cargoWeight.toLocaleString())
+            .replace("{{PROPOSED_PRICE}}", request.proposedPrice.toLocaleString());
+    return await resend.emails.send({
+        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        to: ["freightaffords@gmail.com", "devfranklinandrew@gmail.com"],
+        subject: request.quantity > 1
+            ? `New Batch: ${request.quantity} Freight Requests Submitted`
+            : "New Freight Request Submitted",
+        html,
     });
 };
 export const sendCustomerAcceptedNotification = async (email, fullname, bookingNo) => {
@@ -23,6 +39,20 @@ export const sendCustomerAcceptedNotification = async (email, fullname, bookingN
         to: email,
         subject: "Freight Request Accepted",
         html: FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE.replace("{{USERNAME}}", fullname.split(" ")[0]).replace("{{BOOKING_NUMBER}}", bookingNo),
+    });
+};
+export const sendCustomerBatchAcceptedNotification = async (email, fullname, bookingNumbers) => {
+    const bookingListHtml = bookingNumbers
+        .map((num) => `<li style="margin-bottom: 6px;">${num}</li>`)
+        .join("");
+    return await resend.emails.send({
+        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        to: [email],
+        subject: `${bookingNumbers.length} Freight Requests Accepted`,
+        html: CUSTOMER_BATCH_ACCEPTED_TEMPLATE.replace("{{FULLNAME}}", fullname)
+            .replace("{{COUNT}}", String(bookingNumbers.length))
+            .replace("{{COUNT}}", String(bookingNumbers.length))
+            .replace("{{BOOKING_LIST}}", bookingListHtml),
     });
 };
 export const sendCustomerCounterNotification = async (email, fullname, price, reason) => {

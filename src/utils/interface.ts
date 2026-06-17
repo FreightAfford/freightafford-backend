@@ -59,6 +59,8 @@ export interface IFreightRequest extends Document {
   status: "pending" | "countered" | "accepted" | "rejected" | "expired";
   containerSize: "20FT" | "40FT" | "40FT_HC";
   containerQuantity: number;
+  batchId?: string | null;
+  batchSize?: number;
   adminActionAt?: Date;
   customerDecisionAt?: Date;
 }

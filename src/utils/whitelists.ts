@@ -8,6 +8,7 @@ export const allowedFreightFilters = [
   "createdAt",
   "customerName",
   "customerEmail",
+  "batchId",
 ];
 
 export const allowedBookingFilters = ["status", "shippingLine"];

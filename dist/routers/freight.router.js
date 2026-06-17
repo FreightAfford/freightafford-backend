@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { acceptFreightRequest, counterFreightRequest, createFreightRequest, getAllFreightRequests, getFreightRequest, getMyFreightRequest, rejectFreightRequest, respondToCounter, } from "../controllers/freight.controller.js";
+import { acceptFreightRequest, acceptFreightRequestBatch, counterFreightRequest, createFreightRequest, getAllFreightRequests, getFreightRequest, getMyFreightRequest, rejectFreightRequest, respondToCounter, } from "../controllers/freight.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
 import catchAsync from "../utils/catch-async.js";
 const freightRouter = Router();
@@ -11,6 +11,7 @@ freightRouter.get("/:id", authorize("admin", "customer", "cso"), catchAsync(getF
 freightRouter.patch("/admin/:id/accept", authorize("admin"), catchAsync(acceptFreightRequest));
 freightRouter.patch("/admin/:id/counter", authorize("admin", "cso"), catchAsync(counterFreightRequest));
 freightRouter.patch("/admin/:id/reject", authorize("admin", "cso"), catchAsync(rejectFreightRequest));
+freightRouter.patch("/batch/:batchId/accept", authorize("admin", "cso"), catchAsync(acceptFreightRequestBatch));
 freightRouter.patch("/:id/respond", catchAsync(respondToCounter));
 export default freightRouter;
 //# sourceMappingURL=freight.router.js.map
