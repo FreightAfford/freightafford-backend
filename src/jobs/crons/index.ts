@@ -1,4 +1,5 @@
 import cron from "node-cron";
+import { autoCloseStaleTickets } from "../../services/auto-close-ticket.service.js";
 import { sendMonthlyReport } from "../monthly-report.js";
 import {
   autoTransitSailedBookings,
@@ -26,6 +27,15 @@ export const registerCrons = () => {
     if (tomorrow.getDate() === 1) {
       console.log("[cron] Sending monthly sailed report...");
       await sendMonthlyReport();
+    }
+  });
+
+  cron.schedule("0 * * * *", async () => {
+    console.log("[AutoClose] Running auto-close job...");
+    try {
+      await autoCloseStaleTickets();
+    } catch (err) {
+      console.error("[AutoClose] Job failed with error:", err);
     }
   });
 
