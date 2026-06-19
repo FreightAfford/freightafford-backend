@@ -29,7 +29,7 @@ export const autoTransitSailedBookings = async () => {
       const customer = booking.customer as unknown as IUser;
 
       //   1. Update booking status to "in transit"
-      booking.status = "in transit";
+      booking.status = "in_transit";
       await booking.save();
 
       //   2. Send the same email that manual flow already uses

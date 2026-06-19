@@ -19,7 +19,7 @@ export const autoTransitSailedBookings = async () => {
     const results = await Promise.allSettled(bookings.map(async (booking) => {
         const customer = booking.customer;
         //   1. Update booking status to "in transit"
-        booking.status = "in transit";
+        booking.status = "in_transit";
         await booking.save();
         //   2. Send the same email that manual flow already uses
         const error = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, "in transit");
