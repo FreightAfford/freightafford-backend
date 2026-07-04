@@ -8,12 +8,15 @@ import {
 import type { IFreightRequest, IUser } from "../utils/interface.js";
 
 export const autoTransitSailedBookings = async () => {
-  const startOfDay = moment().startOf("day").toDate();
   const endOfDay = moment().endOf("day").toDate();
 
-  // Find confirmed bookings whose sailing date falls today and update their status to "in transit"
+  // Find every confirmed booking whose sailing date is today or already past,
+  // and move it to "in transit". Using `<= end of today` (rather than a single
+  // same-day window) makes the job self-healing: if the cron missed a day
+  // (deploy, restart, downtime), past-due bookings are still picked up on the
+  // next run instead of being stuck in "confirmed" forever.
   const bookings = await Booking.find({
-    sailingDate: { $gte: startOfDay, $lte: endOfDay },
+    sailingDate: { $lte: endOfDay },
     status: "confirmed",
   })
     .populate("customer", "fullname email")
@@ -33,7 +36,7 @@ export const autoTransitSailedBookings = async () => {
       await booking.save();
 
       //   2. Send the same email that manual flow already uses
-      const error = await sendShipmentStatusUpdate(
+      const { error } = await sendShipmentStatusUpdate(
         customer.email,
         customer.fullname,
         booking.bookingNumber,
