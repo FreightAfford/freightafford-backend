@@ -10,12 +10,24 @@ export const getMyBookings = async (req, res, next) => {
     const totalAll = await Booking.countDocuments(baseFilter);
     const countFeatures = new ApiFeatures(Booking.find(baseFilter), req.query)
         .filter(allowedBookingFilters)
-        .search(["bookingNumber", "shippingLine", "status"]);
+        .search([
+        "bookingNumber",
+        "shippingLine",
+        "status",
+        "carrierBookingNumber",
+        "vessel",
+    ]);
     const total = await countFeatures.query.countDocuments();
     const baseQuery = Booking.find(baseFilter).populate("freightRequest", "status commodity");
     const features = new ApiFeatures(baseQuery, req.query)
         .filter(allowedBookingFilters)
-        .search(["bookingNumber", "shippingLine", "status"])
+        .search([
+        "bookingNumber",
+        "shippingLine",
+        "status",
+        "carrierBookingNumber",
+        "vessel",
+    ])
         .sort()
         .limitFields()
         .paginate();
@@ -41,6 +53,8 @@ export const getAllBookings = async (req, res, next) => {
         "status",
         "customerName",
         "customerEmail",
+        "carrierBookingNumber",
+        "vessel",
     ]);
     const total = await countFeatures.query.countDocuments();
     const baseQuery = Booking.find(baseFilter).populate("freightRequest", "status commodity");
@@ -52,6 +66,8 @@ export const getAllBookings = async (req, res, next) => {
         "status",
         "customerName",
         "customerEmail",
+        "carrierBookingNumber",
+        "vessel",
     ])
         .sort()
         .limitFields()
