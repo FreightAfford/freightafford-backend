@@ -6,17 +6,12 @@ import { sendMonthlyReportToAdmins } from "../services/booking.service.js";
 import { generateSailedReport } from "../utils/generate-sailed-report.js";
 import type { IFreightRequest, IUser } from "../utils/interface.js";
 
-// Durable record of which months have already been reported, stored in MongoDB
-// (see report-log.model.ts). Survives server restarts and redeploys — a local
-// file does not on ephemeral hosts, which caused the startup catch-up to resend
-// the previous month's report on every boot.
+// Tracks which months were already reported (in MongoDB, so it survives restarts).
 const wasMonthlyReportSent = async (monthKey: string): Promise<boolean> => {
   try {
     return (await ReportLog.exists({ monthKey })) != null;
   } catch (err) {
-    // On a DB read error, assume "already sent" so a transient failure never
-    // spams admins with a duplicate report; a genuinely missed month is still
-    // recovered on the next run once the DB is reachable again.
+    // On DB error, assume sent so a hiccup can't cause a duplicate blast.
     console.error("[monthlyReport] Failed to read sent marker:", err);
     return true;
   }
@@ -24,7 +19,6 @@ const wasMonthlyReportSent = async (monthKey: string): Promise<boolean> => {
 
 const markMonthlyReportSent = async (monthKey: string) => {
   try {
-    // Idempotent upsert — safe to call again if the same month is retried.
     await ReportLog.updateOne(
       { monthKey },
       { $setOnInsert: { monthKey, sentAt: new Date() } },

@@ -1,13 +1,10 @@
 import { Schema, model } from "mongoose";
 
-// Durable record of which monthly reports have already been sent. Persisted in
-// MongoDB (not the local filesystem) so the "already sent" state survives server
-// restarts and redeploys on ephemeral hosts — otherwise the startup catch-up
-// resends the previous month's report on every boot.
+// Durable record of which monthly reports were sent, so the startup catch-up
+// doesn't resend them after a restart.
 const reportLogSchema = new Schema(
   {
-    // `YYYY-MM` of the reported month, e.g. "2026-06".
-    monthKey: { type: String, unique: true, required: true },
+    monthKey: { type: String, unique: true, required: true }, // "YYYY-MM"
     sentAt: { type: Date, default: Date.now },
   },
   { timestamps: true },
