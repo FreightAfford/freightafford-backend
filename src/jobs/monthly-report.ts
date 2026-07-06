@@ -1,45 +1,35 @@
 import moment from "moment";
-import fs from "node:fs";
-import path from "node:path";
 import Booking from "../models/booking.model.js";
+import { ReportLog } from "../models/report-log.model.js";
 import User from "../models/user.model.js";
 import { sendMonthlyReportToAdmins } from "../services/booking.service.js";
 import { generateSailedReport } from "../utils/generate-sailed-report.js";
 import type { IFreightRequest, IUser } from "../utils/interface.js";
 
-// Persistent record of which months have already been reported (one
-// `YYYY-MM` key per line). Lets the report survive a missed month-end run:
-// if the server was down at 23:59 on the last day, the catch-up still sends it.
-const MONTHLY_REPORT_MARKER = path.resolve(
-  process.cwd(),
-  ".monthly-report-sent",
-);
-
-const wasMonthlyReportSent = (monthKey: string): boolean => {
+// Durable record of which months have already been reported, stored in MongoDB
+// (see report-log.model.ts). Survives server restarts and redeploys — a local
+// file does not on ephemeral hosts, which caused the startup catch-up to resend
+// the previous month's report on every boot.
+const wasMonthlyReportSent = async (monthKey: string): Promise<boolean> => {
   try {
-    return fs
-      .readFileSync(MONTHLY_REPORT_MARKER, "utf8")
-      .split("\n")
-      .map((line) => line.trim())
-      .includes(monthKey);
-  } catch {
-    return false;
+    return (await ReportLog.exists({ monthKey })) != null;
+  } catch (err) {
+    // On a DB read error, assume "already sent" so a transient failure never
+    // spams admins with a duplicate report; a genuinely missed month is still
+    // recovered on the next run once the DB is reachable again.
+    console.error("[monthlyReport] Failed to read sent marker:", err);
+    return true;
   }
 };
 
-const markMonthlyReportSent = (monthKey: string) => {
+const markMonthlyReportSent = async (monthKey: string) => {
   try {
-    const existing = fs.existsSync(MONTHLY_REPORT_MARKER)
-      ? fs.readFileSync(MONTHLY_REPORT_MARKER, "utf8")
-      : "";
-    const keys = new Set(
-      existing
-        .split("\n")
-        .map((line) => line.trim())
-        .filter(Boolean),
+    // Idempotent upsert — safe to call again if the same month is retried.
+    await ReportLog.updateOne(
+      { monthKey },
+      { $setOnInsert: { monthKey, sentAt: new Date() } },
+      { upsert: true },
     );
-    keys.add(monthKey);
-    fs.writeFileSync(MONTHLY_REPORT_MARKER, `${[...keys].join("\n")}\n`);
   } catch (err) {
     console.error("[monthlyReport] Failed to persist sent marker:", err);
   }
@@ -118,7 +108,7 @@ export const sendMonthlyReport = async (target: moment.Moment = moment()) => {
   }
 
   // Only recorded on success, so a failed send is retried on the next run.
-  markMonthlyReportSent(monthKey);
+  await markMonthlyReportSent(monthKey);
 
   console.log(
     `[monthlyReport] Report for ${monthLabel} sent to ${recipientEmails.join(", ")} — ${bookings.length} shipment(s).`,
@@ -133,7 +123,7 @@ export const catchUpMonthlyReport = async () => {
   const lastMonth = moment().subtract(1, "month");
   const monthKey = lastMonth.format("YYYY-MM");
 
-  if (wasMonthlyReportSent(monthKey)) {
+  if (await wasMonthlyReportSent(monthKey)) {
     console.log(
       `[monthlyReport] Catch-up: ${lastMonth.format("MMMM YYYY")} already reported. Skipping.`,
     );
