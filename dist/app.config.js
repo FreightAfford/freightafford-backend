@@ -25,7 +25,8 @@ const appConfig = async (app) => {
     }))
         .use(helmet())
         .use(express.json())
-        .use(cookieParser());
+        .use(cookieParser())
+        .set("trust proxy", 1);
     if (envConfig.NODE_ENV === "development") {
         app.use(morgan("dev"));
         const { default: devRouter } = await import("./routers/dev.router.js");

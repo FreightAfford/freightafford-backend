@@ -32,7 +32,8 @@ const appConfig = async (app: Application) => {
     )
     .use(helmet())
     .use(express.json())
-    .use(cookieParser());
+    .use(cookieParser())
+    .set("trust proxy", 1);
 
   if (envConfig.NODE_ENV === "development") {
     app.use(morgan("dev"));
