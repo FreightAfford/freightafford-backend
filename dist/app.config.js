@@ -18,6 +18,7 @@ import locationRouter from "./routers/location.router.js";
 import pipelineRouter from "./routers/pipeline.router.js";
 import ticketRouter from "./routers/ticket.router.js";
 import trackingRouter from "./routers/tracking.router.js";
+import vesselRouter from "./routers/vessel.router.js";
 import webhookRouter from "./routers/webhook.router.js";
 const appConfig = async (app) => {
     app
@@ -48,6 +49,7 @@ const appConfig = async (app) => {
     app.use("/api/v1/chat", chatRouter);
     app.use("/api/v1/locations", locationRouter);
     app.use("/api/v1/commodities", commodityRouter);
+    app.use("/api/v1/vessels", vesselRouter);
     app.use((req, res, next) => next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)));
     app.use(globalErrorHandler);
 };

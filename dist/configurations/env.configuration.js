@@ -18,6 +18,8 @@ const envConfig = {
         "https://api.maersk.com/reference-data/locations",
     MAERSK_COMMODITIES_URL: process.env.MAERSK_COMMODITIES_URL ||
         "https://api.maersk.com/commodity-classifications",
+    MAERSK_VESSELS_URL: process.env.MAERSK_VESSELS_URL ||
+        "https://api.maersk.com/reference-data/vessels",
 };
 export default envConfig;
 //# sourceMappingURL=env.configuration.js.map

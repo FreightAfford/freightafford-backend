@@ -1,4 +1,5 @@
 import AppError from "../errors/app.error.js";
+import { VESSEL_IMO_REGEX } from "../integrations/maersk/vessels.client.js";
 import Booking from "../models/booking.model.js";
 import { sendBookingScheduleNotification, sendContainerNumbersNotification, sendShipmentStatusUpdate, } from "../services/booking.service.js";
 import ApiFeatures from "../utils/api-features.js";
@@ -92,13 +93,17 @@ export const getSingleBooking = async (req, res, next) => {
 };
 // ADMIN: Update Shipping Details
 export const updateBookingShipping = async (req, res, next) => {
-    const { shippingLine, vessel, sailingDate, carrierBookingNumber } = req.body;
+    const { shippingLine, vessel, vesselImo, sailingDate, carrierBookingNumber } = req.body;
     const booking = await Booking.findById(req.params.id).populate("customer", "email fullname");
     if (!booking)
         return next(new AppError("Booking not found", 404));
     const customer = booking.customer;
     booking.shippingLine = shippingLine;
     booking.vessel = vessel;
+    // Only set when picked from the Maersk suggestions; a typed name clears it
+    booking.vesselImo = VESSEL_IMO_REGEX.test(String(vesselImo ?? ""))
+        ? String(vesselImo)
+        : undefined;
     booking.sailingDate = sailingDate;
     booking.carrierBookingNumber = carrierBookingNumber;
     const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, carrierBookingNumber, shippingLine, vessel, booking.sailingDate);
