@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
+import { createTtlCache } from "./cache.js";
 export const UN_LOCODE_REGEX = /^[A-Z]{2}[A-Z2-9]{3}$/;
 const SEARCH_TTL = 24 * 60 * 60 * 1000;
 const LOOKUP_TTL = 7 * 24 * 60 * 60 * 1000;
@@ -15,23 +16,7 @@ const maerskLocations = axios.create({
         Accept: "application/json",
     },
 });
-// Small TTL cache. Map preserves insertion order, so the first key is the oldest.
-const cache = new Map();
-const getCached = (key) => {
-    const entry = cache.get(key);
-    if (!entry)
-        return undefined;
-    if (entry.expiresAt < Date.now()) {
-        cache.delete(key);
-        return undefined;
-    }
-    return entry.value;
-};
-const setCached = (key, value, ttl) => {
-    if (cache.size >= MAX_CACHE_ENTRIES)
-        cache.delete(cache.keys().next().value);
-    cache.set(key, { value, expiresAt: Date.now() + ttl });
-};
+const { get: getCached, set: setCached } = createTtlCache(MAX_CACHE_ENTRIES);
 const toPortLocation = (loc) => ({
     code: loc.UNLocationCode,
     city: loc.cityName,

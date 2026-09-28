@@ -6,6 +6,7 @@ export const allowedFreightFilters = [
     "originPortCode",
     "destinationPortCode",
     "commodity",
+    "commodityCode",
     "cargoWeight",
     "createdAt",
     "customerName",

@@ -6,6 +6,7 @@ import { sendAdminCustomerDecisionNotification, sendAdminFreightRequestNotificat
 import ApiFeatures from "../utils/api-features.js";
 import { allowedFreightFilters } from "../utils/whitelists.js";
 import { formatPortName, getLocationByCode, } from "../integrations/maersk/locations.client.js";
+import { getCommodityByCode } from "../integrations/maersk/commodities.client.js";
 const generateBookingNumber = () => {
     const random = Math.floor(100000 + Math.random() * 900000);
     return `FA-${new Date().getFullYear()}-${random}`;
@@ -19,17 +20,28 @@ const resolvePort = async (code, label) => {
         throw new AppError(`${label} port "${code}" is not a recognised location`, 400);
     return { code: location.code, name: formatPortName(location) };
 };
+// Resolves a Maersk commodity code so the stored commodity name is never client-supplied
+const resolveCommodity = async (code) => {
+    if (typeof code !== "string" || !code.trim())
+        throw new AppError("Commodity is required", 400);
+    const commodity = await getCommodityByCode(code);
+    if (!commodity)
+        throw new AppError(`Commodity "${code}" is not a recognised commodity`, 400);
+    return { code: commodity.code, name: commodity.name };
+};
 // CUSTOMER: Create Request
 export const createFreightRequest = async (req, res, next) => {
-    const { originPortCode, destinationPortCode, commodity, cargoReadyDate, cargoWeight, proposedPrice, notes, containerSize, containerQuantity, quantity, } = req.body;
-    const [origin, destination] = await Promise.all([
+    const { originPortCode, destinationPortCode, commodityCode, cargoReadyDate, cargoWeight, proposedPrice, notes, containerSize, containerQuantity, quantity, } = req.body;
+    const [origin, destination, resolvedCommodity] = await Promise.all([
         resolvePort(originPortCode, "Origin"),
         resolvePort(destinationPortCode, "Destination"),
+        resolveCommodity(commodityCode),
     ]);
     if (origin.code === destination.code)
         return next(new AppError("Origin and destination ports must be different", 400));
     const originPort = origin.name;
     const destinationPort = destination.name;
+    const commodity = resolvedCommodity.name;
     const requestCount = Math.min(Math.max(Number(quantity) || 1, 1), 50);
     const batchId = requestCount > 1 ? `batch_${Date.now()}` : null;
     const baseDoc = {
@@ -41,6 +53,7 @@ export const createFreightRequest = async (req, res, next) => {
         originPortCode: origin.code,
         destinationPortCode: destination.code,
         commodity,
+        commodityCode: resolvedCommodity.code,
         cargoWeight,
         cargoReadyDate,
         proposedPrice,
@@ -79,7 +92,7 @@ export const createFreightRequest = async (req, res, next) => {
 // ADMIN & CSO: Update Request
 export const updateFreightRequest = async (req, res, next) => {
     const { requestId } = req.params;
-    const { originPortCode, destinationPortCode, commodity, cargoReadyDate, cargoWeight, proposedPrice, notes, containerSize, containerQuantity, status, adminCounterPrice, counterReason, rejectionReason, } = req.body;
+    const { originPortCode, destinationPortCode, commodity, commodityCode, cargoReadyDate, cargoWeight, proposedPrice, notes, containerSize, containerQuantity, status, adminCounterPrice, counterReason, rejectionReason, } = req.body;
     const request = await FreightRequest.findById(requestId);
     if (!request)
         return next(new AppError("Freight request not found", 404));
@@ -96,7 +109,12 @@ export const updateFreightRequest = async (req, res, next) => {
         updatedData.destinationPort = destination.name;
         updatedData.destinationPortCode = destination.code;
     }
-    if (commodity)
+    if (commodityCode) {
+        const resolved = await resolveCommodity(commodityCode);
+        updatedData.commodity = resolved.name.toLowerCase();
+        updatedData.commodityCode = resolved.code;
+    }
+    else if (commodity)
         updatedData.commodity = commodity.toLowerCase();
     if (cargoReadyDate)
         updatedData.cargoReadyDate = cargoReadyDate;
