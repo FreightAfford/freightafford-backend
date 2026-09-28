@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
+import { createTtlCache } from "./cache.js";
 
 // Maersk Reference Data — Locations API.
 // Auth is the Consumer-Key header only (no OAuth for this product).
@@ -47,23 +48,7 @@ const maerskLocations = axios.create({
   },
 });
 
-// Small TTL cache. Map preserves insertion order, so the first key is the oldest.
-const cache = new Map<string, { value: unknown; expiresAt: number }>();
-
-const getCached = <T>(key: string): T | undefined => {
-  const entry = cache.get(key);
-  if (!entry) return undefined;
-  if (entry.expiresAt < Date.now()) {
-    cache.delete(key);
-    return undefined;
-  }
-  return entry.value as T;
-};
-
-const setCached = (key: string, value: unknown, ttl: number) => {
-  if (cache.size >= MAX_CACHE_ENTRIES) cache.delete(cache.keys().next().value);
-  cache.set(key, { value, expiresAt: Date.now() + ttl });
-};
+const { get: getCached, set: setCached } = createTtlCache(MAX_CACHE_ENTRIES);
 
 const toPortLocation = (loc: MaerskLocation): PortLocation => ({
   code: loc.UNLocationCode!,

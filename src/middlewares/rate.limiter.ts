@@ -11,3 +11,9 @@ export const locationRateLimiter = rateLimit({
   limit: 60,
   message: { message: "Too many location searches. Please slow down." },
 });
+
+export const commodityRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  message: { message: "Too many commodity searches. Please slow down." },
+});

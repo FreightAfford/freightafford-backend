@@ -51,6 +51,7 @@ export interface IFreightRequest extends Document {
   originPortCode?: string;
   destinationPortCode?: string;
   commodity: string;
+  commodityCode?: string;
   cargoWeight: number;
   cargoReadyDate: Date;
   proposedPrice: number;

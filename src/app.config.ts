@@ -15,6 +15,7 @@ import authRouter from "./routers/auth.router.js";
 import BLRouter from "./routers/bl.router.js";
 import bookingRouter from "./routers/booking.router.js";
 import chatRouter from "./routers/chat.router.js";
+import commodityRouter from "./routers/commodity.router.js";
 import freightRouter from "./routers/freight.router.js";
 import invoiceRouter from "./routers/invoice.router.js";
 import locationRouter from "./routers/location.router.js";
@@ -58,6 +59,7 @@ const appConfig = async (app: Application) => {
   app.use("/api/webhook", webhookRouter);
   app.use("/api/v1/chat", chatRouter);
   app.use("/api/v1/locations", locationRouter);
+  app.use("/api/v1/commodities", commodityRouter);
 
   app.use((req, res, next) =>
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)),

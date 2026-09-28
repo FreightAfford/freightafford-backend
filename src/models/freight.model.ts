@@ -39,6 +39,14 @@ const freightRequestSchema = new Schema<IFreightRequest>(
       index: true,
     },
     commodity: { type: String, required: true, trim: true, lowercase: true },
+    // Maersk commodity classification code. Optional so legacy free-text
+    // requests remain valid; new requests always set it.
+    commodityCode: {
+      type: String,
+      trim: true,
+      match: /^\d{6}$/,
+      index: true,
+    },
     cargoWeight: { type: Number, required: true, min: 0 },
     cargoReadyDate: { type: Date, required: true },
     proposedPrice: { type: Number, required: true, min: 0 },
