@@ -77,6 +77,7 @@ export interface IBooking extends Document {
   customerEmail: string;
   shippingLine: string;
   vessel: string;
+  vesselImo?: string;
   sailingDate: Date;
   status: string;
   containers: string[];

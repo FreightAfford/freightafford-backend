@@ -19,6 +19,7 @@ const bookingSchema = new Schema<IBooking>(
     },
     carrierBookingNumber: { type: String, unique: true, sparse: true },
     vessel: { type: String },
+    vesselImo: { type: String },
     sailingDate: { type: Date },
     status: {
       type: String,
