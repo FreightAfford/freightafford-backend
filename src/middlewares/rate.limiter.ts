@@ -23,3 +23,9 @@ export const vesselRateLimiter = rateLimit({
   limit: 60,
   message: { message: "Too many vessel searches. Please slow down." },
 });
+
+export const trackingRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 30,
+  message: { message: "Too many tracking requests. Please slow down." },
+});

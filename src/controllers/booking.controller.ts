@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import { Types } from "mongoose";
 import AppError from "../errors/app.error.js";
 import { VESSEL_IMO_REGEX } from "../integrations/maersk/vessels.client.js";
 import Booking from "../models/booking.model.js";
@@ -7,6 +8,7 @@ import {
   sendContainerNumbersNotification,
   sendShipmentStatusUpdate,
 } from "../services/booking.service.js";
+import { syncBookingWithMaersk } from "../services/maersk-sync.service.js";
 import ApiFeatures from "../utils/api-features.js";
 import {
   canModifyContainers,
@@ -129,16 +131,27 @@ export const getAllBookings = async (
   });
 };
 
+// Customers can only reach their own bookings; staff can reach any.
+// Returns null for both "missing" and "not yours" so ids can't be probed.
+export const findBookingForUser = async (id: string, user: IUser) => {
+  if (!Types.ObjectId.isValid(id)) return null;
+  const filter =
+    user.role === "customer" ? { _id: id, customer: user._id } : { _id: id };
+  return Booking.findOne(filter);
+};
+
 export const getSingleBooking = async (
-  req: Request,
+  req: AuthenticateRequest,
   res: Response,
   next: NextFunction,
 ) => {
-  const booking = await Booking.findById(req.params.id)
-    .populate("customer", "fullname email companyName")
-    .populate("freightRequest");
+  const owned = await findBookingForUser(String(req.params.id), req.user!);
+  if (!owned) return next(new AppError("Booking not found", 404));
 
-  if (!booking) return next(new AppError("Booking not found", 404));
+  const booking = await owned.populate([
+    { path: "customer", select: "fullname email companyName" },
+    { path: "freightRequest" },
+  ]);
 
   res.status(200).json({ status: "success", data: booking });
 };
@@ -183,6 +196,12 @@ export const updateBookingShipping = async (
     );
 
   await booking.save();
+
+  // Pull real dates from Maersk straight away rather than waiting for the cron
+  if (booking.shippingLine === "Maersk")
+    syncBookingWithMaersk(booking._id.toString()).catch((err) =>
+      console.error("[maersk-sync] Sync after shipping update failed:", err),
+    );
 
   res.status(200).json({
     status: "success",

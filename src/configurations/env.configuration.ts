@@ -24,6 +24,11 @@ const envConfig = {
   MAERSK_VESSELS_URL:
     process.env.MAERSK_VESSELS_URL ||
     "https://api.maersk.com/reference-data/vessels",
+  MAERSK_TRACKING_URL:
+    process.env.MAERSK_TRACKING_URL ||
+    "https://api.maersk.com/track-and-trace/public-events",
+  // Kill switch for the Maersk status/date sync cron; on unless set to "false"
+  MAERSK_TRACKING_SYNC_ENABLED: process.env.MAERSK_TRACKING_SYNC_ENABLED,
 };
 
 export default envConfig;

@@ -79,6 +79,14 @@ export interface IBooking extends Document {
   vessel: string;
   vesselImo?: string;
   sailingDate: Date;
+  eta?: Date;
+  maerskSync?: {
+    status?: "ok" | "not_found" | "error";
+    lastSyncedAt?: Date;
+    reference?: string;
+    departedAt?: Date;
+    arrivedAt?: Date;
+  };
   status: string;
   containers: string[];
 }
