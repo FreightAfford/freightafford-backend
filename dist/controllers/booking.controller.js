@@ -1,7 +1,9 @@
+import { Types } from "mongoose";
 import AppError from "../errors/app.error.js";
 import { VESSEL_IMO_REGEX } from "../integrations/maersk/vessels.client.js";
 import Booking from "../models/booking.model.js";
 import { sendBookingScheduleNotification, sendContainerNumbersNotification, sendShipmentStatusUpdate, } from "../services/booking.service.js";
+import { syncBookingWithMaersk } from "../services/maersk-sync.service.js";
 import ApiFeatures from "../utils/api-features.js";
 import { canModifyContainers, isValidContainer, normalizeContainers, validateContainers, } from "../utils/container.js";
 import { allowedBookingFilters } from "../utils/whitelists.js";
@@ -83,12 +85,22 @@ export const getAllBookings = async (req, res, next) => {
         data: bookings,
     });
 };
+// Customers can only reach their own bookings; staff can reach any.
+// Returns null for both "missing" and "not yours" so ids can't be probed.
+export const findBookingForUser = async (id, user) => {
+    if (!Types.ObjectId.isValid(id))
+        return null;
+    const filter = user.role === "customer" ? { _id: id, customer: user._id } : { _id: id };
+    return Booking.findOne(filter);
+};
 export const getSingleBooking = async (req, res, next) => {
-    const booking = await Booking.findById(req.params.id)
-        .populate("customer", "fullname email companyName")
-        .populate("freightRequest");
-    if (!booking)
+    const owned = await findBookingForUser(String(req.params.id), req.user);
+    if (!owned)
         return next(new AppError("Booking not found", 404));
+    const booking = await owned.populate([
+        { path: "customer", select: "fullname email companyName" },
+        { path: "freightRequest" },
+    ]);
     res.status(200).json({ status: "success", data: booking });
 };
 // ADMIN: Update Shipping Details
@@ -110,6 +122,9 @@ export const updateBookingShipping = async (req, res, next) => {
     if (error)
         return next(new AppError("Unable to send booking schedule notification", 400));
     await booking.save();
+    // Pull real dates from Maersk straight away rather than waiting for the cron
+    if (booking.shippingLine === "Maersk")
+        syncBookingWithMaersk(booking._id.toString()).catch((err) => console.error("[maersk-sync] Sync after shipping update failed:", err));
     res.status(200).json({
         status: "success",
         message: "Booking details updated sent to client.",

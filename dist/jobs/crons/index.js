@@ -1,5 +1,7 @@
 import cron from "node-cron";
+import envConfig from "../../configurations/env.configuration.js";
 import { autoCloseStaleTickets } from "../../services/auto-close-ticket.service.js";
+import { runMaerskSync } from "../../services/maersk-sync.service.js";
 import { catchUpMonthlyReport, sendMonthlyReport } from "../monthly-report.js";
 import { autoTransitSailedBookings, sendSailingReminders, } from "../sailing-notifications.js";
 export const registerCrons = () => {
@@ -37,6 +39,19 @@ export const registerCrons = () => {
     cron.schedule("30 0 1 * *", async () => {
         console.log("[cron] Monthly report catch-up check...");
         await catchUpMonthlyReport();
+    });
+    // Every 6 hours — sync Maersk bookings' dates, vessel and status from
+    // Track & Trace. Set MAERSK_TRACKING_SYNC_ENABLED=false to turn it off.
+    cron.schedule("0 */6 * * *", async () => {
+        if (envConfig.MAERSK_TRACKING_SYNC_ENABLED === "false")
+            return;
+        console.log("[cron] Syncing bookings with Maersk Track & Trace...");
+        try {
+            await runMaerskSync();
+        }
+        catch (err) {
+            console.error("[maersk-sync] Job failed with error:", err);
+        }
     });
     cron.schedule("0 * * * *", async () => {
         console.log("[AutoClose] Running auto-close job...");

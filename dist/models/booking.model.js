@@ -18,6 +18,16 @@ const bookingSchema = new Schema({
     vessel: { type: String },
     vesselImo: { type: String },
     sailingDate: { type: Date },
+    eta: { type: Date },
+    // Last Maersk Track & Trace sync. status "ok" means Maersk events drive
+    // this booking's dates and status instead of the sailing-date job.
+    maerskSync: {
+        status: { type: String, enum: ["ok", "not_found", "error"] },
+        lastSyncedAt: { type: Date },
+        reference: { type: String },
+        departedAt: { type: Date },
+        arrivedAt: { type: Date },
+    },
     status: {
         type: String,
         enum: [
