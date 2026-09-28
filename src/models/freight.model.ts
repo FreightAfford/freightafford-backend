@@ -22,6 +22,22 @@ const freightRequestSchema = new Schema<IFreightRequest>(
       trim: true,
       lowercase: true,
     },
+    // UN/LOCODEs resolved via the Maersk Locations API. Optional so legacy
+    // free-text requests remain valid; new requests always set them.
+    originPortCode: {
+      type: String,
+      trim: true,
+      uppercase: true,
+      match: /^[A-Z]{2}[A-Z2-9]{3}$/,
+      index: true,
+    },
+    destinationPortCode: {
+      type: String,
+      trim: true,
+      uppercase: true,
+      match: /^[A-Z]{2}[A-Z2-9]{3}$/,
+      index: true,
+    },
     commodity: { type: String, required: true, trim: true, lowercase: true },
     cargoWeight: { type: Number, required: true, min: 0 },
     cargoReadyDate: { type: Date, required: true },

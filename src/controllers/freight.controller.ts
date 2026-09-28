@@ -14,10 +14,29 @@ import {
 import ApiFeatures from "../utils/api-features.js";
 import type { AuthenticateRequest, IUser } from "../utils/interface.js";
 import { allowedFreightFilters } from "../utils/whitelists.js";
+import {
+  formatPortName,
+  getLocationByCode,
+} from "../integrations/maersk/locations.client.js";
 
 const generateBookingNumber = () => {
   const random = Math.floor(100000 + Math.random() * 900000);
   return `FA-${new Date().getFullYear()}-${random}`;
+};
+
+// Resolves a UN/LOCODE against Maersk so the stored display name is never client-supplied
+const resolvePort = async (code: unknown, label: string) => {
+  if (typeof code !== "string" || !code.trim())
+    throw new AppError(`${label} port is required`, 400);
+
+  const location = await getLocationByCode(code);
+  if (!location)
+    throw new AppError(
+      `${label} port "${code}" is not a recognised location`,
+      400,
+    );
+
+  return { code: location.code, name: formatPortName(location) };
 };
 
 // CUSTOMER: Create Request
@@ -27,8 +46,8 @@ export const createFreightRequest = async (
   next: NextFunction,
 ) => {
   const {
-    originPort,
-    destinationPort,
+    originPortCode,
+    destinationPortCode,
     commodity,
     cargoReadyDate,
     cargoWeight,
@@ -39,6 +58,19 @@ export const createFreightRequest = async (
     quantity,
   } = req.body;
 
+  const [origin, destination] = await Promise.all([
+    resolvePort(originPortCode, "Origin"),
+    resolvePort(destinationPortCode, "Destination"),
+  ]);
+
+  if (origin.code === destination.code)
+    return next(
+      new AppError("Origin and destination ports must be different", 400),
+    );
+
+  const originPort = origin.name;
+  const destinationPort = destination.name;
+
   const requestCount = Math.min(Math.max(Number(quantity) || 1, 1), 50);
   const batchId = requestCount > 1 ? `batch_${Date.now()}` : null;
 
@@ -48,6 +80,8 @@ export const createFreightRequest = async (
     customerEmail: req.user!.email,
     originPort,
     destinationPort,
+    originPortCode: origin.code,
+    destinationPortCode: destination.code,
     commodity,
     cargoWeight,
     cargoReadyDate,
@@ -100,8 +134,8 @@ export const updateFreightRequest = async (
   const { requestId } = req.params;
 
   const {
-    originPort,
-    destinationPort,
+    originPortCode,
+    destinationPortCode,
     commodity,
     cargoReadyDate,
     cargoWeight,
@@ -124,9 +158,16 @@ export const updateFreightRequest = async (
 
   const updatedData: any = {};
 
-  if (originPort) updatedData.originPort = originPort.toLowerCase();
-  if (destinationPort)
-    updatedData.destinationPort = destinationPort.toLowerCase();
+  if (originPortCode) {
+    const origin = await resolvePort(originPortCode, "Origin");
+    updatedData.originPort = origin.name;
+    updatedData.originPortCode = origin.code;
+  }
+  if (destinationPortCode) {
+    const destination = await resolvePort(destinationPortCode, "Destination");
+    updatedData.destinationPort = destination.name;
+    updatedData.destinationPortCode = destination.code;
+  }
   if (commodity) updatedData.commodity = commodity.toLowerCase();
   if (cargoReadyDate) updatedData.cargoReadyDate = cargoReadyDate;
   if (cargoWeight) updatedData.cargoWeight = cargoWeight;

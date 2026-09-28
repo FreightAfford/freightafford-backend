@@ -5,3 +5,9 @@ export const authRateLimiter = rateLimit({
   limit: 10,
   message: { message: "Too many authentication attempts. Try again later." },
 });
+
+export const locationRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  message: { message: "Too many location searches. Please slow down." },
+});

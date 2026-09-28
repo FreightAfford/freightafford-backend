@@ -48,6 +48,8 @@ export interface IFreightRequest extends Document {
   booking: Types.ObjectId;
   originPort: string;
   destinationPort: string;
+  originPortCode?: string;
+  destinationPortCode?: string;
   commodity: string;
   cargoWeight: number;
   cargoReadyDate: Date;

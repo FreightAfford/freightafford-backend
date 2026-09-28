@@ -14,6 +14,10 @@ const envConfig = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME!,
+  MAERSK_API_KEY: process.env.MAERSK_API_KEY,
+  MAERSK_LOCATIONS_URL:
+    process.env.MAERSK_LOCATIONS_URL ||
+    "https://api.maersk.com/reference-data/locations",
 };
 
 export default envConfig;
