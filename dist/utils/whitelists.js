@@ -3,6 +3,8 @@ export const allowedFreightFilters = [
     "containerSize",
     "originPort",
     "destinationPort",
+    "originPortCode",
+    "destinationPortCode",
     "commodity",
     "cargoWeight",
     "createdAt",
