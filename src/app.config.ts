@@ -18,6 +18,7 @@ import chatRouter from "./routers/chat.router.js";
 import commodityRouter from "./routers/commodity.router.js";
 import freightRouter from "./routers/freight.router.js";
 import invoiceRouter from "./routers/invoice.router.js";
+import kycRouter from "./routers/kyc.router.js";
 import locationRouter from "./routers/location.router.js";
 import pipelineRouter from "./routers/pipeline.router.js";
 import ticketRouter from "./routers/ticket.router.js";
@@ -62,6 +63,7 @@ const appConfig = async (app: Application) => {
   app.use("/api/v1/locations", locationRouter);
   app.use("/api/v1/commodities", commodityRouter);
   app.use("/api/v1/vessels", vesselRouter);
+  app.use("/api/v1/kyc", kycRouter);
 
   app.use((req, res, next) =>
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)),

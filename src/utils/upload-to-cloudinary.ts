@@ -1,3 +1,4 @@
+import type { UploadApiResponse } from "cloudinary";
 import streamifier from "streamifier";
 import cloudinary from "../configurations/cloudinary.configuration.js";
 
@@ -13,6 +14,29 @@ export const uploadToCloudinary = (
       },
       (err, res) => {
         if (err) return reject(err);
+        resolve(res);
+      },
+    );
+
+    streamifier.createReadStream(file.buffer).pipe(stream);
+  });
+};
+
+// Private ("authenticated") upload: the asset has no public URL. It can only
+// be fetched through a signed, expiring link (see services/kyc-storage).
+export const uploadPrivateToCloudinary = (
+  file: Express.Multer.File,
+  folder: string,
+) => {
+  return new Promise<UploadApiResponse>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        type: "authenticated",
+        resource_type: "auto",
+      },
+      (err, res) => {
+        if (err || !res) return reject(err);
         resolve(res);
       },
     );

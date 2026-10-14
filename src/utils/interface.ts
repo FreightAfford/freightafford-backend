@@ -26,6 +26,90 @@ export interface IUser extends Document {
   companyAddress: string;
   country: string;
   status: string;
+  accountType: KycAccountType;
+}
+
+export type KycAccountType = "export_agent" | "exporter";
+
+export type KycStatus =
+  | "draft"
+  | "submitted"
+  | "in_review"
+  | "changes_requested"
+  | "approved"
+  | "rejected";
+
+export interface IKycUpload {
+  _id: Types.ObjectId;
+  name: string;
+  size: number;
+  mimeType: string;
+  publicId: string;
+  resourceType: string;
+  format?: string;
+  uploadedAt: Date;
+}
+
+export interface IKycDirector {
+  _id: Types.ObjectId;
+  fullName: string;
+  role: string;
+  idType: "nin" | "passport" | "drivers_licence";
+  // Encrypted with utils/encryption; decrypt only for owner and staff.
+  idNumberEncrypted: string;
+  idExpiry: Date | null;
+  idDocument: Types.ObjectId | null;
+}
+
+export interface IKycHistoryEntry {
+  action:
+    | "submitted"
+    | "review_started"
+    | "approved"
+    | "changes_requested"
+    | "rejected";
+  by: Types.ObjectId;
+  at: Date;
+  note?: string;
+}
+
+export interface IKyc extends Document {
+  user: Types.ObjectId;
+  accountType: KycAccountType;
+  status: KycStatus;
+  business: {
+    legalName: string;
+    cacType: "RC" | "BN";
+    cacNumber: string;
+    cacCertificate: Types.ObjectId | null;
+    tin: string;
+    tinCertificate: Types.ObjectId | null;
+    nepcNumber: string;
+    nepcExpiry: Date | null;
+    nepcCertificate: Types.ObjectId | null;
+    address: {
+      street: string;
+      city: string;
+      state: string;
+      proofOfAddress: Types.ObjectId | null;
+    };
+  };
+  directors: IKycDirector[];
+  authorisation: {
+    letter: Types.ObjectId | null;
+    signedBy: string;
+    issuedOn: Date | null;
+  };
+  uploads: IKycUpload[];
+  reviewNotes: { path: string; note: string }[];
+  rejectionReason?: string;
+  declarationAcceptedAt?: Date;
+  submittedAt?: Date;
+  reviewedAt?: Date;
+  reviewedBy?: Types.ObjectId;
+  history: IKycHistoryEntry[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface JwtPayload {
