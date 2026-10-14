@@ -24,6 +24,12 @@ const envConfig = {
         "https://api.maersk.com/track-and-trace/public-events",
     // Kill switch for the Maersk status/date sync cron; on unless set to "false"
     MAERSK_TRACKING_SYNC_ENABLED: process.env.MAERSK_TRACKING_SYNC_ENABLED,
+    // 32-byte key (64 hex characters) for encrypting KYC identifiers such as
+    // directors' ID numbers. Losing it makes stored ID numbers unreadable.
+    KYC_ENCRYPTION_KEY: process.env.KYC_ENCRYPTION_KEY,
+    // "on" blocks freight requests from customers whose business isn't
+    // verified. Off unless set, so it can be switched on at launch.
+    KYC_ENFORCEMENT: process.env.KYC_ENFORCEMENT,
 };
 export default envConfig;
 //# sourceMappingURL=env.configuration.js.map

@@ -42,6 +42,12 @@ const userSchema = new Schema({
         enum: ["active", "inactive", "suspended"],
         default: "active",
     },
+    // Chosen at sign-up. Both go through the same business verification.
+    accountType: {
+        type: String,
+        enum: ["export_agent", "exporter"],
+        default: "export_agent",
+    },
 }, { timestamps: true });
 const User = model("User", userSchema);
 export default User;

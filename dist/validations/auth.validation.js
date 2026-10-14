@@ -5,6 +5,9 @@ export const registerSchema = z.object({
     password: z.string().min(8),
     acceptTerms: z.literal(true),
     acceptedFreightRules: z.literal(true),
+    accountType: z.enum(["export_agent", "exporter"]).optional(),
+    phoneNumber: z.string().trim().optional(),
+    companyName: z.string().trim().min(2).max(160).optional(),
 });
 export const verifyOtpSchema = z.object({
     email: z.email(),

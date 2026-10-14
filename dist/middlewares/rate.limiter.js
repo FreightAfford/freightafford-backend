@@ -24,4 +24,14 @@ export const trackingRateLimiter = rateLimit({
     limit: 30,
     message: { message: "Too many tracking requests. Please slow down." },
 });
+export const kycUploadRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 40,
+    message: { message: "Too many uploads. Wait a few minutes and try again." },
+});
+export const kycDocumentRateLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 60,
+    message: { message: "Too many documents opened. Please slow down." },
+});
 //# sourceMappingURL=rate.limiter.js.map

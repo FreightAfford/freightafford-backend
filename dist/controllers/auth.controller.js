@@ -15,9 +15,17 @@ import { allowedUserFilters } from "../utils/whitelists.js";
 const MAX_OTP_ATTEMPTS = 5;
 const MAX_RESEND_LIMIT = 3;
 export const register = async (req, res, next) => {
-    const { fullname, email, password, acceptTerms, acceptedFreightRules } = req.body;
+    const { fullname, email, password, acceptTerms, acceptedFreightRules, accountType, phoneNumber, companyName, } = req.body;
     if (!acceptTerms || !acceptedFreightRules)
         return next(new AppError("Agreements must be accepted.", 400));
+    // Sent by the current sign-up form; optional so older clients still work.
+    if (accountType && !["export_agent", "exporter"].includes(accountType))
+        return next(new AppError("Choose export agent or exporter.", 400));
+    const normalizedPhone = phoneNumber
+        ? normalizePhoneNumber(phoneNumber)
+        : undefined;
+    if (phoneNumber && !normalizedPhone)
+        return next(new AppError("Enter a valid phone number.", 400));
     const existingUser = await User.findOne({ email });
     if (existingUser)
         return next(new AppError("Email already registered.", 400));
@@ -34,6 +42,10 @@ export const register = async (req, res, next) => {
         otpExpiry,
         acceptedTermsAt: new Date(),
         acceptedFreightRulesAt: new Date(),
+        ...(accountType && { accountType }),
+        ...(normalizedPhone && { phoneNumber: normalizedPhone }),
+        ...(typeof companyName === "string" &&
+            companyName.trim() && { companyName: companyName.trim() }),
     });
     const { error } = await sendOTPEmail(email, fullname, otp, expiryMinutes);
     if (error)
