@@ -14,11 +14,12 @@ export const sendBookingScheduleNotification = async (
   shippingLine: string,
   vessel: string,
   sailingDate: Date,
+  subject = "Your Shipment Has Been Scheduled",
 ) => {
   return await resend.emails.send({
     from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
     to: email,
-    subject: "Your Shipment Has Been Scheduled",
+    subject,
     html: BOOKING_SHIPPING_UPDATE_TO_CUSTOMER.replace(
       "{{USERNAME}}",
       fullname.split(" ")[0] as string,

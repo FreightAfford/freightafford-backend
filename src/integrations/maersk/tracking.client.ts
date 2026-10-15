@@ -1,12 +1,15 @@
 import axios, { AxiosError } from "axios";
 import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
+import { clearMaerskAccessToken, getMaerskAccessToken } from "./auth.js";
 import { createTtlCache } from "./cache.js";
 
-// Maersk Track & Trace Events (Maersk Exchange) — public access, DCSA event model.
-// Auth is the Consumer-Key header only (no OAuth for this product).
+// Maersk Ocean Track & Trace (track-and-trace-private), DCSA event model.
+// Auth is OAuth client credentials: Bearer token + Consumer-Key on every call.
+// Only returns shipments under our Maersk customer account.
 // Look up by exactly one of carrierBookingReference, transportDocumentReference
-// or equipmentReference. No parameter → 400, unknown reference → 404.
+// or equipmentReference. No parameter or a malformed one → 400, unknown
+// reference → 404.
 
 type Classifier = "ACT" | "EST" | "PLN";
 type EventType = "TRANSPORT" | "EQUIPMENT" | "SHIPMENT";
@@ -29,6 +32,8 @@ interface MaerskEvent {
   transportEventTypeCode?: string;
   equipmentEventTypeCode?: string;
   shipmentEventTypeCode?: string;
+  // SHIPMENT events only: which document the event is about (BKG = booking)
+  documentTypeCode?: string;
   equipmentReference?: string;
   emptyIndicatorCode?: "EMPTY" | "LADEN";
   transportCall?: MaerskTransportCall;
@@ -45,6 +50,7 @@ export interface ShipmentEvent {
   vessel?: { name?: string; imo?: string };
   voyage?: string;
   container?: string;
+  documentType?: string;
   empty?: boolean;
 }
 
@@ -77,9 +83,9 @@ export type TrackingReference =
   | { transportDocumentReference: string }
   | { equipmentReference: string };
 
-// The public-access tier has a small quota (429 "Rate limit quota violation",
-// no quota headers), so results are cached for an hour and the last good copy
-// is kept for a week to serve when Maersk refuses a call.
+// Maersk enforces a quota (429 "Rate limit quota violation", no quota
+// headers), so results are cached for an hour and the last good copy is kept
+// for a week to serve when Maersk refuses a call.
 const CACHE_TTL = 60 * 60 * 1000;
 const STALE_TTL = 7 * 24 * 60 * 60 * 1000;
 const MAX_CACHE_ENTRIES = 500;
@@ -180,25 +186,39 @@ const toShipmentEvent = (e: MaerskEvent): ShipmentEvent => {
       ? (call.carrierVoyageNumber ?? call.exportVoyageNumber)
       : undefined,
     container: e.equipmentReference,
+    documentType: e.documentTypeCode,
     empty: e.emptyIndicatorCode ? e.emptyIndicatorCode === "EMPTY" : undefined,
   };
 };
 
-const fetchPublicEvents = async (
+const requestEvents = async (params: TrackingReference) => {
+  const { data } = await maerskTracking.get<{ events?: MaerskEvent[] }>("", {
+    params,
+    headers: { Authorization: `Bearer ${await getMaerskAccessToken()}` },
+  });
+  return Array.isArray(data?.events) ? data.events : [];
+};
+
+const fetchEvents = async (
   params: TrackingReference,
 ): Promise<MaerskEvent[]> => {
-  if (!envConfig.MAERSK_API_KEY) {
-    console.error("[maersk] MAERSK_API_KEY is not configured");
+  if (!envConfig.MAERSK_API_KEY || !envConfig.MAERSK_API_SECRET) {
+    console.error("[maersk] MAERSK_API_KEY or MAERSK_API_SECRET is not configured");
     throw new AppError(UNAVAILABLE_MESSAGE, 503);
   }
 
   if (isTrackingQuotaBlocked()) throw new AppError(QUOTA_MESSAGE, 503);
 
   try {
-    const { data } = await maerskTracking.get<{ events?: MaerskEvent[] }>("", {
-      params,
-    });
-    return Array.isArray(data?.events) ? data.events : [];
+    try {
+      return await requestEvents(params);
+    } catch (error) {
+      // Token revoked or expired early: get a new one and retry once
+      if (!(error instanceof AxiosError && error.response?.status === 401))
+        throw error;
+      clearMaerskAccessToken();
+      return await requestEvents(params);
+    }
   } catch (error) {
     // Maersk answers 404 for an unknown reference — no events yet, not an outage.
     if (error instanceof AxiosError && error.response?.status === 404)
@@ -241,7 +261,7 @@ export const getShipmentEvents = async (
 
   let raw: MaerskEvent[];
   try {
-    raw = await fetchPublicEvents(ref);
+    raw = await fetchEvents(ref);
   } catch (error) {
     const stale = !fresh && getStale<ShipmentEvent[]>(key);
     if (stale) return stale;
