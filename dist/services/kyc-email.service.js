@@ -28,7 +28,7 @@ export const sendKycReceivedEmail = (to, businessName) => resend.emails.send({
         body: `
         <p>Hello ${firstName(to.fullname)},</p>
         <p>Thanks for submitting the verification for <strong>${escapeHtml(businessName)}</strong>. Our team is checking your details and documents now.</p>
-        <p>We'll email you as soon as it's done. You can book shipments once your business is verified.</p>`,
+        <p>We'll email you as soon as it's done. Live tracking for your bookings opens once your business is verified.</p>`,
         buttonText: "View verification",
         buttonLink: `${APP()}/app/customer/verification`,
     }),
@@ -63,7 +63,7 @@ export const sendKycNewSubmissionEmail = async (application) => {
     });
 };
 const VERIFY_LINK = () => `${APP()}/app/customer/verification`;
-/** To the customer: verified, they can book. */
+/** To the customer: verified, live tracking is open. */
 export const sendKycApprovedEmail = (to, businessName) => resend.emails.send({
     from: FROM(),
     to: to.email,
@@ -74,9 +74,9 @@ export const sendKycApprovedEmail = (to, businessName) => resend.emails.send({
         body: `
         <p>Hello ${firstName(to.fullname)},</p>
         <p>Good news: <strong>${escapeHtml(businessName)}</strong> is now verified on Freightafford.</p>
-        <p>You can send freight requests and book shipments straight away. If any of your documents expire, we'll ask you to upload a new one.</p>`,
-        buttonText: "Start booking",
-        buttonLink: `${APP()}/app/customer/requests`,
+        <p>Live tracking is now open on all your bookings, so you can follow your cargo from port to port. If any of your documents expire, we'll ask you to upload a new one.</p>`,
+        buttonText: "View your bookings",
+        buttonLink: `${APP()}/app/customer/bookings`,
     }),
 });
 /** To the customer: what to fix, field by field. Labels and notes are plain text. */

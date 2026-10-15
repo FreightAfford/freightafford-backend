@@ -2,13 +2,16 @@ import { Router } from "express";
 import { addContainers, getAllBookings, getMyBookings, getSingleBooking, removeContainers, replaceContainers, updateBookingShipping, updateBookingStatus, } from "../controllers/booking.controller.js";
 import { getBookingMaerskEvents, syncBookingMaersk, } from "../controllers/maersk-tracking.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
+import { requireVerifiedForTracking } from "../middlewares/kyc.js";
 import { trackingRateLimiter } from "../middlewares/rate.limiter.js";
 import catchAsync from "../utils/catch-async.js";
 const bookingRouter = Router();
 bookingRouter.use(authenticate);
 bookingRouter.get("/me", catchAsync(getMyBookings));
 bookingRouter.get("/:id/single", catchAsync(getSingleBooking));
-bookingRouter.get("/:id/maersk-events", trackingRateLimiter, catchAsync(getBookingMaerskEvents));
+bookingRouter.get("/:id/maersk-events", 
+// Live tracking is for verified businesses (see middlewares/kyc.ts).
+catchAsync(requireVerifiedForTracking), trackingRateLimiter, catchAsync(getBookingMaerskEvents));
 bookingRouter.use(authorize("admin", "cso"));
 bookingRouter.get("/admin", catchAsync(getAllBookings));
 bookingRouter.patch("/admin/:id/shipping", catchAsync(updateBookingShipping));
