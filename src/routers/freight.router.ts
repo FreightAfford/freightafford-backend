@@ -11,7 +11,6 @@ import {
   respondToCounter,
 } from "../controllers/freight.controller.js";
 import { authenticate, authorize } from "../middlewares/auth/protection.js";
-import { requireVerifiedBusiness } from "../middlewares/kyc.js";
 import catchAsync from "../utils/catch-async.js";
 
 const freightRouter = Router();
@@ -21,7 +20,6 @@ freightRouter.use(authenticate);
 freightRouter.post(
   "/",
   authorize("customer"),
-  catchAsync(requireVerifiedBusiness),
   catchAsync(createFreightRequest),
 );
 freightRouter.get(

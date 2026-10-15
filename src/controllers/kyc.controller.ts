@@ -66,7 +66,7 @@ export const getMyKyc = async (req: AuthenticateRequest, res: Response) => {
   const kyc = await findMine(req);
   res.status(200).json({
     status: "success",
-    // Tells the frontend whether bookings are actually blocked right now.
+    // Tells the frontend whether live tracking is actually locked right now.
     enforcement: isKycEnforced(),
     data: kyc ? toKycResponse(kyc) : emptyKycResponse(req.user!),
   });
