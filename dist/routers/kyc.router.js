@@ -19,6 +19,14 @@ kycRouter.get("/admin", authorize("admin", "cso"), catchAsync(listKycApplication
 kycRouter.get("/admin/:id", authorize("admin", "cso"), catchAsync(getKycApplication));
 kycRouter.patch("/admin/:id/review", authorize("admin", "cso"), catchAsync(reviewKycApplication));
 // Owner or staff; the controller checks which documents each may open.
-kycRouter.get("/documents/:docId", authorize("customer", "admin", "cso"), kycDocumentRateLimiter, catchAsync(openKycDocument));
+// The frontend shows image documents as <img> thumbnails from another
+// origin, which helmet's default CORP (same-origin) blocks. Allow it on this
+// route only: access still needs the owner's or staff login, and another site
+// embedding it gets an image it cannot read.
+const allowEmbedding = (_req, res, next) => {
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+    next();
+};
+kycRouter.get("/documents/:docId", allowEmbedding, authorize("customer", "admin", "cso"), kycDocumentRateLimiter, catchAsync(openKycDocument));
 export default kycRouter;
 //# sourceMappingURL=kyc.router.js.map
