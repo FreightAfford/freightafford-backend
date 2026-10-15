@@ -47,7 +47,7 @@ export const getMyBookings = async (
 
   const baseQuery = Booking.find(baseFilter).populate(
     "freightRequest",
-    "status commodity",
+    "status commodity originPort destinationPort originPortCode destinationPortCode containerSize containerQuantity",
   );
 
   const features = new ApiFeatures(baseQuery, req.query)
@@ -99,10 +99,12 @@ export const getAllBookings = async (
 
   const total = await countFeatures.query.countDocuments();
 
-  const baseQuery = Booking.find(baseFilter).populate(
-    "freightRequest",
-    "status commodity",
-  );
+  const baseQuery = Booking.find(baseFilter)
+    .populate(
+      "freightRequest",
+      "status commodity originPort destinationPort originPortCode destinationPortCode containerSize containerQuantity",
+    )
+    .populate("customer", "fullname companyName");
 
   const features = new ApiFeatures(baseQuery, req.query)
     .filter(allowedBookingFilters)
