@@ -1,10 +1,11 @@
 import axios, { AxiosError } from "axios";
 import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
+import { clearMaerskAccessToken, getMaerskAccessToken } from "./auth.js";
 import { createTtlCache } from "./cache.js";
-// The public-access tier has a small quota (429 "Rate limit quota violation",
-// no quota headers), so results are cached for an hour and the last good copy
-// is kept for a week to serve when Maersk refuses a call.
+// Maersk enforces a quota (429 "Rate limit quota violation", no quota
+// headers), so results are cached for an hour and the last good copy is kept
+// for a week to serve when Maersk refuses a call.
 const CACHE_TTL = 60 * 60 * 1000;
 const STALE_TTL = 7 * 24 * 60 * 60 * 1000;
 const MAX_CACHE_ENTRIES = 500;
@@ -95,21 +96,35 @@ const toShipmentEvent = (e) => {
             ? (call.carrierVoyageNumber ?? call.exportVoyageNumber)
             : undefined,
         container: e.equipmentReference,
+        documentType: e.documentTypeCode,
         empty: e.emptyIndicatorCode ? e.emptyIndicatorCode === "EMPTY" : undefined,
     };
 };
-const fetchPublicEvents = async (params) => {
-    if (!envConfig.MAERSK_API_KEY) {
-        console.error("[maersk] MAERSK_API_KEY is not configured");
+const requestEvents = async (params) => {
+    const { data } = await maerskTracking.get("", {
+        params,
+        headers: { Authorization: `Bearer ${await getMaerskAccessToken()}` },
+    });
+    return Array.isArray(data?.events) ? data.events : [];
+};
+const fetchEvents = async (params) => {
+    if (!envConfig.MAERSK_API_KEY || !envConfig.MAERSK_API_SECRET) {
+        console.error("[maersk] MAERSK_API_KEY or MAERSK_API_SECRET is not configured");
         throw new AppError(UNAVAILABLE_MESSAGE, 503);
     }
     if (isTrackingQuotaBlocked())
         throw new AppError(QUOTA_MESSAGE, 503);
     try {
-        const { data } = await maerskTracking.get("", {
-            params,
-        });
-        return Array.isArray(data?.events) ? data.events : [];
+        try {
+            return await requestEvents(params);
+        }
+        catch (error) {
+            // Token revoked or expired early: get a new one and retry once
+            if (!(error instanceof AxiosError && error.response?.status === 401))
+                throw error;
+            clearMaerskAccessToken();
+            return await requestEvents(params);
+        }
     }
     catch (error) {
         // Maersk answers 404 for an unknown reference — no events yet, not an outage.
@@ -140,7 +155,7 @@ export const getShipmentEvents = async (ref, { fresh = false } = {}) => {
     }
     let raw;
     try {
-        raw = await fetchPublicEvents(ref);
+        raw = await fetchEvents(ref);
     }
     catch (error) {
         const stale = !fresh && getStale(key);

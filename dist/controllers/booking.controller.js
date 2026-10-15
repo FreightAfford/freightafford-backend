@@ -110,6 +110,12 @@ export const updateBookingShipping = async (req, res, next) => {
     if (!booking)
         return next(new AppError("Booking not found", 404));
     const customer = booking.customer;
+    // Saving the form unchanged shouldn't email the customer again
+    const detailsChanged = booking.shippingLine !== shippingLine ||
+        booking.vessel !== vessel ||
+        booking.carrierBookingNumber !== carrierBookingNumber ||
+        new Date(booking.sailingDate ?? 0).getTime() !==
+            new Date(sailingDate ?? 0).getTime();
     booking.shippingLine = shippingLine;
     booking.vessel = vessel;
     // Only set when picked from the Maersk suggestions; a typed name clears it
@@ -118,9 +124,11 @@ export const updateBookingShipping = async (req, res, next) => {
         : undefined;
     booking.sailingDate = sailingDate;
     booking.carrierBookingNumber = carrierBookingNumber;
-    const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, carrierBookingNumber, shippingLine, vessel, booking.sailingDate);
-    if (error)
-        return next(new AppError("Unable to send booking schedule notification", 400));
+    if (detailsChanged) {
+        const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, carrierBookingNumber, shippingLine, vessel, booking.sailingDate);
+        if (error)
+            return next(new AppError("Unable to send booking schedule notification", 400));
+    }
     await booking.save();
     // Pull real dates from Maersk straight away rather than waiting for the cron
     if (booking.shippingLine === "Maersk")

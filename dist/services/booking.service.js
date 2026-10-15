@@ -6,11 +6,11 @@ import CONTAINER_NUMBER_UPDATE_BY_ADMIN from "../templates/booking/container.boo
 import MONTHLY_REPORT_TO_ADMIN from "../templates/booking/monthly.report.js";
 import SAILING_REMINDER_TO_CUSTOMER from "../templates/booking/sailing.reminder.js";
 import { resend } from "./email.service.js";
-export const sendBookingScheduleNotification = async (email, fullname, carrierBookingNumber, shippingLine, vessel, sailingDate) => {
+export const sendBookingScheduleNotification = async (email, fullname, carrierBookingNumber, shippingLine, vessel, sailingDate, subject = "Your Shipment Has Been Scheduled") => {
     return await resend.emails.send({
         from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
         to: email,
-        subject: "Your Shipment Has Been Scheduled",
+        subject,
         html: BOOKING_SHIPPING_UPDATE_TO_CUSTOMER.replace("{{USERNAME}}", fullname.split(" ")[0])
             .replace("{{SHIPPING_LINE}}", shippingLine)
             .replace("{{VESSEL}}", vessel)

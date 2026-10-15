@@ -9,12 +9,13 @@ export const autoTransitSailedBookings = async () => {
     // same-day window) makes the job self-healing: if the cron missed a day
     // (deploy, restart, downtime), past-due bookings are still picked up on the
     // next run instead of being stuck in "confirmed" forever.
-    // Bookings Maersk is tracking are skipped: the Maersk sync moves them on the
-    // real departure instead of the planned date.
+    // Maersk bookings are skipped: live tracking moves them on the real
+    // departure instead of the planned date. This job only covers carriers
+    // without tracking.
     const bookings = await Booking.find({
         sailingDate: { $lte: endOfDay },
         status: "confirmed",
-        "maerskSync.status": { $ne: "ok" },
+        shippingLine: { $ne: "Maersk" },
     })
         .populate("customer", "fullname email")
         .populate("freightRequest", "originPort destinationPort");

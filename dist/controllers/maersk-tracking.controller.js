@@ -19,16 +19,32 @@ export const getBookingMaerskEvents = async (req, res, next) => {
         polCode: request?.originPortCode,
         podCode: request?.destinationPortCode,
     });
+    // Save what Maersk reports (status, dates, vessel) so the booking matches
+    // the timeline being shown. A failure here mustn't hide the timeline.
+    let bookingStatus = booking.status;
+    if (events.length) {
+        try {
+            const synced = await syncBookingWithMaersk(booking._id.toString(), {
+                prefetched: { reference, events },
+            });
+            if (synced.booking)
+                bookingStatus = synced.booking.status;
+        }
+        catch (err) {
+            console.error(`[maersk-sync] Applying live tracking failed for booking ${booking.bookingNumber}:`, err);
+        }
+    }
     res.status(200).json({
         status: "success",
         data: {
             reference,
             events: events.filter((e) => !HIDDEN_CODES.has(e.code)),
             summary,
+            bookingStatus,
         },
     });
 };
-// STAFF: Sync one booking with Maersk now (dates, vessel, forward status)
+// STAFF: Sync one booking with Maersk now (dates, vessel, status)
 export const syncBookingMaersk = async (req, res, next) => {
     const { outcome, booking, message } = await syncBookingWithMaersk(String(req.params.id));
     if (!booking)

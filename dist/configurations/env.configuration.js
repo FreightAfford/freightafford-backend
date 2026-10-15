@@ -14,6 +14,10 @@ const envConfig = {
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
     MAERSK_API_KEY: process.env.MAERSK_API_KEY,
+    // Client secret for OAuth (client credentials); only Track & Trace needs it
+    MAERSK_API_SECRET: process.env.MAERSK_API_SECRET,
+    MAERSK_TOKEN_URL: process.env.MAERSK_TOKEN_URL ||
+        "https://api.maersk.com/customer-identity/oauth/v2/access_token",
     MAERSK_LOCATIONS_URL: process.env.MAERSK_LOCATIONS_URL ||
         "https://api.maersk.com/reference-data/locations",
     MAERSK_COMMODITIES_URL: process.env.MAERSK_COMMODITIES_URL ||
@@ -21,7 +25,7 @@ const envConfig = {
     MAERSK_VESSELS_URL: process.env.MAERSK_VESSELS_URL ||
         "https://api.maersk.com/reference-data/vessels",
     MAERSK_TRACKING_URL: process.env.MAERSK_TRACKING_URL ||
-        "https://api.maersk.com/track-and-trace/public-events",
+        "https://api.maersk.com/track-and-trace-private/events",
     // Kill switch for the Maersk status/date sync cron; on unless set to "false"
     MAERSK_TRACKING_SYNC_ENABLED: process.env.MAERSK_TRACKING_SYNC_ENABLED,
     // 32-byte key (64 hex characters) for encrypting KYC identifiers such as
