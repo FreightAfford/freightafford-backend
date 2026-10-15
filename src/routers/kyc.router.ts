@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, type RequestHandler } from "express";
 import {
   getMyKyc,
   openKycDocument,
@@ -60,8 +60,18 @@ kycRouter.patch(
 );
 
 // Owner or staff; the controller checks which documents each may open.
+// The frontend shows image documents as <img> thumbnails from another
+// origin, which helmet's default CORP (same-origin) blocks. Allow it on this
+// route only: access still needs the owner's or staff login, and another site
+// embedding it gets an image it cannot read.
+const allowEmbedding: RequestHandler = (_req, res, next) => {
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+};
+
 kycRouter.get(
   "/documents/:docId",
+  allowEmbedding,
   authorize("customer", "admin", "cso"),
   kycDocumentRateLimiter,
   catchAsync(openKycDocument),
