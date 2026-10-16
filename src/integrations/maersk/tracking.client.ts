@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
+import { isValidContainer } from "../../utils/container.js";
 import { clearMaerskAccessToken, getMaerskAccessToken } from "./auth.js";
 import { createTtlCache } from "./cache.js";
 import { isPlaceholderVessel } from "./vessels.client.js";
@@ -296,6 +297,18 @@ export const getShipmentEvents = async (
   if (events.length) setStale(key, events, STALE_TTL);
   return events;
 };
+
+// Containers carrying the cargo, in the order Maersk first reports them.
+// Only boxes seen laden count: one that was only ever empty (picked up,
+// then swapped) never held this cargo.
+export const shipmentContainers = (events: ShipmentEvent[]) => [
+  ...new Set(
+    events
+      .filter((e) => e.type === "EQUIPMENT" && e.container && e.empty === false)
+      .map((e) => e.container!.trim().toUpperCase())
+      .filter(isValidContainer),
+  ),
+];
 
 const CLASSIFIER_RANK: Record<Classifier, number> = { ACT: 3, EST: 2, PLN: 1 };
 

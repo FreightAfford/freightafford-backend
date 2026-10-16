@@ -3,7 +3,9 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import {
   deriveShipmentSummary,
+  shipmentContainers,
   toShipmentEvents,
+  type ShipmentEvent,
 } from "./tracking.client.js";
 import { isPlaceholderVessel } from "./vessels.client.js";
 
@@ -113,6 +115,56 @@ describe("deriveShipmentSummary", () => {
     assert.equal(summary.departure, null);
     assert.equal(summary.arrival, null);
     assert.deepEqual(summary.legs, []);
+  });
+});
+
+describe("shipmentContainers", () => {
+  const box = (
+    container: string,
+    code: string,
+    empty: boolean,
+  ): ShipmentEvent => ({
+    id: `${container}-${code}-${empty}`,
+    type: "EQUIPMENT",
+    code,
+    classifier: "ACT",
+    dateTime: "2026-10-01T10:00:00+01:00",
+    label: code,
+    container,
+    empty,
+  });
+
+  it("lists the containers Maersk reports", () => {
+    assert.deepEqual(shipmentContainers(fixture("in-transit-transshipment")), [
+      "TEST0000002",
+    ]);
+  });
+
+  // Delivered boxes come back empty at the end; still this cargo's container
+  it("keeps a container returned empty after delivery", () => {
+    assert.deepEqual(
+      shipmentContainers(fixture("arrived-feeder-from-other-port")),
+      ["TEST0000003"],
+    );
+  });
+
+  it("has none before the cargo reaches a container", () => {
+    assert.deepEqual(shipmentContainers(fixture("confirmed-transshipment")), []);
+  });
+
+  it("skips boxes that were only ever empty and bad numbers", () => {
+    const events = [
+      box("MSKU1111111", "GTOT", true),
+      box("MSKU1111111", "GTIN", true),
+      box("mrku2222222", "GTIN", false),
+      box("MRKU3333333", "LOAD", false),
+      box("MRKU2222222", "LOAD", false),
+      box("NOT-A-BOX", "LOAD", false),
+    ];
+    assert.deepEqual(shipmentContainers(events), [
+      "MRKU2222222",
+      "MRKU3333333",
+    ]);
   });
 });
 
