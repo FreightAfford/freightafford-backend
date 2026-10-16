@@ -3,6 +3,7 @@ import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
 import { clearMaerskAccessToken, getMaerskAccessToken } from "./auth.js";
 import { createTtlCache } from "./cache.js";
+import { isPlaceholderVessel } from "./vessels.client.js";
 // Maersk enforces a quota (429 "Rate limit quota violation", no quota
 // headers), so results are cached for an hour and the last good copy is kept
 // for a week to serve when Maersk refuses a call.
@@ -79,6 +80,11 @@ const toShipmentEvent = (e) => {
         e.shipmentEventTypeCode ??
         "";
     const call = e.transportCall;
+    // A "PENDING MOTHER VSL" call has no real vessel or voyage yet
+    const vessel = call?.vessel?.vesselName &&
+        !isPlaceholderVessel(call.vessel.vesselName, call.vessel.vesselCallSignNumber)
+        ? call.vessel
+        : undefined;
     return {
         id: e.eventID,
         type: e.eventType,
@@ -89,10 +95,10 @@ const toShipmentEvent = (e) => {
         location: call
             ? { name: call.location?.locationName, code: call.UNLocationCode }
             : undefined,
-        vessel: call?.vessel?.vesselName
-            ? { name: call.vessel.vesselName, imo: call.vessel.vesselIMONumber }
+        vessel: vessel
+            ? { name: vessel.vesselName, imo: vessel.vesselIMONumber }
             : undefined,
-        voyage: call?.vessel
+        voyage: vessel
             ? (call.carrierVoyageNumber ?? call.exportVoyageNumber)
             : undefined,
         container: e.equipmentReference,
@@ -142,6 +148,14 @@ const fetchEvents = async (params) => {
     }
 };
 const time = (e) => new Date(e.dateTime).getTime();
+// Maersk dates a port call it hasn't scheduled yet 1 Jan 2099, port time
+// (e.g. "2099-01-01T00:00:00+01:00", which is still 2098 in UTC). The date
+// means "unknown", so those events are left out rather than shown or saved.
+const isPlaceholderDate = (dateTime) => dateTime?.slice(0, 4) >= "2099";
+export const toShipmentEvents = (raw) => raw
+    .filter((e) => !isPlaceholderDate(e.eventDateTime))
+    .map(toShipmentEvent)
+    .sort((a, b) => time(a) - time(b));
 // `fresh` skips the cached copy (the sync job wants current data) but still
 // refreshes the cache for the booking page. Without `fresh`, a failed call
 // falls back to the last good copy so the page keeps showing events.
@@ -163,15 +177,18 @@ export const getShipmentEvents = async (ref, { fresh = false } = {}) => {
             return stale;
         throw error;
     }
-    const events = raw.map(toShipmentEvent).sort((a, b) => time(a) - time(b));
+    const events = toShipmentEvents(raw);
     setCached(key, events, CACHE_TTL);
     if (events.length)
         setStale(key, events, STALE_TTL);
     return events;
 };
 const CLASSIFIER_RANK = { ACT: 3, EST: 2, PLN: 1 };
-// Best event for one port call: actual beats estimated beats planned; among
-// equals the most recent report wins.
+// Best event for one port call: actual beats estimated beats planned.
+// Maersk sends only the current event per call and classifier (no history of
+// superseded estimates, and eventCreatedDateTime is one snapshot time on
+// every event), so a tie only means the port appears on two legs; the later
+// one wins.
 const pickBest = (events) => events.reduce((best, e) => !best || CLASSIFIER_RANK[e.classifier] >= CLASSIFIER_RANK[best.classifier]
     ? e
     : best, null);
