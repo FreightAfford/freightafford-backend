@@ -1,16 +1,38 @@
-import envConfig from "../configurations/env.configuration.js";
 import {
-  CUSTOMER_BATCH_ACCEPTED_TEMPLATE,
-  FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE,
-} from "../templates/freight/request.accepted.js";
-import FREIGHTREQUEST_COUNTER_BY_ADMIN_TO_CUSTOMER_TEMPLATE from "../templates/freight/request.counter.js";
-import {
-  FREIGHTREQUEST_BATCH_MADE_TO_ADMIN_TEMPLATE,
-  FREIGHTREQUEST_MADE_TO_ADMIN_TEMPLATE,
-} from "../templates/freight/request.js";
-import FREIGHTREQUEST_REJECTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE from "../templates/freight/request.rejected.js";
-import FREIGHTREQUEST_RESPOND_BY_CUSTOMER_TO_ADMIN_TEMPLATE from "../templates/freight/request.respond.js";
+  APP_URL,
+  FROM,
+  button,
+  details,
+  emailLayout,
+  escapeHtml,
+  formatDate,
+  formatMoney,
+  greeting,
+  mono,
+  paragraph,
+  priceComparison,
+  reason as reasonNote,
+  route,
+  titleCase,
+  type RouteInfo,
+} from "../templates/email/layout.js";
 import { resend } from "./email.service.js";
+
+const ADMIN_RECIPIENTS = [
+  "freightaffords@gmail.com",
+  "devfranklinandrew@gmail.com",
+  "alonsokelvin1@gmail.com",
+  "chiamaka.k@ewebalinternational.ng",
+];
+
+/** "NGAPP → NLRTM", or the port names when a legacy request has no codes. */
+const routeLabel = (r: RouteInfo) =>
+  r.originPortCode && r.destinationPortCode
+    ? `${r.originPortCode} → ${r.destinationPortCode}`
+    : `${titleCase(r.originPort)} → ${titleCase(r.destinationPort)}`;
+
+const containersLabel = (size?: string | null, quantity?: number | null) =>
+  size && quantity ? `${quantity} &times; ${escapeHtml(size)}` : "";
 
 export const sendAdminFreightRequestNotification = async (request: {
   originPort: string;
@@ -20,65 +42,90 @@ export const sendAdminFreightRequestNotification = async (request: {
   cargoWeight: number;
   quantity: number;
   batchId: string | null;
+  originPortCode?: string;
+  destinationPortCode?: string;
+  customerName?: string;
+  customerEmail?: string;
+  containerSize?: string;
+  containerQuantity?: number;
+  cargoReadyDate?: Date | string;
 }) => {
+  const isBatch = request.quantity > 1;
   const dashboardLink = request.batchId
-    ? `https://freightafford.com/app/admin/requests?batchId=${request.batchId}`
-    : "https://freightafford.com/app/admin";
-  const html =
-    request.quantity > 1
-      ? FREIGHTREQUEST_BATCH_MADE_TO_ADMIN_TEMPLATE.replace(
-          "{{QUANTITY}}",
-          String(request.quantity),
-        )
-          .replace("{{QUANTITY}}", String(request.quantity))
-          .replace("{{QUANTITY}}", String(request.quantity))
-          .replace("{{ORIGIN_PORT}}", request.originPort)
-          .replace("{{DESTINATION_PORT}}", request.destinationPort)
-          .replace("{{COMMODITY}}", request.commodity)
-          .replace("{{CARGO_WEIGHT}}", request.cargoWeight.toLocaleString())
-          .replace("{{PROPOSED_PRICE}}", request.proposedPrice.toLocaleString())
-          .replace("{{DASHBOARD_LINK}}", dashboardLink)
-      : FREIGHTREQUEST_MADE_TO_ADMIN_TEMPLATE.replace(
-          "{{ORIGIN_PORT}}",
-          request.originPort,
-        )
-          .replace("{{DESTINATION_PORT}}", request.destinationPort)
-          .replace("{{COMMODITY}}", request.commodity)
-          .replace("{{CARGO_WEIGHT}}", request.cargoWeight.toLocaleString())
-          .replace(
-            "{{PROPOSED_PRICE}}",
-            request.proposedPrice.toLocaleString(),
-          );
+    ? `${APP_URL}/app/admin/requests?batchId=${encodeURIComponent(request.batchId)}`
+    : `${APP_URL}/app/admin/requests`;
+  const each = isBatch ? " (each)" : "";
+  const customer = [request.customerName, request.customerEmail && `(${request.customerEmail})`]
+    .filter(Boolean)
+    .join(" ");
+
+  const html = emailLayout({
+    preheader: [request.customerName, titleCase(request.commodity), formatMoney(request.proposedPrice) + (isBatch ? " each" : "")]
+      .filter(Boolean)
+      .join(" · "),
+    status: [isBatch ? `${request.quantity} requests` : "New request", "ochre"],
+    heading: isBatch ? `New batch of ${request.quantity} requests` : "New freight request",
+    body:
+      paragraph(
+        customer
+          ? `${escapeHtml(customer)} submitted ${isBatch ? `${request.quantity} identical requests` : "a request"}.`
+          : `A customer submitted ${isBatch ? `${request.quantity} identical requests` : "a request"}.`,
+      ) +
+      route(request, [
+        [`Containers${each}`, containersLabel(request.containerSize, request.containerQuantity)],
+        ["Cargo ready", formatDate(request.cargoReadyDate)],
+      ]) +
+      details([
+        ["Commodity", escapeHtml(titleCase(request.commodity))],
+        [`Cargo weight${each}`, `${request.cargoWeight.toLocaleString()} kg`],
+        [`Proposed price${each}`, formatMoney(request.proposedPrice), { mono: true }],
+      ]) +
+      button(isBatch ? "Review batch" : "Review request", dashboardLink),
+  });
 
   return await resend.emails.send({
-    from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
-    to: [
-      "freightaffords@gmail.com",
-      "devfranklinandrew@gmail.com",
-      "alonsokelvin1@gmail.com",
-      "chiamaka.k@ewebalinternational.ng",
-    ],
-    subject:
-      request.quantity > 1
-        ? `New Batch: ${request.quantity} Freight Requests Submitted`
-        : "New Freight Request Submitted",
+    from: FROM(),
+    to: ADMIN_RECIPIENTS,
+    subject: isBatch
+      ? `New batch: ${request.quantity} freight requests, ${routeLabel(request)}`
+      : `New freight request: ${routeLabel(request)}`,
     html,
   });
+};
+
+/** Request fields the customer-facing emails can show. All optional. */
+export type FreightEmailDetails = RouteInfo & {
+  containerSize?: string;
+  containerQuantity?: number;
+  proposedPrice?: number;
+  adminCounterPrice?: number;
 };
 
 export const sendCustomerAcceptedNotification = async (
   email: string,
   fullname: string,
   bookingNo: string,
+  request: FreightEmailDetails = {},
 ) => {
+  // Same rule as the invoice and the booking page: the counter price wins.
+  const agreedPrice = request.adminCounterPrice || request.proposedPrice;
   return await resend.emails.send({
-    from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+    from: FROM(),
     to: email,
-    subject: "Freight Request Accepted",
-    html: FREIGHTREQUEST_ACCEPTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE.replace(
-      "{{USERNAME}}",
-      fullname.split(" ")[0] as string,
-    ).replace("{{BOOKING_NUMBER}}", bookingNo),
+    subject: `Request accepted: ${bookingNo}`,
+    html: emailLayout({
+      preheader: [route(request) && routeLabel(request), formatMoney(agreedPrice)].filter(Boolean).join(" · "),
+      reference: ["Booking", bookingNo],
+      status: ["Accepted", "green"],
+      heading: "Your request is accepted",
+      body:
+        paragraph(`${greeting(fullname)} your booking number is ${mono(bookingNo)}. We'll send your invoice next.`) +
+        route(request, [
+          ["Containers", containersLabel(request.containerSize, request.containerQuantity)],
+          ["Agreed price", formatMoney(agreedPrice)],
+        ]) +
+        button("View booking", `${APP_URL}/app/customer/bookings`),
+    }),
   });
 };
 
@@ -86,19 +133,23 @@ export const sendCustomerBatchAcceptedNotification = async (
   email: string,
   fullname: string,
   bookingNumbers: string[],
+  request: RouteInfo = {},
 ) => {
-  const bookingListHtml = bookingNumbers
-    .map((num) => `<li style="margin-bottom: 6px;">${num}</li>`)
-    .join("");
-
+  const count = bookingNumbers.length;
   return await resend.emails.send({
-    from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+    from: FROM(),
     to: [email],
-    subject: `${bookingNumbers.length} Freight Requests Accepted`,
-    html: CUSTOMER_BATCH_ACCEPTED_TEMPLATE.replace("{{FULLNAME}}", fullname)
-      .replace("{{COUNT}}", String(bookingNumbers.length))
-      .replace("{{COUNT}}", String(bookingNumbers.length))
-      .replace("{{BOOKING_LIST}}", bookingListHtml),
+    subject: `${count} freight requests accepted`,
+    html: emailLayout({
+      preheader: count > 1 ? `${bookingNumbers[0]} and ${count - 1} more` : bookingNumbers[0],
+      status: [`${count} accepted`, "green"],
+      heading: `Your ${count} requests are accepted`,
+      body:
+        paragraph(`${greeting(fullname)} each request now has its own booking number.`) +
+        route(request) +
+        details(bookingNumbers.map((num, i) => [`Booking ${i + 1}`, escapeHtml(num), { mono: true }])) +
+        button("View bookings", `${APP_URL}/app/customer/bookings`),
+    }),
   });
 };
 
@@ -107,17 +158,26 @@ export const sendCustomerCounterNotification = async (
   fullname: string,
   price: number,
   reason: string,
+  request: FreightEmailDetails = {},
 ) => {
+  const proposed = request.proposedPrice;
   return await resend.emails.send({
-    from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+    from: FROM(),
     to: email,
-    subject: "Freight Counter Offer",
-    html: FREIGHTREQUEST_COUNTER_BY_ADMIN_TO_CUSTOMER_TEMPLATE.replace(
-      "{{USERNAME}}",
-      fullname.split(" ")[0] as string,
-    )
-      .replace("{{COUNTER_PRICE}}", price.toLocaleString())
-      .replace("{{REASON}}", reason),
+    subject: `Counter offer: ${formatMoney(price)}`,
+    html: emailLayout({
+      preheader: proposed ? `You proposed ${formatMoney(proposed)}.` : `Our offer: ${formatMoney(price)}`,
+      status: ["Reply needed", "ochre"],
+      heading: "We have a counter offer",
+      body:
+        paragraph(`${greeting(fullname)} we can't take your request at the proposed price. Here's what we can offer.`) +
+        (typeof proposed === "number"
+          ? priceComparison(proposed, price)
+          : details([["Our offer", formatMoney(price), { mono: true, big: true }]])) +
+        (reason ? reasonNote("blue", reason) : "") +
+        route(request) +
+        button("Respond to offer", `${APP_URL}/app/customer/requests`),
+    }),
   });
 };
 
@@ -125,15 +185,23 @@ export const sendCustomerRejectedNotification = async (
   email: string,
   fullname: string,
   reason: string,
+  request: RouteInfo = {},
 ) => {
+  const hasRoute = !!route(request);
   return await resend.emails.send({
-    from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+    from: FROM(),
     to: email,
-    subject: "Freight Request Rejected",
-    html: FREIGHTREQUEST_REJECTED_BY_ADMIN_TO_CUSTOMER_TEMPLATE.replace(
-      "{{USERNAME}}",
-      fullname.split(" ")[0] as string,
-    ).replace("{{REASON}}", reason),
+    subject: hasRoute ? `Request not accepted: ${routeLabel(request)}` : "Freight request not accepted",
+    html: emailLayout({
+      preheader: reason,
+      status: ["Not accepted", "red"],
+      heading: "We can't take this request",
+      body:
+        paragraph(`${greeting(fullname)} we're unable to accept this request.`) +
+        (reason ? reasonNote("red", reason) : "") +
+        route(request) +
+        button("Send a new request", `${APP_URL}/app/customer/requests`),
+    }),
   });
 };
 
@@ -141,16 +209,25 @@ export const sendAdminCustomerDecisionNotification = async (
   adminEmail: string[],
   fullname: string,
   decision: string,
+  request: FreightEmailDetails = {},
 ) => {
+  const accepted = decision === "accept";
+  const name = titleCase(fullname) || "The customer";
+  const offer = formatMoney(request.adminCounterPrice);
   return await resend.emails.send({
-    from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+    from: FROM(),
     to: adminEmail,
-    subject: "Customer Responded to Counter Offer",
-    html: FREIGHTREQUEST_RESPOND_BY_CUSTOMER_TO_ADMIN_TEMPLATE.replace(
-      "{{FULLNAME}}",
-      fullname,
-    )
-      .replace("{{DECISION}}", decision)
-      .replace("{{COLOR}}", decision === "accept" ? "#10b981" : "#ef4444"),
+    subject: `${name} ${accepted ? "accepted" : "declined"} the counter offer`,
+    html: emailLayout({
+      preheader: [route(request) && routeLabel(request), offer].filter(Boolean).join(" · "),
+      status: [accepted ? "Accepted" : "Declined", accepted ? "green" : "red"],
+      heading: `Customer ${accepted ? "accepted" : "declined"} the counter offer`,
+      body:
+        paragraph(
+          `${escapeHtml(name)} ${accepted ? "accepted" : "declined"} ${offer ? `your offer of ${offer}` : "your counter offer"}.`,
+        ) +
+        route(request) +
+        button("Open requests", `${APP_URL}/app/admin/requests`),
+    }),
   });
 };

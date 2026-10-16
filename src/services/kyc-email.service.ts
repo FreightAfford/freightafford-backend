@@ -1,29 +1,24 @@
 import envConfig from "../configurations/env.configuration.js";
 import User from "../models/user.model.js";
-import { kycEmailLayout } from "../templates/kyc/layout.js";
+import {
+  FROM,
+  button,
+  details,
+  emailLayout,
+  escapeHtml,
+  greeting,
+  paragraph,
+  reason as reasonNote,
+} from "../templates/email/layout.js";
 import { resend } from "./email.service.js";
 
 // Business verification (KYC) emails. Each returns Resend's `{ error }`.
 
-const FROM = () => `Freightafford <${envConfig.RESEND_EMAIL}>`;
 const APP = () => envConfig.CLIENT_URL ?? "https://freightafford.com";
 
-export const escapeHtml = (value: string) =>
-  value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+export { escapeHtml };
 
-const firstName = (fullname: string) =>
-  escapeHtml((fullname.split(" ")[0] ?? "").replace(/^./, (c) => c.toUpperCase()));
-
-const row = (label: string, value: string, last = false) => `
-  <tr>
-    <td class="info-td info-label"${last ? ' style="border-bottom: none;"' : ""}>${label}</td>
-    <td class="info-td info-value"${last ? ' style="border-bottom: none;"' : ""}>${value}</td>
-  </tr>`;
+const business = (name: string) => `<strong style="color:#0f172b;">${escapeHtml(name)}</strong>`;
 
 /** To the customer, right after they submit. */
 export const sendKycReceivedEmail = (
@@ -34,15 +29,13 @@ export const sendKycReceivedEmail = (
     from: FROM(),
     to: to.email,
     subject: "We've received your business details",
-    html: kycEmailLayout({
-      title: "Verification received",
+    html: emailLayout({
+      preheader: "We'll email you when it's done.",
+      status: ["In review", "blue"],
       heading: "Your details are with our team",
-      body: `
-        <p>Hello ${firstName(to.fullname)},</p>
-        <p>Thanks for submitting the verification for <strong>${escapeHtml(businessName)}</strong>. Our team is checking your details and documents now.</p>
-        <p>We'll email you as soon as it's done. Live tracking for your bookings opens once your business is verified.</p>`,
-      buttonText: "View verification",
-      buttonLink: `${APP()}/app/customer/verification`,
+      body:
+        paragraph(`${greeting(to.fullname)} we're checking the details for ${business(businessName)}. We'll email you when it's done.`) +
+        button("View verification", `${APP()}/app/customer/verification`),
     }),
   });
 
@@ -64,24 +57,27 @@ export const sendKycNewSubmissionEmail = async (application: {
     return { error: null };
   }
 
+  const accountType = application.accountType === "exporter" ? "Exporter" : "Export agent";
   return resend.emails.send({
     from: FROM(),
     // The rest are bcc'd, so the team's addresses aren't all shown.
     to: recipients[0]!,
     ...(recipients.length > 1 && { bcc: recipients.slice(1) }),
     subject: `New business verification: ${application.businessName}`,
-    html: kycEmailLayout({
-      title: "New business verification",
+    html: emailLayout({
+      preheader: `${application.applicantName} · ${accountType}`,
+      status: ["To review", "ochre"],
       heading: "A business is waiting for verification",
-      body: `
-        <p>${escapeHtml(application.businessName)} has submitted its details and documents for review.</p>
-        <table class="info-table">
-          ${row("Business", escapeHtml(application.businessName))}
-          ${row("Account type", application.accountType === "exporter" ? "Exporter" : "Export agent")}
-          ${row("Submitted by", `${escapeHtml(application.applicantName)}<br/>${escapeHtml(application.applicantEmail)}`, true)}
-        </table>`,
-      buttonText: "Review now",
-      buttonLink: `${APP()}/app/admin/verifications/${application.id}`,
+      body:
+        details([
+          ["Business", escapeHtml(application.businessName)],
+          ["Account type", accountType],
+          [
+            "Submitted by",
+            `${escapeHtml(application.applicantName)}<br><span style="font-weight:400;color:#3d4b5f;">${escapeHtml(application.applicantEmail)}</span>`,
+          ],
+        ]) +
+        button("Review now", `${APP()}/app/admin/verifications/${encodeURIComponent(application.id)}`),
     }),
   });
 };
@@ -95,15 +91,13 @@ export const sendKycApprovedEmail = (to: Recipient, businessName: string) =>
     from: FROM(),
     to: to.email,
     subject: "Your business is verified",
-    html: kycEmailLayout({
-      title: "Business verified",
+    html: emailLayout({
+      preheader: "Live tracking is now open.",
+      status: ["Verified", "green"],
       heading: "Your business is verified",
-      body: `
-        <p>Hello ${firstName(to.fullname)},</p>
-        <p>Good news: <strong>${escapeHtml(businessName)}</strong> is now verified on Freightafford.</p>
-        <p>Live tracking is now open on all your bookings, so you can follow your cargo from port to port. If any of your documents expire, we'll ask you to upload a new one.</p>`,
-      buttonText: "View your bookings",
-      buttonLink: `${APP()}/app/customer/bookings`,
+      body:
+        paragraph(`${greeting(to.fullname)} ${business(businessName)} is now verified. Live tracking is open on all your bookings.`) +
+        button("View bookings", `${APP()}/app/customer/bookings`),
     }),
   });
 
@@ -117,18 +111,16 @@ export const sendKycChangesEmail = (
     from: FROM(),
     to: to.email,
     subject: "We need a few changes to verify your business",
-    html: kycEmailLayout({
-      title: "Changes needed",
+    html: emailLayout({
+      preheader: notes.map((n) => n.label).join(", "),
+      status: ["Changes needed", "ochre"],
       heading: "A few changes are needed",
-      body: `
-        <p>Hello ${firstName(to.fullname)},</p>
-        <p>Our team reviewed the details for <strong>${escapeHtml(businessName)}</strong> and needs you to update the following before we can verify your business:</p>
-        <table class="info-table">
-          ${notes.map(({ label, note }, i) => row(escapeHtml(label), escapeHtml(note), i === notes.length - 1)).join("")}
-        </table>
-        <p>Your other details are saved. Update these and submit again.</p>`,
-      buttonText: "Make the changes",
-      buttonLink: VERIFY_LINK(),
+      body:
+        paragraph(`${greeting(to.fullname)} please update the following for ${business(businessName)}:`) +
+        details(
+          notes.map(({ label, note }) => [label, `<span style="font-weight:400;">${escapeHtml(note)}</span>`]),
+        ) +
+        button("Make the changes", VERIFY_LINK()),
     }),
   });
 
@@ -142,17 +134,13 @@ export const sendKycRejectedEmail = (
     from: FROM(),
     to: to.email,
     subject: "We couldn't verify your business",
-    html: kycEmailLayout({
-      title: "Verification unsuccessful",
+    html: emailLayout({
+      preheader: reason,
+      status: ["Not verified", "red"],
       heading: "We couldn't verify your business",
-      body: `
-        <p>Hello ${firstName(to.fullname)},</p>
-        <p>We weren't able to verify <strong>${escapeHtml(businessName)}</strong>.</p>
-        <table class="info-table">
-          ${row("Reason", escapeHtml(reason), true)}
-        </table>
-        <p>If you think this is a mistake, or want to know what's needed, contact our support team.</p>`,
-      buttonText: "View details",
-      buttonLink: VERIFY_LINK(),
+      body:
+        paragraph(`${greeting(to.fullname)} we weren't able to verify ${business(businessName)}.`) +
+        reasonNote("red", reason) +
+        button("View details", VERIFY_LINK()),
     }),
   });

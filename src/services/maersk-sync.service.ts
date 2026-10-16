@@ -94,6 +94,17 @@ const vesselKey = (name?: string) =>
 const sameVesselName = (current: string | undefined, next: string) =>
   vesselKey(current) ? vesselKey(current) === vesselKey(next) : null;
 
+// Ports for the customer emails; empty for legacy requests.
+const routeOf = (booking: BookingDoc) => {
+  const request = booking.freightRequest as unknown as IFreightRequest | null;
+  return {
+    originPort: request?.originPort,
+    destinationPort: request?.destinationPort,
+    originPortCode: request?.originPortCode,
+    destinationPortCode: request?.destinationPortCode,
+  };
+};
+
 // Tells the customer their shipment moved to another vessel. Failure is
 // only logged, like the status emails.
 const notifyVesselChange = async (booking: BookingDoc) => {
@@ -105,7 +116,13 @@ const notifyVesselChange = async (booking: BookingDoc) => {
     booking.shippingLine ?? "Maersk",
     booking.vessel ?? "",
     booking.sailingDate,
-    "Shipping Details Updated",
+    undefined,
+    {
+      ...routeOf(booking),
+      bookingNumber: booking.bookingNumber,
+      eta: booking.eta,
+      isUpdate: true,
+    },
   );
   if (error)
     console.error(
@@ -131,6 +148,7 @@ const applyStatus = async (
     customer.fullname,
     booking.bookingNumber,
     STATUS_TEXT[next],
+    { ...routeOf(booking), vessel: booking.vessel, eta: booking.eta },
   );
   if (error)
     console.error(

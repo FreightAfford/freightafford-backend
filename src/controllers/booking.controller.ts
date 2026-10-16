@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import AppError from "../errors/app.error.js";
 import { VESSEL_IMO_REGEX } from "../integrations/maersk/vessels.client.js";
 import Booking from "../models/booking.model.js";
+import FreightRequest from "../models/freight.model.js";
 import {
   sendBookingScheduleNotification,
   sendContainerNumbersNotification,
@@ -180,6 +181,7 @@ export const updateBookingShipping = async (
     booking.carrierBookingNumber !== carrierBookingNumber ||
     new Date(booking.sailingDate ?? 0).getTime() !==
       new Date(sailingDate ?? 0).getTime();
+  const hadShippingDetails = !!(booking.vessel || booking.sailingDate);
 
   booking.shippingLine = shippingLine;
   booking.vessel = vessel;
@@ -191,6 +193,12 @@ export const updateBookingShipping = async (
   booking.carrierBookingNumber = carrierBookingNumber;
 
   if (detailsChanged) {
+    // Looked up separately so the response keeps an unpopulated freightRequest
+    const route = await FreightRequest.findById(
+      booking.freightRequest,
+      "originPort destinationPort originPortCode destinationPortCode",
+    ).lean();
+
     const { error } = await sendBookingScheduleNotification(
       customer.email,
       customer.fullname,
@@ -198,6 +206,13 @@ export const updateBookingShipping = async (
       shippingLine,
       vessel,
       booking.sailingDate,
+      undefined,
+      {
+        ...route,
+        bookingNumber: booking.bookingNumber,
+        eta: booking.eta,
+        isUpdate: hadShippingDetails,
+      },
     );
 
     if (error)
@@ -231,7 +246,10 @@ export const updateBookingStatus = async (
 
   const booking = await Booking.findById(req.params.id)
     .populate("customer", "email fullname")
-    .populate("freightRequest", "originPort destinationPort");
+    .populate(
+      "freightRequest",
+      "originPort destinationPort originPortCode destinationPortCode",
+    );
 
   if (!booking) return next(new AppError("Booking not found", 404));
 
@@ -264,6 +282,14 @@ export const updateBookingStatus = async (
     customer.fullname,
     booking.bookingNumber,
     status,
+    {
+      originPort: request?.originPort,
+      destinationPort: request?.destinationPort,
+      originPortCode: request?.originPortCode,
+      destinationPortCode: request?.destinationPortCode,
+      vessel: booking.vessel,
+      eta: booking.eta,
+    },
   );
 
   if (error)
@@ -386,7 +412,10 @@ export const replaceContainers = async (
 
   const booking = await Booking.findById(bookingId)
     .populate("customer", "fullname email")
-    .populate("freightRequest", "originPort destinationPort");
+    .populate(
+      "freightRequest",
+      "originPort destinationPort originPortCode destinationPortCode",
+    );
 
   if (!booking) return next(new AppError("Booking not found", 404));
 
@@ -409,6 +438,10 @@ export const replaceContainers = async (
     request.originPort,
     request.destinationPort,
     booking.containers,
+    {
+      originPortCode: request.originPortCode,
+      destinationPortCode: request.destinationPortCode,
+    },
   );
 
   if (error)

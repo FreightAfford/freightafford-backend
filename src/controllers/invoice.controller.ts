@@ -85,6 +85,7 @@ export const uploadInvoice = async (
     invoice.invoiceNumber,
     invoice.amount,
     invoice.dueDate,
+    { bookingNumber: invoice.bookingNumber, description: invoice.description },
   );
 
   if (error)
@@ -207,6 +208,7 @@ export const submitPaymentProof = async (
     invoice.invoiceNumber,
     invoice.paymentReference,
     invoice.status,
+    { customerName: invoice.customerName, amount: invoice.amount },
   );
 
   if (error)
@@ -258,6 +260,12 @@ export const verifyPayment = async (
     action,
     invoice.invoiceNumber,
     invoice.status,
+    {
+      amount: invoice.amount,
+      paidAt: invoice.paidAt,
+      dueDate: invoice.dueDate,
+      paymentReference: invoice.paymentReference,
+    },
   );
 
   if (error)

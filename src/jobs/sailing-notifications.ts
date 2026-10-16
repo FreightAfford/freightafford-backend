@@ -24,7 +24,10 @@ export const autoTransitSailedBookings = async () => {
     shippingLine: { $ne: "Maersk" },
   })
     .populate("customer", "fullname email")
-    .populate("freightRequest", "originPort destinationPort");
+    .populate(
+      "freightRequest",
+      "originPort destinationPort originPortCode destinationPortCode",
+    );
 
   if (!bookings.length) {
     console.log("[autoTransit] No bookings to transition today.");
@@ -45,6 +48,14 @@ export const autoTransitSailedBookings = async () => {
         customer.fullname,
         booking.bookingNumber,
         "in transit",
+        {
+          originPort: (booking.freightRequest as any)?.originPort,
+          destinationPort: (booking.freightRequest as any)?.destinationPort,
+          originPortCode: (booking.freightRequest as any)?.originPortCode,
+          destinationPortCode: (booking.freightRequest as any)?.destinationPortCode,
+          vessel: booking.vessel,
+          eta: booking.eta,
+        },
       );
 
       if (error) {
@@ -85,7 +96,10 @@ export const sendSailingReminders = async () => {
     sailingDate: { $gte: startOfDay, $lte: endOfDay },
   })
     .populate("customer", "fullname email")
-    .populate("freightRequest", "originPort destinationPort");
+    .populate(
+      "freightRequest",
+      "originPort destinationPort originPortCode destinationPortCode",
+    );
 
   if (!bookings.length) {
     console.log("[sailingReminder] No reminders to send today.");
@@ -106,6 +120,10 @@ export const sendSailingReminders = async () => {
         request?.originPort ?? "",
         request?.destinationPort ?? "",
         booking.sailingDate!,
+        {
+          originPortCode: request?.originPortCode,
+          destinationPortCode: request?.destinationPortCode,
+        },
       );
 
       if (error) {

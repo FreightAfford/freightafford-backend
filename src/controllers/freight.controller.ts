@@ -121,6 +121,13 @@ export const createFreightRequest = async (
     commodity,
     quantity: requestCount,
     batchId,
+    originPortCode: origin.code,
+    destinationPortCode: destination.code,
+    customerName: baseDoc.customerName,
+    customerEmail: baseDoc.customerEmail,
+    containerSize,
+    containerQuantity,
+    cargoReadyDate,
   });
 
   if (error) {
@@ -292,6 +299,7 @@ export const acceptFreightRequestBatch = async (
     customer.email,
     customer.fullname,
     createdBookings.map((b) => b.bookingNumber),
+    acceptableRequests[0],
   );
 
   if (error) {
@@ -445,6 +453,7 @@ export const acceptFreightRequest = async (
     user.email,
     user.fullname,
     booking.bookingNumber,
+    request,
   );
 
   if (error) {
@@ -498,6 +507,7 @@ export const counterFreightRequest = async (
     user.fullname,
     counterPrice,
     reason,
+    request,
   );
 
   if (error)
@@ -545,6 +555,7 @@ export const rejectFreightRequest = async (
     user.email,
     user.fullname,
     reason,
+    request,
   );
 
   if (error)
@@ -600,6 +611,7 @@ export const respondToCounter = async (
     ],
     req.user.fullname,
     decision,
+    request,
   );
 
   if (error)
