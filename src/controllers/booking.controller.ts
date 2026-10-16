@@ -12,7 +12,6 @@ import { syncBookingWithMaersk } from "../services/maersk-sync.service.js";
 import ApiFeatures from "../utils/api-features.js";
 import {
   canModifyContainers,
-  isValidContainer,
   normalizeContainers,
   validateContainers,
 } from "../utils/container.js";
@@ -301,7 +300,7 @@ export const addContainers = async (
 
   containers = normalizeContainers(containers);
 
-  if (isValidContainer(containers))
+  if (!validateContainers(containers))
     return next(new AppError("Invalid container format", 400));
 
   const booking = await Booking.findById(bookingId);
