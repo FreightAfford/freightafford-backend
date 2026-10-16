@@ -5,7 +5,7 @@ import Booking from "../models/booking.model.js";
 import { sendBookingScheduleNotification, sendContainerNumbersNotification, sendShipmentStatusUpdate, } from "../services/booking.service.js";
 import { syncBookingWithMaersk } from "../services/maersk-sync.service.js";
 import ApiFeatures from "../utils/api-features.js";
-import { canModifyContainers, isValidContainer, normalizeContainers, validateContainers, } from "../utils/container.js";
+import { canModifyContainers, normalizeContainers, validateContainers, } from "../utils/container.js";
 import { allowedBookingFilters } from "../utils/whitelists.js";
 import { createTrackingEvent } from "./tracking.controller.js";
 export const getMyBookings = async (req, res, next) => {
@@ -188,7 +188,7 @@ export const addContainers = async (req, res, next) => {
     if (!Array.isArray(containers) || containers.length === 0)
         return next(new AppError("Containers are required", 400));
     containers = normalizeContainers(containers);
-    if (isValidContainer(containers))
+    if (!validateContainers(containers))
         return next(new AppError("Invalid container format", 400));
     const booking = await Booking.findById(bookingId);
     if (!booking)

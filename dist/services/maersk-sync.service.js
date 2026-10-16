@@ -1,5 +1,5 @@
 import { createTrackingEvent } from "../controllers/tracking.controller.js";
-import { deriveShipmentSummary, getShipmentEvents, isTrackingQuotaBlocked, } from "../integrations/maersk/tracking.client.js";
+import { deriveShipmentSummary, getShipmentEvents, isTrackingQuotaBlocked, shipmentContainers, } from "../integrations/maersk/tracking.client.js";
 import Booking from "../models/booking.model.js";
 import { sendBookingScheduleNotification, sendShipmentStatusUpdate, } from "./booking.service.js";
 import { maerskStatus } from "./maersk-status.js";
@@ -148,6 +148,14 @@ export const syncBookingWithMaersk = async (bookingId, { prefetched, } = {}) => 
                 : sameVesselName(booking.vessel, departure.vessel.name) === false;
         booking.vessel = departure.vessel.name;
         booking.vesselImo = departure.vessel.imo;
+        changed = true;
+    }
+    // The team rarely types container numbers, so add the ones Maersk reports.
+    // Saved silently, and never removes one entered by hand.
+    const existing = booking.containers ?? [];
+    const missing = shipmentContainers(result.events).filter((c) => !existing.includes(c));
+    if (missing.length) {
+        booking.containers = [...existing, ...missing];
         changed = true;
     }
     booking.maerskSync = {
