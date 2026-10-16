@@ -1,38 +1,49 @@
-import envConfig from "../configurations/env.configuration.js";
-import OTP_EMAIL_VERIFICATION_TEMPLATE from "../templates/auth/otp.js";
-import PASSWORD_RESET_TEMPLATE from "../templates/auth/password.reset.js";
+import { FROM, button, emailLayout, firstName, firstNameText, gap, linkFallback, otpCode, paragraph, smallPrint, } from "../templates/email/layout.js";
 import { resend } from "./email.service.js";
+const otpEmail = (fullname, otp, expiry, isResend) => emailLayout({
+    preheader: `It expires in ${expiry} minutes.`,
+    status: ["Verification", "blue"],
+    heading: isResend
+        ? "Your new code"
+        : firstNameText(fullname)
+            ? `Verify your email, ${firstNameText(fullname)}`
+            : "Verify your email",
+    body: paragraph(`Enter this code to verify your email. It expires in ${expiry} minutes.`) +
+        otpCode(otp) +
+        smallPrint("If you didn't request this, you can ignore this email."),
+});
 export const sendOTPEmail = async (email, fullname, otp, expiry) => {
     return resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        from: FROM(),
         to: email,
-        subject: "OTP / Email Verification",
-        html: OTP_EMAIL_VERIFICATION_TEMPLATE.replace("{{USER_NAME}}", fullname.split(" ")[0])
-            .replace("{{FULL_YEAR}}", new Date().getFullYear().toString())
-            .replace("{{OTP}}", otp)
-            .replace("{{OTP_EXPIRY}}", expiry.toString()),
+        subject: `${otp} is your Freightafford code`,
+        html: otpEmail(fullname, otp, expiry, false),
     });
 };
 export const resendOTPEmail = async (email, fullname, otp, expiry) => {
     return resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        from: FROM(),
         to: email,
-        subject: "Resend OTP / Email Verification",
-        html: OTP_EMAIL_VERIFICATION_TEMPLATE.replace("{{USER_NAME}}", fullname.split(" ")[0])
-            .replace("{{FULL_YEAR}}", new Date().getFullYear().toString())
-            .replace("{{OTP}}", otp)
-            .replace("{{OTP_EXPIRY}}", expiry.toString()),
+        subject: `${otp} is your Freightafford code`,
+        html: otpEmail(fullname, otp, expiry, true),
     });
 };
 export const passwordResetEmail = async (email, fullname, resetLink, expiry) => {
+    const name = firstName(fullname);
     return resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        from: FROM(),
         to: email,
-        subject: "Password Reset Request",
-        html: PASSWORD_RESET_TEMPLATE.replace("{{USER_NAME}}", fullname.split(" ")[0])
-            .replace("{{FULL_YEAR}}", new Date().getFullYear().toString())
-            .replace("{{RESET_LINK}}", resetLink)
-            .replace("{{RESET_EXPIRY}}", expiry.toString()),
+        subject: "Reset your Freightafford password",
+        html: emailLayout({
+            preheader: `This link expires in ${expiry} minutes.`,
+            status: ["Password reset", "blue"],
+            heading: "Reset your password",
+            body: paragraph(`${name ? `Hi ${name}, use` : "Use"} the button below to choose a new password. The link expires in ${expiry} minutes.`) +
+                button("Choose a new password", resetLink) +
+                linkFallback(resetLink) +
+                gap(18) +
+                smallPrint("If you didn't ask for this, ignore this email. Your password won't change."),
+        }),
     });
 };
 //# sourceMappingURL=auth-email.service.js.map

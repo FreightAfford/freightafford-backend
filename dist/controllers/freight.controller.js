@@ -73,6 +73,13 @@ export const createFreightRequest = async (req, res, next) => {
         commodity,
         quantity: requestCount,
         batchId,
+        originPortCode: origin.code,
+        destinationPortCode: destination.code,
+        customerName: baseDoc.customerName,
+        customerEmail: baseDoc.customerEmail,
+        containerSize,
+        containerQuantity,
+        cargoReadyDate,
     });
     if (error) {
         // return next(
@@ -185,7 +192,7 @@ export const acceptFreightRequestBatch = async (req, res, next) => {
         await request.save();
         createdBookings.push(booking);
     }
-    const { error } = await sendCustomerBatchAcceptedNotification(customer.email, customer.fullname, createdBookings.map((b) => b.bookingNumber));
+    const { error } = await sendCustomerBatchAcceptedNotification(customer.email, customer.fullname, createdBookings.map((b) => b.bookingNumber), acceptableRequests[0]);
     if (error) {
         console.error("Batch accepted but notification email failed to send:", error);
     }
@@ -281,7 +288,7 @@ export const acceptFreightRequest = async (req, res, next) => {
         customerEmail: customer.email,
     });
     request.booking = booking._id;
-    const { error } = await sendCustomerAcceptedNotification(user.email, user.fullname, booking.bookingNumber);
+    const { error } = await sendCustomerAcceptedNotification(user.email, user.fullname, booking.bookingNumber, request);
     if (error) {
         return next(new AppError("Booking created but notification email failed to send.", 400));
     }
@@ -308,7 +315,7 @@ export const counterFreightRequest = async (req, res, next) => {
     request.counterReason = reason;
     request.status = "countered";
     request.adminActionAt = new Date();
-    const { error } = await sendCustomerCounterNotification(user.email, user.fullname, counterPrice, reason);
+    const { error } = await sendCustomerCounterNotification(user.email, user.fullname, counterPrice, reason, request);
     if (error)
         return next(new AppError("Unable to send counter freight request notification.", 400));
     await request.save();
@@ -333,7 +340,7 @@ export const rejectFreightRequest = async (req, res, next) => {
     request.status = "rejected";
     request.rejectionReason = reason;
     request.adminActionAt = new Date();
-    const { error } = await sendCustomerRejectedNotification(user.email, user.fullname, reason);
+    const { error } = await sendCustomerRejectedNotification(user.email, user.fullname, reason, request);
     if (error)
         return next(new AppError("Unable to send reject freight request notification", 400));
     await request.save();
@@ -365,7 +372,7 @@ export const respondToCounter = async (req, res, next) => {
         "devfranklinandrew@gmail.com",
         "alonsokelvin1@gmail.com",
         "chiamaka.k@ewebalinternational.ng",
-    ], req.user.fullname, decision);
+    ], req.user.fullname, decision, request);
     if (error)
         return next(new AppError("Unable to send response to counter offer request notification.", 400));
     const booking = await Booking.create({

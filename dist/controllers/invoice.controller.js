@@ -46,7 +46,7 @@ export const uploadInvoice = async (req, res, next) => {
         amount: freightRequest.adminCounterPrice || freightRequest.proposedPrice,
         description,
     });
-    const { error } = await sendUploadInvoiceNotification(customer.email, customer.fullname, invoice.invoiceNumber, invoice.amount, invoice.dueDate);
+    const { error } = await sendUploadInvoiceNotification(customer.email, customer.fullname, invoice.invoiceNumber, invoice.amount, invoice.dueDate, { bookingNumber: invoice.bookingNumber, description: invoice.description });
     if (error)
         return next(new AppError("Unable to send invoice notification", 400));
     await invoice.save();
@@ -122,7 +122,7 @@ export const submitPaymentProof = async (req, res, next) => {
         "devfranklinandrew@gmail.com",
         "alonsokelvin1@gmail.com",
         "chiamaka.k@ewebalinternational.ng",
-    ], invoice.invoiceNumber, invoice.paymentReference, invoice.status);
+    ], invoice.invoiceNumber, invoice.paymentReference, invoice.status, { customerName: invoice.customerName, amount: invoice.amount });
     if (error)
         return next(new AppError("Unable to send payment proof notification", 400));
     await invoice.save();
@@ -152,7 +152,12 @@ export const verifyPayment = async (req, res, next) => {
         invoice.verifiedBy = adminId;
     }
     const customer = invoice.customer;
-    const { error } = await sendVerifyPaymentNotification(customer.email, customer.fullname, action, invoice.invoiceNumber, invoice.status);
+    const { error } = await sendVerifyPaymentNotification(customer.email, customer.fullname, action, invoice.invoiceNumber, invoice.status, {
+        amount: invoice.amount,
+        paidAt: invoice.paidAt,
+        dueDate: invoice.dueDate,
+        paymentReference: invoice.paymentReference,
+    });
     if (error)
         return next(new AppError("Unable to send verify payment notification", 400));
     await invoice.save();

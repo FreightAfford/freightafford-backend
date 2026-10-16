@@ -54,11 +54,26 @@ const sameDate = (a, b) => (a ? new Date(a).getTime() : null) === (b ? new Date(
 const vesselKey = (name) => name?.toUpperCase().replace(/[^A-Z0-9]/g, "") ?? "";
 // null when there's no previous vessel to compare against
 const sameVesselName = (current, next) => vesselKey(current) ? vesselKey(current) === vesselKey(next) : null;
+// Ports for the customer emails; empty for legacy requests.
+const routeOf = (booking) => {
+    const request = booking.freightRequest;
+    return {
+        originPort: request?.originPort,
+        destinationPort: request?.destinationPort,
+        originPortCode: request?.originPortCode,
+        destinationPortCode: request?.destinationPortCode,
+    };
+};
 // Tells the customer their shipment moved to another vessel. Failure is
 // only logged, like the status emails.
 const notifyVesselChange = async (booking) => {
     const customer = booking.customer;
-    const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, booking.carrierBookingNumber ?? "", booking.shippingLine ?? "Maersk", booking.vessel ?? "", booking.sailingDate, "Shipping Details Updated");
+    const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, booking.carrierBookingNumber ?? "", booking.shippingLine ?? "Maersk", booking.vessel ?? "", booking.sailingDate, undefined, {
+        ...routeOf(booking),
+        bookingNumber: booking.bookingNumber,
+        eta: booking.eta,
+        isUpdate: true,
+    });
     if (error)
         console.error(`[maersk-sync] Vessel email failed for booking ${booking.bookingNumber}: ${JSON.stringify(error)}`);
 };
@@ -69,7 +84,7 @@ const applyStatus = async (booking, next, description) => {
     const request = booking.freightRequest;
     booking.status = next;
     await booking.save();
-    const { error } = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, STATUS_TEXT[next]);
+    const { error } = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, STATUS_TEXT[next], { ...routeOf(booking), vessel: booking.vessel, eta: booking.eta });
     if (error)
         console.error(`[maersk-sync] Email failed for booking ${booking.bookingNumber}: ${JSON.stringify(error)}`);
     try {

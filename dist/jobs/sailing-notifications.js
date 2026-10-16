@@ -18,7 +18,7 @@ export const autoTransitSailedBookings = async () => {
         shippingLine: { $ne: "Maersk" },
     })
         .populate("customer", "fullname email")
-        .populate("freightRequest", "originPort destinationPort");
+        .populate("freightRequest", "originPort destinationPort originPortCode destinationPortCode");
     if (!bookings.length) {
         console.log("[autoTransit] No bookings to transition today.");
         return;
@@ -29,7 +29,14 @@ export const autoTransitSailedBookings = async () => {
         booking.status = "in_transit";
         await booking.save();
         //   2. Send the same email that manual flow already uses
-        const { error } = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, "in transit");
+        const { error } = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, "in transit", {
+            originPort: booking.freightRequest?.originPort,
+            destinationPort: booking.freightRequest?.destinationPort,
+            originPortCode: booking.freightRequest?.originPortCode,
+            destinationPortCode: booking.freightRequest?.destinationPortCode,
+            vessel: booking.vessel,
+            eta: booking.eta,
+        });
         if (error) {
             console.error(`[autoTransit] Email failed for booking ${booking.bookingNumber}: ${error}`);
         }
@@ -57,7 +64,7 @@ export const sendSailingReminders = async () => {
         sailingDate: { $gte: startOfDay, $lte: endOfDay },
     })
         .populate("customer", "fullname email")
-        .populate("freightRequest", "originPort destinationPort");
+        .populate("freightRequest", "originPort destinationPort originPortCode destinationPortCode");
     if (!bookings.length) {
         console.log("[sailingReminder] No reminders to send today.");
         return;
@@ -65,7 +72,10 @@ export const sendSailingReminders = async () => {
     const results = await Promise.allSettled(bookings.map(async (booking) => {
         const customer = booking.customer;
         const request = booking.freightRequest;
-        const { error } = await sendSailingReminderNotification(customer.email, customer.fullname, booking.bookingNumber, booking.shippingLine ?? "", booking.vessel ?? "", request?.originPort ?? "", request?.destinationPort ?? "", booking.sailingDate);
+        const { error } = await sendSailingReminderNotification(customer.email, customer.fullname, booking.bookingNumber, booking.shippingLine ?? "", booking.vessel ?? "", request?.originPort ?? "", request?.destinationPort ?? "", booking.sailingDate, {
+            originPortCode: request?.originPortCode,
+            destinationPortCode: request?.destinationPortCode,
+        });
         if (error) {
             console.error(`[sailingReminder] Email failed for booking ${booking.bookingNumber}:`, error);
         }

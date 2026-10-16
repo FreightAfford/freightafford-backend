@@ -1,39 +1,79 @@
-import envConfig from "../configurations/env.configuration.js";
-import SEND_PAYMENT_PROOF_TO_ADMIN from "../templates/invoice/payment.proof.js";
-import SEND_UPLOAD_INVOICE_BY_ADMIN from "../templates/invoice/upload.invoice.js";
-import VERIFY_PAYMENT_BY_ADMIN_TO_CUSTOMER from "../templates/invoice/verify.payment.js";
+import { APP_URL, FROM, SUPPORT_EMAIL, button, details, emailLayout, escapeHtml, formatDate, formatMoney, greeting, paragraph, } from "../templates/email/layout.js";
 import { resend } from "./email.service.js";
-export const sendUploadInvoiceNotification = async (email, fullname, invoiceNumber, amount, dueDate) => {
+export const sendUploadInvoiceNotification = async (email, fullname, invoiceNumber, amount, dueDate, invoice = {}) => {
     return await resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        from: FROM(),
         to: email,
-        subject: "Invoice for payment",
-        html: SEND_UPLOAD_INVOICE_BY_ADMIN.replace("{{USERNAME}}", fullname.split(" ")[0])
-            .replace("{{INVOICE_NUMBER}}", invoiceNumber)
-            .replace("{{AMOUNT}}", amount.toLocaleString())
-            .replace("{{DUE_DATE}}", dueDate.toDateString()),
+        subject: `Invoice ${invoiceNumber}: ${formatMoney(amount)}`,
+        html: emailLayout({
+            preheader: `Due ${formatDate(dueDate)}`,
+            reference: ["Invoice", invoiceNumber],
+            status: ["Payment due", "ochre"],
+            heading: "You have a new invoice",
+            body: paragraph(`${greeting(fullname)} please pay by the due date to avoid delays.`) +
+                details([
+                    ["Amount due", formatMoney(amount), { big: true, mono: true }],
+                    ["Due date", formatDate(dueDate)],
+                    ["Booking", escapeHtml(invoice.bookingNumber ?? ""), { mono: true }],
+                    ["Description", escapeHtml(invoice.description ?? "")],
+                ]) +
+                button("Pay invoice", `${APP_URL}/app/customer/invoices`),
+        }),
     });
 };
-export const sendSubmitPaymentProofNotification = async (adminEmail, invoiceNumber, payReference, status) => {
+export const sendSubmitPaymentProofNotification = async (adminEmail, invoiceNumber, payReference, status, invoice = {}) => {
     return await resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        from: FROM(),
         to: adminEmail,
-        subject: "Payment Proof Submission",
-        html: SEND_PAYMENT_PROOF_TO_ADMIN.replace("{{INVOICE_NUMBER}}", invoiceNumber)
-            .replace("{{PAY_REFERENCE}}", payReference)
-            .replace("{{STATUS}}", status.replace("_", " ")),
+        subject: `Payment proof submitted: ${invoiceNumber}`,
+        html: emailLayout({
+            preheader: `Ref ${payReference}`,
+            reference: ["Invoice", invoiceNumber],
+            status: ["To verify", "ochre"],
+            heading: "Payment proof to verify",
+            body: paragraph(`${invoice.customerName ? escapeHtml(invoice.customerName) : "A customer"} uploaded proof of payment.`) +
+                details([
+                    ["Amount", formatMoney(invoice.amount), { mono: true }],
+                    ["Payment reference", escapeHtml(payReference), { mono: true }],
+                    ["Invoice", escapeHtml(invoiceNumber), { mono: true }],
+                ]) +
+                button("Verify payment", `${APP_URL}/app/admin/invoices`),
+        }),
     });
 };
-export const sendVerifyPaymentNotification = async (email, fullname, action, invoiceNumber, status) => {
+export const sendVerifyPaymentNotification = async (email, fullname, action, invoiceNumber, status, invoice = {}) => {
+    const approved = action === "approve";
     return await resend.emails.send({
-        from: `Freight Afford <${envConfig.RESEND_EMAIL}>`,
+        from: FROM(),
         to: email,
-        subject: `Payment Verification Update`,
-        html: VERIFY_PAYMENT_BY_ADMIN_TO_CUSTOMER.replace("{{USERNAME}}", fullname.split(" ")[0])
-            .replace("{{COLOR}}", action === "approve" ? "#10b981" : "#ef4444")
-            .replace("{{ACTION}}", action === "approve" ? "Approved" : "Rejected")
-            .replace("{{INVOICE_NUMBER}}", invoiceNumber)
-            .replace("{{STATUS}}", status.replace("_", " ")),
+        subject: approved
+            ? `Payment confirmed: ${invoiceNumber}`
+            : `Payment not confirmed: ${invoiceNumber}`,
+        html: emailLayout({
+            preheader: approved
+                ? invoice.amount
+                    ? `${formatMoney(invoice.amount)} received`
+                    : "Payment received"
+                : "Please contact us about this payment.",
+            reference: ["Invoice", invoiceNumber],
+            status: approved ? ["Paid", "green"] : ["Not confirmed", "red"],
+            heading: approved ? "Payment confirmed" : "We couldn't confirm your payment",
+            body: approved
+                ? paragraph(`${greeting(fullname)} we've received your payment. Thank you.`) +
+                    details([
+                        ["Amount", formatMoney(invoice.amount), { big: true, mono: true }],
+                        ["Paid on", formatDate(invoice.paidAt)],
+                        ["Payment reference", escapeHtml(invoice.paymentReference ?? ""), { mono: true }],
+                    ]) +
+                    button("View booking", `${APP_URL}/app/customer/bookings`)
+                : // A rejected invoice can't take a new proof upload, so point to support.
+                    paragraph(`${greeting(fullname)} we couldn't match your proof of payment to this invoice. Please contact us at <a href="mailto:${SUPPORT_EMAIL}" style="color:#0f5bb0;font-weight:600;">${SUPPORT_EMAIL}</a> so we can sort it out.`) +
+                        details([
+                            ["Amount due", formatMoney(invoice.amount), { mono: true }],
+                            ["Due date", formatDate(invoice.dueDate)],
+                        ]) +
+                        button("View invoices", `${APP_URL}/app/customer/invoices`),
+        }),
     });
 };
 //# sourceMappingURL=invoice.service.js.map

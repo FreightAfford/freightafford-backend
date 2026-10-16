@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import AppError from "../errors/app.error.js";
 import { VESSEL_IMO_REGEX } from "../integrations/maersk/vessels.client.js";
 import Booking from "../models/booking.model.js";
+import FreightRequest from "../models/freight.model.js";
 import { sendBookingScheduleNotification, sendContainerNumbersNotification, sendShipmentStatusUpdate, } from "../services/booking.service.js";
 import { syncBookingWithMaersk } from "../services/maersk-sync.service.js";
 import ApiFeatures from "../utils/api-features.js";
@@ -118,6 +119,7 @@ export const updateBookingShipping = async (req, res, next) => {
         booking.carrierBookingNumber !== carrierBookingNumber ||
         new Date(booking.sailingDate ?? 0).getTime() !==
             new Date(sailingDate ?? 0).getTime();
+    const hadShippingDetails = !!(booking.vessel || booking.sailingDate);
     booking.shippingLine = shippingLine;
     booking.vessel = vessel;
     // Only set when picked from the Maersk suggestions; a typed name clears it
@@ -127,7 +129,14 @@ export const updateBookingShipping = async (req, res, next) => {
     booking.sailingDate = sailingDate;
     booking.carrierBookingNumber = carrierBookingNumber;
     if (detailsChanged) {
-        const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, carrierBookingNumber, shippingLine, vessel, booking.sailingDate);
+        // Looked up separately so the response keeps an unpopulated freightRequest
+        const route = await FreightRequest.findById(booking.freightRequest, "originPort destinationPort originPortCode destinationPortCode").lean();
+        const { error } = await sendBookingScheduleNotification(customer.email, customer.fullname, carrierBookingNumber, shippingLine, vessel, booking.sailingDate, undefined, {
+            ...route,
+            bookingNumber: booking.bookingNumber,
+            eta: booking.eta,
+            isUpdate: hadShippingDetails,
+        });
         if (error)
             return next(new AppError("Unable to send booking schedule notification", 400));
     }
@@ -146,7 +155,7 @@ export const updateBookingStatus = async (req, res, next) => {
     const { status } = req.body;
     const booking = await Booking.findById(req.params.id)
         .populate("customer", "email fullname")
-        .populate("freightRequest", "originPort destinationPort");
+        .populate("freightRequest", "originPort destinationPort originPortCode destinationPortCode");
     if (!booking)
         return next(new AppError("Booking not found", 404));
     const allowedTransitions = {
@@ -163,7 +172,14 @@ export const updateBookingStatus = async (req, res, next) => {
         return next(new AppError(`Invalid status transition from "${currentStatus}" to "${status}"`, 400));
     const request = booking.freightRequest;
     const customer = booking.customer;
-    const { error } = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, status);
+    const { error } = await sendShipmentStatusUpdate(customer.email, customer.fullname, booking.bookingNumber, status, {
+        originPort: request?.originPort,
+        destinationPort: request?.destinationPort,
+        originPortCode: request?.originPortCode,
+        destinationPortCode: request?.destinationPortCode,
+        vessel: booking.vessel,
+        eta: booking.eta,
+    });
     if (error)
         return next(new AppError("Booking status Notification email failed", 400));
     await createTrackingEvent({
@@ -234,7 +250,7 @@ export const replaceContainers = async (req, res, next) => {
         return next(new AppError("Invalid container format", 400));
     const booking = await Booking.findById(bookingId)
         .populate("customer", "fullname email")
-        .populate("freightRequest", "originPort destinationPort");
+        .populate("freightRequest", "originPort destinationPort originPortCode destinationPortCode");
     if (!booking)
         return next(new AppError("Booking not found", 404));
     if (!canModifyContainers(booking.status)) {
@@ -245,7 +261,10 @@ export const replaceContainers = async (req, res, next) => {
     booking.containers = containers;
     const customer = booking.customer;
     const request = booking.freightRequest;
-    const { error } = await sendContainerNumbersNotification(customer.email, customer.fullname, booking.bookingNumber, request.originPort, request.destinationPort, booking.containers);
+    const { error } = await sendContainerNumbersNotification(customer.email, customer.fullname, booking.bookingNumber, request.originPort, request.destinationPort, booking.containers, {
+        originPortCode: request.originPortCode,
+        destinationPortCode: request.destinationPortCode,
+    });
     if (error)
         return next(new AppError("Unable to update container manifest. Try again.", 400));
     await booking.save();
