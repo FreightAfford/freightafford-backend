@@ -29,9 +29,24 @@ export const getAdminOverview = async (req, res, next) => {
         },
     });
 };
+const LATEST_SHIPMENT_FIELDS = "bookingNumber status shippingLine vessel vesselImo sailingDate eta carrierBookingNumber containers maerskSync freightRequest createdAt updatedAt";
+// The customer's newest booking still on its way, else the newest delivered
+// one. Cancelled bookings are never shown.
+const findLatestShipment = async (userId) => {
+    const latest = (status) => Booking.findOne({ customer: userId, status: { $in: status } })
+        .sort("-createdAt")
+        .select(LATEST_SHIPMENT_FIELDS)
+        .populate("freightRequest", "originPort destinationPort originPortCode destinationPortCode containerSize containerQuantity");
+    return ((await latest([
+        "awaiting_confirmation",
+        "confirmed",
+        "in_transit",
+        "arrived",
+    ])) ?? (await latest(["delivered"])));
+};
 export const getCustomerOverview = async (req, res, next) => {
     const userId = req.user._id;
-    const [totalRequests, totalBookings, bills, invoiceStats] = await Promise.all([
+    const [totalRequests, totalBookings, bills, invoiceStats, latestShipment] = await Promise.all([
         FreightRequest.countDocuments({ customer: userId }),
         Booking.countDocuments({ customer: userId }),
         BillOfLading.countDocuments({ customer: userId }),
@@ -49,6 +64,7 @@ export const getCustomerOverview = async (req, res, next) => {
                 },
             },
         ]),
+        findLatestShipment(userId),
     ]);
     res.status(200).json({
         status: "success",
@@ -57,6 +73,7 @@ export const getCustomerOverview = async (req, res, next) => {
             totalBookings,
             bills,
             totalInvoiceAmount: invoiceStats[0]?.totalAmount || 0,
+            latestShipment,
         },
     });
 };
