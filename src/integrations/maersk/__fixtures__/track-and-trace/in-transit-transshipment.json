@@ -1,0 +1,584 @@
+{
+  "events": [
+    {
+      "eventID": "2bd24e1a-5a5c-4e83-a69b-c201844c3a7fD1",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-09-22T18:45:00+01:00",
+      "eventCreatedDateTime": "2026-10-15T20:30:49Z",
+      "eventClassifierCode": "ACT",
+      "transportEventTypeCode": "DEPA",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "635N",
+        "carrierVoyageNumber": "635N",
+        "facilityCode": "TCIPC",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Port & Cargo (Sifax) Terminal",
+          "latitude": "6.438107",
+          "longitude": "3.365322"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Port & Cargo (Sifax) Terminal Lagos Nigeria Apapa Oshodi Express Way Tin Can Island Port Nigeria 102241",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9313955",
+          "vesselName": "MAERSK BROWNSVILLE",
+          "vesselFlag": "DK",
+          "vesselCallSignNumber": "OXVD2"
+        },
+        "UNLocationCode": "NGTIN"
+      }
+    },
+    {
+      "eventID": "2bd24e1a-5a5c-4e83-a69b-c201844c3a7fD2",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-10-23T11:00:00+01:00",
+      "eventCreatedDateTime": "2026-10-15T20:30:49Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "DEPA",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "639W",
+        "carrierVoyageNumber": "639W",
+        "facilityCode": "APM2",
+        "transportCallSequenceNumber": 2,
+        "location": {
+          "locationName": "Tanger Med 2",
+          "latitude": "35.895066",
+          "longitude": "-5.489954"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Tanger Med 2 Oued Rmel, Commune Fahs Anjra 9000 Tangier City Morocco ZONE FRANCHE KSAR AL MAJAZ Port Tangier Mediterranee Morocco 90000",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9665607",
+          "vesselName": "SAVANNAH EXPRESS",
+          "vesselFlag": "LR",
+          "vesselCallSignNumber": "5LBX9"
+        },
+        "UNLocationCode": "MAPTM"
+      }
+    },
+    {
+      "eventID": "2bd24e1a-5a5c-4e83-a69b-c201844c3a7fA2",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-10-24T07:00:00+01:00",
+      "eventCreatedDateTime": "2026-10-15T20:30:49Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "ARRI",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "639W",
+        "carrierVoyageNumber": "639W",
+        "facilityCode": "APMT",
+        "transportCallSequenceNumber": 2,
+        "location": {
+          "locationName": "Port Tangier Mediterranee",
+          "latitude": "35.889187",
+          "longitude": "-5.494813"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Port Tangier Mediterranee Zone Franche Ksar Al Majaz Oued R'me Port Tangier Mediterranee Morocco 90000",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9665607",
+          "vesselName": "SAVANNAH EXPRESS",
+          "vesselFlag": "LR",
+          "vesselCallSignNumber": "5LBX9"
+        },
+        "UNLocationCode": "MAPTM"
+      }
+    },
+    {
+      "eventID": "2bd24e1a-5a5c-4e83-a69b-c201844c3a7fD3",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-10-25T06:00:00+01:00",
+      "eventCreatedDateTime": "2026-10-15T20:30:49Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "DEPA",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "641S",
+        "carrierVoyageNumber": "641S",
+        "facilityCode": "APMT",
+        "transportCallSequenceNumber": 3,
+        "location": {
+          "locationName": "Port Tangier Mediterranee",
+          "latitude": "35.889187",
+          "longitude": "-5.494813"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Port Tangier Mediterranee Zone Franche Ksar Al Majaz Oued R'me Port Tangier Mediterranee Morocco 90000",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9526978",
+          "vesselName": "MAERSK LABERINTO",
+          "vesselFlag": "DK",
+          "vesselCallSignNumber": "OZJF2"
+        },
+        "UNLocationCode": "MAPTM"
+      }
+    },
+    {
+      "eventID": "2bd24e1a-5a5c-4e83-a69b-c201844c3a7fA1",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-11-02T15:00:00+01:00",
+      "eventCreatedDateTime": "2026-10-15T20:30:49Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "ARRI",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "635N",
+        "carrierVoyageNumber": "635N",
+        "facilityCode": "APM2",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Tanger Med 2",
+          "latitude": "35.895066",
+          "longitude": "-5.489954"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Tanger Med 2 Oued Rmel, Commune Fahs Anjra 9000 Tangier City Morocco ZONE FRANCHE KSAR AL MAJAZ Port Tangier Mediterranee Morocco 90000",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9313955",
+          "vesselName": "MAERSK BROWNSVILLE",
+          "vesselFlag": "DK",
+          "vesselCallSignNumber": "OXVD2"
+        },
+        "UNLocationCode": "MAPTM"
+      }
+    },
+    {
+      "eventID": "2bd24e1a-5a5c-4e83-a69b-c201844c3a7fA3",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-11-06T07:00:00-03:00",
+      "eventCreatedDateTime": "2026-10-15T20:30:49Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "ARRI",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "641S",
+        "carrierVoyageNumber": "641S",
+        "facilityCode": "BTP",
+        "transportCallSequenceNumber": 3,
+        "location": {
+          "locationName": "Brasil Terminal Portuario",
+          "latitude": "-23.921833",
+          "longitude": "-46.352117"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Brasil Terminal Portuario Porto Alemoa Av. Engenheiro Augusto Barata s/n Al Santos Brazil 11095-907",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9526978",
+          "vesselName": "MAERSK LABERINTO",
+          "vesselFlag": "DK",
+          "vesselCallSignNumber": "OZJF2"
+        },
+        "UNLocationCode": "BRSSZ"
+      }
+    },
+    {
+      "eventID": "15114643898",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-07-22T08:39:51Z",
+      "eventCreatedDateTime": "2026-07-22T08:39:51Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "CONF",
+      "documentTypeCode": "BKG",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15123175396",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-07-23T13:48:15Z",
+      "eventCreatedDateTime": "2026-07-23T13:48:15Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "RECE",
+      "documentTypeCode": "VGM",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15123174359",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-07-23T13:48:42Z",
+      "eventCreatedDateTime": "2026-07-23T13:48:42Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "RECE",
+      "documentTypeCode": "SHI",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15123177540",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-07-23T13:49:06Z",
+      "eventCreatedDateTime": "2026-07-23T13:49:06Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "DRFT",
+      "documentTypeCode": "TRD",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15287119819",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-08-25T09:02:17Z",
+      "eventCreatedDateTime": "2026-08-25T09:02:17Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "CONF",
+      "documentTypeCode": "BKG",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15307169204",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-08-28T11:56:09Z",
+      "eventCreatedDateTime": "2026-08-28T11:56:09Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "CONF",
+      "documentTypeCode": "BKG",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15389307312",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-16T09:46:53Z",
+      "eventCreatedDateTime": "2026-09-16T09:46:53Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "CONF",
+      "documentTypeCode": "BKG",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15421977216",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-25T10:32:10Z",
+      "eventCreatedDateTime": "2026-09-25T10:32:10Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "ISSU",
+      "documentTypeCode": "TRD",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15422033928",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-25T10:44:15Z",
+      "eventCreatedDateTime": "2026-09-25T10:44:15Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "ISSU",
+      "documentTypeCode": "TRD",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15464904956",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-10-08T14:44:02Z",
+      "eventCreatedDateTime": "2026-10-08T14:44:02Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "ISSU",
+      "documentTypeCode": "TRD",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15464908714",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-10-08T14:45:32Z",
+      "eventCreatedDateTime": "2026-10-08T14:45:32Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "ISSU",
+      "documentTypeCode": "TRD",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15465144826",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-10-08T16:02:11Z",
+      "eventCreatedDateTime": "2026-10-08T16:02:11Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "ISSU",
+      "documentTypeCode": "TRD",
+      "documentID": "900000007",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000008"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ]
+    },
+    {
+      "eventID": "15215269546",
+      "eventType": "EQUIPMENT",
+      "eventDateTime": "2026-08-06T00:01:00+01:00",
+      "eventCreatedDateTime": "2026-08-11T11:30:29Z",
+      "eventClassifierCode": "ACT",
+      "equipmentEventTypeCode": "GTIN",
+      "equipmentReference": "TEST0000002",
+      "emptyIndicatorCode": "LADEN",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "facilityCode": "TCIPC",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Port & Cargo (Sifax) Terminal",
+          "latitude": "6.438107",
+          "longitude": "3.365322"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Port & Cargo (Sifax) Terminal Lagos Nigeria Apapa Oshodi Express Way Tin Can Island Port Nigeria 102241",
+        "modeOfTransport": "TRUCK",
+        "UNLocationCode": "NGTIN"
+      },
+      "seals": [
+        {
+          "sealNumber": "SEAL00002",
+          "sealSource": "CAR",
+          "sealType": "BLT"
+        }
+      ],
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ],
+      "ISOEquipmentCode": "45G1"
+    },
+    {
+      "eventID": "3e7411f1-1ce5-34f3-8cc1-dc9f3ae03b74",
+      "eventType": "EQUIPMENT",
+      "eventDateTime": "2026-09-22T05:24:00+01:00",
+      "eventCreatedDateTime": "2026-09-22T04:57:48Z",
+      "eventClassifierCode": "ACT",
+      "equipmentEventTypeCode": "LOAD",
+      "equipmentReference": "TEST0000002",
+      "emptyIndicatorCode": "LADEN",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000007"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000007"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "635N",
+        "carrierVoyageNumber": "635N",
+        "facilityCode": "TCIPC",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Port & Cargo (Sifax) Terminal",
+          "latitude": "6.438107",
+          "longitude": "3.365322"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Port & Cargo (Sifax) Terminal Lagos Nigeria Apapa Oshodi Express Way Tin Can Island Port Nigeria 102241",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "9313955",
+          "vesselName": "MAERSK BROWNSVILLE",
+          "vesselFlag": "DK",
+          "vesselCallSignNumber": "OXVD2"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "seals": [
+        {
+          "sealNumber": "SEAL00002",
+          "sealSource": "CAR",
+          "sealType": "BLT"
+        }
+      ],
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000007"
+        }
+      ],
+      "ISOEquipmentCode": "45G1"
+    }
+  ]
+}

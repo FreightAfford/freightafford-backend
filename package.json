@@ -10,7 +10,8 @@
     "server:prod": "cross-env NODE_ENV=production tsx watch src/server.ts",
     "server:dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

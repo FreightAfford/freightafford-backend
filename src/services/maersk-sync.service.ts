@@ -13,6 +13,7 @@ import {
   sendBookingScheduleNotification,
   sendShipmentStatusUpdate,
 } from "./booking.service.js";
+import { maerskStatus, type MaerskStatus } from "./maersk-status.js";
 
 type BookingDoc = HydratedDocument<IBooking>;
 
@@ -32,8 +33,6 @@ const CONCURRENCY = 2;
 // Maersk has confirmed the arrival, so a manual "arrived" gets corrected.
 // Delivery and cancellation are manual and final.
 const SYNCABLE_STATUSES = ["awaiting_confirmation", "confirmed", "in_transit"];
-
-type MaerskStatus = "confirmed" | "in_transit" | "arrived" | "cancelled";
 
 const STATUS_TEXT: Record<MaerskStatus, string> = {
   confirmed: "confirmed",
@@ -87,12 +86,6 @@ const portCodes = (booking: IBooking) => {
 const sameDate = (a?: Date | null, b?: Date | null) =>
   (a ? new Date(a).getTime() : null) === (b ? new Date(b).getTime() : null);
 
-const place = (name?: string, code?: string) =>
-  [name, code && `(${code})`].filter(Boolean).join(" ") || "port";
-
-const vesselText = (vessel?: { name?: string }, voyage?: string) =>
-  [vessel?.name, voyage].filter(Boolean).join(" ");
-
 const vesselKey = (name?: string) =>
   name?.toUpperCase().replace(/[^A-Z0-9]/g, "") ?? "";
 
@@ -117,86 +110,6 @@ const notifyVesselChange = async (booking: BookingDoc) => {
     console.error(
       `[maersk-sync] Vessel email failed for booking ${booking.bookingNumber}: ${JSON.stringify(error)}`,
     );
-};
-
-// The status Maersk's events describe, or null when they don't settle it.
-// A booking Maersk rejected or cancelled (latest booking-document event) that
-// never actually sailed is cancelled; otherwise arrival beats departure beats
-// a confirmed booking or planned route.
-const maerskStatus = (
-  events: ShipmentEvent[],
-  summary: ReturnType<typeof deriveShipmentSummary>,
-): { status: MaerskStatus; description: string } | null => {
-  const actualDeparture = events.find(
-    (e) => e.type === "TRANSPORT" && e.code === "DEPA" && e.classifier === "ACT",
-  );
-  const lastBookingEvent = events
-    .filter(
-      (e) =>
-        e.type === "SHIPMENT" &&
-        e.documentType === "BKG" &&
-        ["CONF", "REJE", "CANC"].includes(e.code),
-    )
-    .at(-1);
-
-  if (
-    !actualDeparture &&
-    (lastBookingEvent?.code === "REJE" || lastBookingEvent?.code === "CANC")
-  )
-    return {
-      status: "cancelled",
-      description: `Maersk: booking ${lastBookingEvent.code === "REJE" ? "rejected" : "cancelled"} by the carrier.`,
-    };
-
-  const { departure, arrival } = summary;
-
-  if (summary.hasArrived)
-    return {
-      status: "arrived",
-      description: `Maersk: arrived at ${place(arrival?.locationName, arrival?.locationCode)}${
-        arrival?.vessel?.name
-          ? ` on ${vesselText(arrival.vessel, arrival.voyage)}`
-          : ""
-      }.`,
-    };
-
-  // Feeder legs can sail from a different port than the planned first one
-  const sailed =
-    summary.hasDeparted && departure
-      ? {
-          name: departure.locationName,
-          code: departure.locationCode,
-          vessel: departure.vessel,
-          voyage: departure.voyage,
-        }
-      : actualDeparture && {
-          name: actualDeparture.location?.name,
-          code: actualDeparture.location?.code,
-          vessel: actualDeparture.vessel,
-          voyage: actualDeparture.voyage,
-        };
-  if (sailed)
-    return {
-      status: "in_transit",
-      description: `Maersk: departed ${place(sailed.name, sailed.code)}${
-        sailed.vessel?.name
-          ? ` on ${vesselText(sailed.vessel, sailed.voyage)}`
-          : ""
-      }.`,
-    };
-
-  if (
-    lastBookingEvent?.code === "CONF" ||
-    events.some((e) => e.type === "TRANSPORT")
-  )
-    return {
-      status: "confirmed",
-      description: departure
-        ? `Maersk: booking confirmed, not yet departed. Departure from ${place(departure.locationName, departure.locationCode)} planned for ${new Date(departure.at).toDateString()}.`
-        : "Maersk: booking confirmed, not yet departed.",
-    };
-
-  return null;
 };
 
 // Sets the status Maersk reports, mirroring the manual/auto-transit flow:

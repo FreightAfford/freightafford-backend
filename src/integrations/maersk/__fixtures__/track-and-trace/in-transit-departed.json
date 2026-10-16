@@ -1,0 +1,382 @@
+{
+  "events": [
+    {
+      "eventID": "204f76a6-63b9-4733-ad01-169729435bcfD1",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-10-05T11:10:00+01:00",
+      "eventCreatedDateTime": "2026-10-05T10:50:29Z",
+      "eventClassifierCode": "ACT",
+      "transportEventTypeCode": "DEPA",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000005"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000005"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "638E",
+        "carrierVoyageNumber": "638E",
+        "facilityCode": "APMTER",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Apapa Port",
+          "latitude": "6.421800",
+          "longitude": "3.343700"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Apapa Port Container Terminal, Apapa Port wharf Apapa Nigeria 101010",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "1013365",
+          "vesselName": "MAERSK FRIO",
+          "vesselFlag": "SG",
+          "vesselCallSignNumber": "9V9727"
+        },
+        "UNLocationCode": "NGAPP"
+      }
+    },
+    {
+      "eventID": "204f76a6-63b9-4733-ad01-169729435bcfA1",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-11-07T06:00:00+05:30",
+      "eventCreatedDateTime": "2026-10-05T10:50:29Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "ARRI",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000005"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000005"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "638E",
+        "carrierVoyageNumber": "638E",
+        "facilityCode": "ACMTPL",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Adani CMA Mundra container terminal",
+          "latitude": "22.836000",
+          "longitude": "69.718000"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Adani CMA Mundra container terminal Mundra-370421 Mundra Port Mundra India 370421",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "1013365",
+          "vesselName": "MAERSK FRIO",
+          "vesselFlag": "SG",
+          "vesselCallSignNumber": "9V9727"
+        },
+        "UNLocationCode": "INMUN"
+      }
+    },
+    {
+      "eventID": "204f76a6-63b9-4733-ad01-169729435bcfD2",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-11-08T18:00:00+05:30",
+      "eventCreatedDateTime": "2026-10-05T10:50:29Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "DEPA",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000005"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000005"
+        }
+      ],
+      "transportCall": {
+        "facilityCode": "ACMTPL",
+        "transportCallSequenceNumber": 2,
+        "location": {
+          "locationName": "Adani CMA Mundra container terminal",
+          "latitude": "22.836000",
+          "longitude": "69.718000"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Adani CMA Mundra container terminal Mundra-370421 Mundra Port Mundra India 370421",
+        "modeOfTransport": "RAIL",
+        "UNLocationCode": "INMUN"
+      }
+    },
+    {
+      "eventID": "204f76a6-63b9-4733-ad01-169729435bcfA2",
+      "eventType": "TRANSPORT",
+      "eventDateTime": "2026-11-11T18:00:00+05:30",
+      "eventCreatedDateTime": "2026-10-05T10:50:29Z",
+      "eventClassifierCode": "EST",
+      "transportEventTypeCode": "ARRI",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000005"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000005"
+        }
+      ],
+      "transportCall": {
+        "transportCallSequenceNumber": 2,
+        "location": {
+          "locationName": "Adani Logistics,Patli",
+          "latitude": "28.400000",
+          "longitude": "76.850000"
+        },
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Adani Logistics,Patli Patli Village Patli Hansi Taluk Patli India 125033",
+        "modeOfTransport": "RAIL",
+        "UNLocationCode": "INPTL"
+      }
+    },
+    {
+      "eventID": "15413705961",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-23T09:26:25Z",
+      "eventCreatedDateTime": "2026-09-23T09:26:25Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "CONF",
+      "documentTypeCode": "BKG",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "15414624360",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-23T12:25:32Z",
+      "eventCreatedDateTime": "2026-09-23T12:25:32Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "CONF",
+      "documentTypeCode": "BKG",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "15421483040",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-25T08:10:02Z",
+      "eventCreatedDateTime": "2026-09-25T08:10:02Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "RECE",
+      "documentTypeCode": "VGM",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000006"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "15421517925",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-25T08:19:43Z",
+      "eventCreatedDateTime": "2026-09-25T08:19:43Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "RECE",
+      "documentTypeCode": "SHI",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000006"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "15421520469",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-25T08:19:51Z",
+      "eventCreatedDateTime": "2026-09-25T08:19:51Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "DRFT",
+      "documentTypeCode": "TRD",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000006"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "15430769987",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-09-28T17:10:11Z",
+      "eventCreatedDateTime": "2026-09-28T17:10:11Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "RECE",
+      "documentTypeCode": "VGM",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000006"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "15468727224",
+      "eventType": "SHIPMENT",
+      "eventDateTime": "2026-10-09T12:57:36Z",
+      "eventCreatedDateTime": "2026-10-09T12:57:36Z",
+      "eventClassifierCode": "ACT",
+      "shipmentEventTypeCode": "ISSU",
+      "documentTypeCode": "TRD",
+      "documentID": "900000005",
+      "references": [
+        {
+          "referenceType": "EQ",
+          "referenceValue": "900000006"
+        },
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ]
+    },
+    {
+      "eventID": "8b55ac3a-7778-346b-b506-14e376d562dc",
+      "eventType": "EQUIPMENT",
+      "eventDateTime": "2026-09-28T18:03:00+01:00",
+      "eventCreatedDateTime": "2026-09-28T17:30:29Z",
+      "eventClassifierCode": "ACT",
+      "equipmentEventTypeCode": "GTIN",
+      "equipmentReference": "TEST0000001",
+      "emptyIndicatorCode": "LADEN",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000005"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000005"
+        }
+      ],
+      "transportCall": {
+        "facilityCode": "APMTER",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Apapa Port",
+          "latitude": "6.421800",
+          "longitude": "3.343700"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Apapa Port Container Terminal, Apapa Port wharf Apapa Nigeria 101010",
+        "modeOfTransport": "TRUCK",
+        "UNLocationCode": "NGAPP"
+      },
+      "seals": [
+        {
+          "sealNumber": "SEAL00001",
+          "sealSource": "CAR",
+          "sealType": "BLT"
+        }
+      ],
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ],
+      "ISOEquipmentCode": "45G1"
+    },
+    {
+      "eventID": "39ac6079-49ee-31df-be53-d30e5be75ff6",
+      "eventType": "EQUIPMENT",
+      "eventDateTime": "2026-10-04T14:04:00+01:00",
+      "eventCreatedDateTime": "2026-10-04T14:10:23Z",
+      "eventClassifierCode": "ACT",
+      "equipmentEventTypeCode": "LOAD",
+      "equipmentReference": "TEST0000001",
+      "emptyIndicatorCode": "LADEN",
+      "documentReferences": [
+        {
+          "documentReferenceType": "BKG",
+          "documentReferenceValue": "900000005"
+        },
+        {
+          "documentReferenceType": "TRD",
+          "documentReferenceValue": "900000005"
+        }
+      ],
+      "transportCall": {
+        "exportVoyageNumber": "638E",
+        "carrierVoyageNumber": "638E",
+        "facilityCode": "APMTER",
+        "transportCallSequenceNumber": 1,
+        "location": {
+          "locationName": "Apapa Port",
+          "latitude": "6.421800",
+          "longitude": "3.343700"
+        },
+        "facilityCodeListProvider": "SMDG",
+        "facilityTypeCode": "POTE",
+        "otherFacility": "Apapa Port Container Terminal, Apapa Port wharf Apapa Nigeria 101010",
+        "modeOfTransport": "VESSEL",
+        "vessel": {
+          "vesselIMONumber": "1013365",
+          "vesselName": "MAERSK FRIO",
+          "vesselFlag": "SG",
+          "vesselCallSignNumber": "9V9727"
+        },
+        "UNLocationCode": "NGAPP"
+      },
+      "seals": [
+        {
+          "sealNumber": "SEAL00001",
+          "sealSource": "CAR",
+          "sealType": "BLT"
+        }
+      ],
+      "references": [
+        {
+          "referenceType": "CR",
+          "referenceValue": "900000005"
+        }
+      ],
+      "ISOEquipmentCode": "45G1"
+    }
+  ]
+}

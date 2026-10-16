@@ -31,8 +31,10 @@ export interface Vessel {
 
 export const VESSEL_IMO_REGEX = /^\d{7}$/;
 
-// Maersk uses this call sign for barges and placeholder vessels
-const PLACEHOLDER_CALL_SIGN = "99999";
+// Maersk uses call sign 99999 for barges and placeholder vessels, and names
+// like "PENDING MOTHER VSL" or "DUMMY" for a vessel not yet assigned
+export const isPlaceholderVessel = (name?: string, callSign?: string) =>
+  callSign === "99999" || /DUMMY|PENDING/i.test(name ?? "");
 
 const SEARCH_TTL = 24 * 60 * 60 * 1000;
 const MAX_CACHE_ENTRIES = 500;
@@ -101,8 +103,7 @@ export const searchVessels = async (query: string): Promise<Vessel[]> => {
     .filter(
       (v) =>
         v.vesselShortName &&
-        v.vesselCallSign !== PLACEHOLDER_CALL_SIGN &&
-        !/DUMMY/i.test(v.vesselLongName || v.vesselShortName),
+        !isPlaceholderVessel(v.vesselLongName || v.vesselShortName, v.vesselCallSign),
     )
     .map(toVessel)
     .filter((v) => {
