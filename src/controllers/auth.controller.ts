@@ -222,7 +222,9 @@ export const login = async (
     maxAge: 24 * 60 * 60 * 1000,
     httpOnly: true,
     secure: envConfig.NODE_ENV === "production",
-    sameSite: envConfig.NODE_ENV === "production" ? "none" : "strict",
+    // The API is served from api.freightafford.com, the same site as the
+    // frontend, so the cookie is first-party and browsers don't block it.
+    sameSite: "lax",
     path: "/",
   });
 
@@ -387,7 +389,7 @@ export const logout = async (
 ) => {
   res.clearCookie("jwt", {
     httpOnly: true,
-    sameSite: envConfig.NODE_ENV === "production" ? "none" : "strict",
+    sameSite: "lax",
     secure: envConfig.NODE_ENV === "production",
     path: "/",
   });
