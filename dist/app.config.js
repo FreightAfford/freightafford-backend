@@ -25,7 +25,12 @@ const appConfig = async (app) => {
     app
         .use(cors({
         credentials: true,
-        origin: ["http://localhost:5173", "https://freightafford.com"],
+        origin: [
+            "http://localhost:5173",
+            "https://freightafford.com",
+            // freightafford.com redirects here, so this is where the site runs
+            "https://www.freightafford.com",
+        ],
     }))
         .use(helmet())
         .use(express.json())

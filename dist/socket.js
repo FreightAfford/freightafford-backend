@@ -19,7 +19,13 @@ let io;
 export const initSocketServer = (httpServer) => {
     io = new SocketServer(httpServer, {
         cors: {
-            origin: ["http://localhost:5173", envConfig.CLIENT_URL], // allow both local dev and production origins
+            // Local dev, CLIENT_URL, and both forms of the production domain
+            origin: [
+                "http://localhost:5173",
+                envConfig.CLIENT_URL,
+                "https://freightafford.com",
+                "https://www.freightafford.com",
+            ].filter(Boolean),
             methods: ["GET", "POST"],
             credentials: true, // required for cookie-based auth
         },
