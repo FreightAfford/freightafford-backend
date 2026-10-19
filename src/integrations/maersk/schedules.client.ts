@@ -6,8 +6,10 @@ import { getBuiltYears, isPlaceholderVessel } from "./vessels.client.js";
 
 // Maersk Ocean – Commercial Schedules [DCSA]. Auth is the Consumer-Key header
 // only (no OAuth). Used here: GET /v1/active-ports (every port Maersk calls
-// at) and GET /v1/port-schedules (vessel calls at one port; one call covers
-// about three months from `date`, one entry per terminal).
+// at), GET /v1/port-schedules (vessel calls at one port; one call covers
+// about three months from `date`, one entry per terminal),
+// GET /v1/point-to-point-routes, GET /v1/active-vessels and
+// GET /v1/vessel-schedules (one vessel's port calls).
 //
 // The key's quota is 50 calls an hour across the whole product, and a 429
 // once it's spent. So results are cached hard, one port's schedule answers
@@ -745,6 +747,325 @@ export const getRoutes = async (
     origin,
     destination,
     routes: routesInWindow(source.routes, by, date),
+    fetchedAt: new Date(source.fetchedAt).toISOString(),
+  };
+};
+
+// ---- Vessel schedules ------------------------------------------------------
+//
+// GET /v1/active-vessels (every vessel, no filters) and
+// GET /v1/vessel-schedules (one vessel's port calls). Maersk returns whole
+// voyages whatever `startDate` says, plus other vessels sharing those
+// voyages, so both are trimmed here. At most 3 services come per page.
+
+// A search shows 12 weeks from its date; one fetch covers two weeks before
+// the date to 16 weeks after
+const VESSEL_WINDOW_WEEKS = 12;
+const VESSEL_LEAD_DAYS = 14;
+const VESSEL_FETCH_DAYS = 112;
+// Maersk's limits for startDate and endDate, from today
+const VESSEL_DAYS_BACK = 90;
+const VESSEL_DAYS_AHEAD = 180;
+
+interface MaerskActiveVessel {
+  vesselIMONumber?: string;
+  carrierVesselCode?: string;
+  vesselName?: string;
+  vesselFlagCode?: string;
+  vesselCallSign?: string;
+}
+
+interface MaerskTransportCall {
+  transportCallReference?: string;
+  carrierImportVoyageNumber?: string;
+  carrierExportVoyageNumber?: string;
+  location?: {
+    locationName?: string;
+    facilityName?: string;
+    UNLocationCode?: string;
+  };
+  timestamps?: MaerskTimestamp[];
+  cutOffTimes?: { cutOffDateTimeCode: string; cutOffDateTime: string }[];
+}
+
+export interface MaerskServiceSchedule {
+  carrierServiceName?: string;
+  carrierServiceCode?: string;
+  vesselSchedules?: {
+    vessel?: {
+      vesselIMONumber?: string;
+      name?: string;
+      flag?: string;
+      callSign?: string;
+    };
+    isDummyVessel?: boolean;
+    transportCalls?: MaerskTransportCall[];
+  }[];
+}
+
+export interface ActiveVessel {
+  imo: string;
+  name: string;
+  flag?: string;
+  callSign?: string;
+  // Maersk's own vessel code
+  code: string;
+}
+
+export interface VesselCall {
+  id: string;
+  port: { code: string; name: string; country: string };
+  terminal?: string;
+  service: { name: string; code: string };
+  voyageIn: string;
+  voyageOut?: string;
+  arrival: ScheduleTime;
+  departure: ScheduleTime;
+  cutOffs: { code: string; at: string }[];
+}
+
+export interface VesselInfo {
+  name: string;
+  imo: string;
+  flag?: string;
+  callSign?: string;
+  builtYear?: number;
+}
+
+export interface VesselScheduleResult {
+  vessel: VesselInfo;
+  services: { name: string; code: string }[];
+  // In rotation order
+  calls: VesselCall[];
+  fetchedAt: string;
+}
+
+const vesselsCache = createTtlCache(1);
+const vesselsStale = createTtlCache(1);
+
+// Vessels that can be looked up by IMO, once each, by name
+export const toActiveVessels = (raw: MaerskActiveVessel[]): ActiveVessel[] => {
+  const seen = new Set<string>();
+  return raw
+    .filter((v) => {
+      const imo = v.vesselIMONumber;
+      if (!imo || !v.vesselName?.trim() || seen.has(imo)) return false;
+      if (isPlaceholderVessel(v.vesselName, v.vesselCallSign)) return false;
+      seen.add(imo);
+      return true;
+    })
+    .map((v) => ({
+      imo: v.vesselIMONumber!,
+      name: v.vesselName!.trim(),
+      ...(v.vesselFlagCode && { flag: v.vesselFlagCode }),
+      ...(v.vesselCallSign && { callSign: v.vesselCallSign }),
+      code: v.carrierVesselCode ?? "",
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+};
+
+// Every vessel Maersk runs, for the vessel picker
+export const getActiveVessels = async (): Promise<ActiveVessel[]> => {
+  const cached = vesselsCache.get<ActiveVessel[]>("all");
+  if (cached) return cached;
+
+  return withFallback(async () => {
+    const { data } = await request<MaerskActiveVessel[]>("/v1/active-vessels", {});
+    const vessels = toActiveVessels(Array.isArray(data) ? data : []);
+    vesselsCache.set("all", vessels, PORTS_TTL);
+    vesselsStale.set("all", vessels, STALE_TTL);
+    return vessels;
+  }, vesselsStale.get<ActiveVessel[]>("all"));
+};
+
+const callTime = (call: VesselCall) =>
+  Date.parse(best(call.arrival) ?? best(call.departure) ?? "");
+
+// One vessel's calls across all its services, in rotation order. Calls by
+// other vessels on the same voyages are dropped.
+export const toVesselSchedule = (
+  raw: MaerskServiceSchedule[],
+  imo: string,
+  ports: ActivePort[] = [],
+): {
+  vessel?: VesselInfo;
+  services: VesselScheduleResult["services"];
+  calls: VesselCall[];
+} => {
+  const portsByCode = new Map(ports.map((p) => [p.code, p]));
+  let vessel: VesselInfo | undefined;
+  const services: VesselScheduleResult["services"] = [];
+  const calls = new Map<string, VesselCall>();
+
+  for (const svc of raw) {
+    const service = {
+      name: svc.carrierServiceName || svc.carrierServiceCode || "",
+      code: svc.carrierServiceCode || "",
+    };
+    for (const schedule of svc.vesselSchedules ?? []) {
+      const v = schedule.vessel;
+      if (v?.vesselIMONumber !== imo) continue;
+      vessel ??= {
+        name: v.name?.trim() || imo,
+        imo,
+        ...(v.flag && { flag: v.flag }),
+        ...(v.callSign && { callSign: v.callSign }),
+      };
+      if (!services.some((s) => s.code === service.code)) services.push(service);
+
+      for (const c of schedule.transportCalls ?? []) {
+        const code = c.location?.UNLocationCode ?? "";
+        const stamps = c.timestamps ?? [];
+        const arrival = toTime(stamps, "ARRI");
+        const departure = toTime(stamps, "DEPA");
+        if (!best(arrival) && !best(departure)) continue;
+        const id =
+          c.transportCallReference ??
+          [code, c.carrierImportVoyageNumber, best(arrival)].join("|");
+        if (calls.has(id)) continue;
+
+        const port = portsByCode.get(code);
+        const terminal = c.location?.facilityName || c.location?.locationName;
+        calls.set(id, {
+          id,
+          port: {
+            code,
+            name: port?.name ?? terminal ?? code,
+            country: port?.country ?? "",
+          },
+          ...(terminal && { terminal }),
+          service,
+          voyageIn: c.carrierImportVoyageNumber ?? "",
+          ...(c.carrierExportVoyageNumber && {
+            voyageOut: c.carrierExportVoyageNumber,
+          }),
+          arrival,
+          departure,
+          cutOffs: (c.cutOffTimes ?? [])
+            .filter((x) => !isPlaceholderDate(x.cutOffDateTime))
+            .map((x) => ({ code: x.cutOffDateTimeCode, at: x.cutOffDateTime })),
+        });
+      }
+    }
+  }
+
+  return {
+    vessel,
+    services,
+    calls: [...calls.values()].sort((a, b) => callTime(a) - callTime(b)),
+  };
+};
+
+// Calls the vessel is at or after `from` (port time), arriving within
+// `weeks`, plus the port it left just before, so the list shows where it's
+// coming from
+export const vesselCallsInWindow = (
+  calls: VesselCall[],
+  from: string,
+  weeks: number,
+): VesselCall[] => {
+  const end = addDays(from, weeks * 7);
+  const leaves = (c: VesselCall) =>
+    localDay(best(c.departure)) ?? localDay(best(c.arrival)) ?? "";
+  const arrives = (c: VesselCall) =>
+    localDay(best(c.arrival)) ?? localDay(best(c.departure)) ?? "";
+  const first = calls.findIndex((c) => leaves(c) >= from);
+  if (first < 0) return [];
+  return calls.slice(Math.max(first - 1, 0)).filter((c) => arrives(c) < end);
+};
+
+interface VesselFetch {
+  from: string;
+  to: string;
+  vessel?: VesselInfo;
+  services: VesselScheduleResult["services"];
+  calls: VesselCall[];
+  fetchedAt: number;
+}
+
+// IMO → its recent fetches, newest first
+const vesselScheduleCache = createTtlCache(MAX_CACHE_ENTRIES);
+
+// Maersk only takes dates from 90 days back to 180 ahead
+const clampDate = (date: string) => {
+  const today = todayIso();
+  const min = addDays(today, -VESSEL_DAYS_BACK);
+  const max = addDays(today, VESSEL_DAYS_AHEAD);
+  return date < min ? min : date > max ? max : date;
+};
+
+const fetchVesselSchedule = async (
+  imo: string,
+  from: string,
+): Promise<VesselFetch> => {
+  const to = clampDate(addDays(from, VESSEL_FETCH_DAYS));
+  const raw: MaerskServiceSchedule[] = [];
+  let cursor: string | undefined;
+  for (let page = 0; page < MAX_PAGES; page++) {
+    const { data, nextCursor } = await request<MaerskServiceSchedule[]>(
+      "/v1/vessel-schedules",
+      {
+        vesselIMONumber: imo,
+        startDate: clampDate(addDays(from, -VESSEL_LEAD_DAYS)),
+        endDate: to,
+        ...(cursor && { cursor }),
+      },
+    );
+    if (Array.isArray(data)) raw.push(...data);
+    if (!nextCursor) break;
+    cursor = nextCursor;
+  }
+
+  // Names come from the port list; a schedule without them still works
+  const ports = await getActivePorts().catch(() => []);
+  const schedule = toVesselSchedule(raw, imo, ports);
+  if (schedule.vessel) {
+    const years = await getBuiltYears([imo]);
+    if (years[imo]) schedule.vessel.builtYear = years[imo];
+  }
+  return { from, to, ...schedule, fetchedAt: Date.now() };
+};
+
+// One vessel's port calls for 12 weeks from `from`. A cached fetch that
+// covers the window answers it, so moving the date up to 4 weeks later
+// costs no Maersk call.
+export const getVesselSchedule = async (
+  imo: string,
+  from: string,
+): Promise<VesselScheduleResult> => {
+  const weeks = VESSEL_WINDOW_WEEKS;
+  const lastDay = clampDate(addDays(from, weeks * 7 - 1));
+  const fetches = vesselScheduleCache.get<VesselFetch[]>(imo) ?? [];
+  const covering = fetches.filter((f) => f.from <= from && lastDay <= f.to);
+  const fresh = covering.find((f) => Date.now() - f.fetchedAt < SCHEDULE_TTL);
+
+  const source =
+    fresh ??
+    (await withFallback(async () => {
+      const fetched = await fetchVesselSchedule(imo, from);
+      vesselScheduleCache.set(
+        imo,
+        [fetched, ...fetches.filter((f) => f.from !== from)].slice(0, 4),
+        STALE_TTL,
+      );
+      return fetched;
+    }, covering[0]));
+
+  // A vessel with nothing scheduled still gets its name from the vessel list
+  const listed = (
+    vesselsCache.get<ActiveVessel[]>("all") ??
+    vesselsStale.get<ActiveVessel[]>("all")
+  )?.find((v) => v.imo === imo);
+
+  return {
+    vessel: source.vessel ?? {
+      name: listed?.name ?? imo,
+      imo,
+      ...(listed?.flag && { flag: listed.flag }),
+      ...(listed?.callSign && { callSign: listed.callSign }),
+    },
+    services: source.services,
+    calls: vesselCallsInWindow(source.calls, from, weeks),
     fetchedAt: new Date(source.fetchedAt).toISOString(),
   };
 };

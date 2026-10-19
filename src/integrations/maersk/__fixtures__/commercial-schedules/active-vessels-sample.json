@@ -1,0 +1,79 @@
+[
+  {
+    "vesselIMONumber": "9938315",
+    "carrierVesselCode": "EM0",
+    "vesselName": "ALS FIDES",
+    "vesselFlagCode": "SG",
+    "vesselCallSign": "9V8623"
+  },
+  {
+    "vesselIMONumber": "9938315",
+    "carrierVesselCode": "EM0",
+    "vesselName": "ALS Fides",
+    "vesselFlagCode": "SG",
+    "vesselCallSign": "9V8623"
+  },
+  {
+    "vesselIMONumber": "9948815",
+    "carrierVesselCode": "V5U",
+    "vesselName": "Adrian Maersk",
+    "vesselFlagCode": "DK",
+    "vesselCallSign": "OZUU2"
+  },
+  {
+    "vesselIMONumber": "9321500",
+    "carrierVesselCode": "785",
+    "vesselName": "Eleonora Maersk",
+    "vesselFlagCode": "SG",
+    "vesselCallSign": "9VCX6"
+  },
+  {
+    "vesselIMONumber": "9525467",
+    "carrierVesselCode": "417",
+    "vesselName": "MAERSK CASABLANCA",
+    "vesselFlagCode": "HK",
+    "vesselCallSign": "VRJU9"
+  },
+  {
+    "vesselIMONumber": "9784271",
+    "carrierVesselCode": "Y64",
+    "vesselName": "MAERSK HALIFAX",
+    "vesselFlagCode": "SG",
+    "vesselCallSign": "9V5395"
+  },
+  {
+    "vesselIMONumber": "9457000",
+    "carrierVesselCode": "KC4",
+    "vesselName": "Rhone Maersk",
+    "vesselFlagCode": "DK",
+    "vesselCallSign": "OXGX2"
+  },
+  {
+    "carrierVesselCode": "N3K",
+    "vesselName": "922 DUMMY VESEL",
+    "vesselCallSign": "5VGA"
+  },
+  {
+    "carrierVesselCode": "YW0",
+    "vesselName": "DUMMY DAM-PSD",
+    "vesselCallSign": "99999"
+  },
+  {
+    "carrierVesselCode": "FQ6",
+    "vesselName": "AMADEUS A",
+    "vesselFlagCode": "NL",
+    "vesselCallSign": "99999"
+  },
+  {
+    "carrierVesselCode": "JQ7",
+    "vesselName": "BAHTERA MARINE 3001",
+    "vesselCallSign": "99999"
+  },
+  {
+    "vesselIMONumber": "9938315",
+    "carrierVesselCode": "EM0",
+    "vesselName": "ALS FIDES",
+    "vesselFlagCode": "SG",
+    "vesselCallSign": "9V8623"
+  }
+]

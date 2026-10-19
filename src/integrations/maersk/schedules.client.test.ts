@@ -8,8 +8,12 @@ import {
   toPortCalls,
   toRoutes,
   toTerminals,
+  toActiveVessels,
+  toVesselSchedule,
+  vesselCallsInWindow,
   type MaerskPortSchedule,
   type MaerskRoute,
+  type MaerskServiceSchedule,
 } from "./schedules.client.js";
 
 // Real Commercial Schedules responses, captured 19 Oct 2026 (date=2026-10-20)
@@ -220,5 +224,119 @@ describe("routesInWindow", () => {
       "2026-11-29",
       "2026-12-06",
     ]);
+  });
+});
+
+// Vessel schedules captured 19 Oct 2026: Adrian Maersk on AE11 and AE19,
+// with other vessels on the same voyages; Maersk Casablanca on FEW2
+const adrian = () =>
+  toVesselSchedule(fixture<MaerskServiceSchedule[]>("vessel-9948815"), "9948815", [
+    { code: "CNSHA", name: "Shanghai", countryCode: "CN", country: "China" },
+  ]);
+const casablanca = () =>
+  toVesselSchedule(fixture<MaerskServiceSchedule[]>("vessel-9525467"), "9525467");
+
+describe("toVesselSchedule", () => {
+  it("keeps only the requested vessel", () => {
+    const { vessel, calls } = adrian();
+    assert.equal(vessel?.name, "Adrian Maersk");
+    assert.equal(vessel?.flag, "DK");
+    assert.equal(vessel?.callSign, "OZUU2");
+    // Berlin Maersk and Matz Maersk share the AE19 voyages: 24 + 5 calls
+    assert.equal(calls.length, 29);
+  });
+
+  it("lists every service the vessel runs on, each call with its own", () => {
+    const { services, calls } = adrian();
+    assert.deepEqual(
+      services.map((s) => s.name),
+      ["AE11", "AE19"],
+    );
+    assert.equal(calls[0].service.name, "AE19");
+    assert.equal(calls.at(-1)?.service.name, "AE11");
+  });
+
+  it("puts calls in rotation order", () => {
+    const { calls } = adrian();
+    const times = calls.map((c) =>
+      Date.parse(c.arrival.actual ?? c.arrival.estimated ?? c.arrival.planned ?? ""),
+    );
+    assert.deepEqual(times, [...times].sort((a, b) => a - b));
+  });
+
+  it("names ports from the port list, falling back to the terminal", () => {
+    const shanghai = adrian().calls.find((c) => c.port.code === "CNSHA");
+    assert.deepEqual(shanghai?.port, { code: "CNSHA", name: "Shanghai", country: "China" });
+    assert.equal(shanghai?.terminal, "YANGSHAN SGH GUANDONG TERMINAL");
+    const yantian = adrian().calls.find((c) => c.port.code === "CNYTN");
+    assert.equal(yantian?.port.name, "YanTian Intl. Container Terminal");
+    assert.equal(yantian?.port.country, "");
+  });
+
+  it("keeps planned, estimated and actual times, voyages and deadlines", () => {
+    const singapore = casablanca().calls[0];
+    assert.equal(singapore.port.code, "SGSIN");
+    assert.equal(singapore.voyageIn, "632E");
+    assert.equal(singapore.voyageOut, "638W");
+    assert.equal(singapore.arrival.actual, "2026-09-24T17:59:00+08:00");
+    assert.equal(singapore.arrival.planned, "2026-09-13T14:00:00+08:00");
+    assert.deepEqual(
+      singapore.cutOffs.map((c) => c.code),
+      ["DCO", "VCO", "FCO"],
+    );
+  });
+
+  it("returns nothing for a vessel that isn't in the response", () => {
+    const { vessel, calls } = toVesselSchedule(
+      fixture<MaerskServiceSchedule[]>("vessel-9525467"),
+      "9999999",
+    );
+    assert.equal(vessel, undefined);
+    assert.equal(calls.length, 0);
+  });
+});
+
+describe("vesselCallsInWindow", () => {
+  it("keeps calls from the date, plus the port the vessel left before it", () => {
+    const calls = vesselCallsInWindow(casablanca().calls, "2026-10-19", 8);
+    // Lomé was left on 18 Oct; Apapa is next
+    assert.deepEqual(
+      calls.slice(0, 2).map((c) => c.port.code),
+      ["TGLFW", "NGAPP"],
+    );
+    // Nothing arriving on or after 14 Dec
+    assert.ok(calls.every((c) => (c.arrival.estimated ?? "") < "2026-12-14"));
+    // Tanjung Pelepas on 24 Nov is the last; Lomé on 18 Dec is past it
+    assert.equal(calls.at(-1)?.port.code, "MYTPP");
+  });
+
+  it("returns nothing when the vessel has left every port by the date", () => {
+    assert.deepEqual(vesselCallsInWindow(casablanca().calls, "2027-06-01", 4), []);
+  });
+});
+
+describe("toActiveVessels", () => {
+  const vessels = () => toActiveVessels(fixture("active-vessels-sample"));
+
+  it("drops dummies and vessels without an IMO number", () => {
+    const names = vessels().map((v) => v.name);
+    assert.ok(!names.some((n) => /DUMMY|AMADEUS|BAHTERA/i.test(n)));
+  });
+
+  it("lists each IMO once, sorted by name", () => {
+    const list = vessels();
+    assert.equal(list.length, 6);
+    assert.equal(new Set(list.map((v) => v.imo)).size, 6);
+    assert.deepEqual(
+      list.map((v) => v.name),
+      [...list.map((v) => v.name)].sort((a, b) => a.localeCompare(b)),
+    );
+    assert.deepEqual(list.find((v) => v.imo === "9525467"), {
+      imo: "9525467",
+      name: "MAERSK CASABLANCA",
+      flag: "HK",
+      callSign: "VRJU9",
+      code: list.find((v) => v.imo === "9525467")?.code,
+    });
   });
 });
