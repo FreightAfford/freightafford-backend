@@ -31,3 +31,25 @@ export const requireVerifiedForTracking = async (
 
   next();
 };
+
+// Sailing schedules are for verified businesses only, whether or not
+// KYC_ENFORCEMENT is on. Staff are never blocked; the frontend shows a
+// locked page too, and this is the check that can't be skipped.
+export const requireVerifiedForSchedules = async (
+  req: AuthenticateRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (req.user!.role !== "customer") return next();
+
+  const verified = await Kyc.exists({
+    user: req.user!._id,
+    status: "approved",
+  });
+  if (!verified)
+    return next(
+      new AppError("Verify your business to see sailing schedules.", 403),
+    );
+
+  next();
+};
