@@ -32,6 +32,9 @@ const envConfig = {
   MAERSK_TRACKING_URL:
     process.env.MAERSK_TRACKING_URL ||
     "https://api.maersk.com/track-and-trace-private/events",
+  MAERSK_SCHEDULES_URL:
+    process.env.MAERSK_SCHEDULES_URL ||
+    "https://api.maersk.com/ocean/commercial-schedules/dcsa",
   // Kill switch for the Maersk status/date sync cron; on unless set to "false"
   MAERSK_TRACKING_SYNC_ENABLED: process.env.MAERSK_TRACKING_SYNC_ENABLED,
   // 32-byte key (64 hex characters) for encrypting KYC identifiers such as

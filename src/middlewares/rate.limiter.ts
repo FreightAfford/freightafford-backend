@@ -30,6 +30,12 @@ export const trackingRateLimiter = rateLimit({
   message: { message: "Too many tracking requests. Please slow down." },
 });
 
+export const scheduleRateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 30,
+  message: { message: "Too many schedule searches. Please slow down." },
+});
+
 export const kycUploadRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 40,

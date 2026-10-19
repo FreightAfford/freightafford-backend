@@ -1,0 +1,3600 @@
+[
+  {
+    "location": {
+      "locationName": "Apapa Port",
+      "facilityName": "Apapa Port",
+      "UNLocationCode": "NGAPP",
+      "facilitySMDGCode": "APMTER"
+    },
+    "vesselSchedules": [
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "638W",
+            "carrierExportVoyageNumber": "641E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525467",
+          "name": "MAERSK CASABLANCA",
+          "flag": "HK",
+          "callSign": "VRJU9",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-19T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-11T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-23T03:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-13T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-10-17T20:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-16T16:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-10-11T04:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "639S",
+            "carrierExportVoyageNumber": "642N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9529255",
+          "name": "MAERSK CARDIFF",
+          "flag": "SG",
+          "callSign": "9V7632",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-21T12:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-16T07:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-24T03:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-19T03:30:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-10-18T16:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-18T08:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "636W",
+            "carrierExportVoyageNumber": "640E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525481",
+          "name": "MAERSK CUBANGO",
+          "flag": "HK",
+          "callSign": "VRJV3",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-21T16:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-13T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-23T16:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-15T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-10-06T16:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-03T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "640S",
+            "carrierExportVoyageNumber": "643N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9561485",
+          "name": "MAERSK CUNENE",
+          "flag": "SG",
+          "callSign": "9V9541",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-23T16:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-23T07:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-26T12:30:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-26T03:30:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-10-20T20:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-20T12:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "641S",
+            "carrierExportVoyageNumber": "644N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9526459",
+          "name": "MAERSK CADIZ",
+          "flag": "SG",
+          "callSign": "9V7639",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-30T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-30T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-01T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-01T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-10-27T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-10-30T12:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-27T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "639W",
+            "carrierExportVoyageNumber": "642E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525285",
+          "name": "MAERSK CONAKRY",
+          "flag": "SG",
+          "callSign": "9V9267",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-10-30T10:30:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-18T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-02T10:30:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-20T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-10-28T10:30:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-27T06:30:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-10-18T04:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "640W",
+            "carrierExportVoyageNumber": "643E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525314",
+          "name": "MAERSK CAPE COAST",
+          "flag": "SG",
+          "callSign": "9V9407",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-02T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-25T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-05T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-27T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-10-31T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-10-30T06:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-10-25T04:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "642S",
+            "carrierExportVoyageNumber": "645N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9260902",
+          "name": "PORTO GERMENO",
+          "flag": "LR",
+          "callSign": "5LBC8",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-08T16:02:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-06T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-11T05:02:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-08T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-05T20:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-05T12:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "641W",
+            "carrierExportVoyageNumber": "644E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525493",
+          "name": "MAERSK CABINDA",
+          "flag": "SG",
+          "callSign": "9V7037",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-09T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-01T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-12T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-03T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-07T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-06T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "638W",
+            "carrierExportVoyageNumber": "642E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9969053",
+          "name": "Maersk Florence",
+          "flag": "SG",
+          "callSign": "9V8566",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-10T13:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-27T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-12T13:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-10-29T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-10-27T16:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-07T09:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "643S",
+            "carrierExportVoyageNumber": "646N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525390",
+          "name": "MAERSK COLOMBO",
+          "flag": "SG",
+          "callSign": "S6AN5",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-13T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-13T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-15T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-15T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-10T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-10T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "642W",
+            "carrierExportVoyageNumber": "645E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9618599",
+          "name": "KYPARISSIA",
+          "flag": "MT",
+          "callSign": "9HA3484",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-15T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-08T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-17T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-10T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-13T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-12T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "644S",
+            "carrierExportVoyageNumber": "647N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525405",
+          "name": "MAERSK COPENHAGEN",
+          "flag": "SG",
+          "callSign": "S6NY3",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-20T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-20T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-22T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-22T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-17T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-17T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "640W",
+            "carrierExportVoyageNumber": "644E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9925825",
+          "name": "CMA CGM MASAI MARA",
+          "flag": "BE",
+          "callSign": "ONAA",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-21T12:32:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-10T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-23T12:32:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-12T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-18T23:30:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-11-10T16:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "644W",
+            "carrierExportVoyageNumber": "647E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9938315",
+          "name": "ALS Fides",
+          "flag": "SG",
+          "callSign": "9V8623",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-22T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-22T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-24T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-24T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-20T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-11-22T04:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "641W",
+            "carrierExportVoyageNumber": "646E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9477799",
+          "name": "MEGALOPOLIS",
+          "flag": "MT",
+          "callSign": "9HA3403",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-24T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-24T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-26T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-26T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-21T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "645S",
+            "carrierExportVoyageNumber": "648N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9456991",
+          "name": "RHINE MAERSK",
+          "flag": "DK",
+          "callSign": "OXPH2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-27T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-27T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-29T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-29T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-24T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-24T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "645W",
+            "carrierExportVoyageNumber": "648E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9457000",
+          "name": "Rhone Maersk",
+          "flag": "DK",
+          "callSign": "OXGX2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-11-29T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-11-29T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-01T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-01T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-11-27T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-26T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "643W",
+            "carrierExportVoyageNumber": "647E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9694543",
+          "name": "CMA CGM Kribi",
+          "flag": "MT",
+          "callSign": "9HA5373",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-01T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-01T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-03T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-03T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-11-29T09:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "646S",
+            "carrierExportVoyageNumber": "649N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525326",
+          "name": "MAERSK CAMEROUN",
+          "flag": "SG",
+          "callSign": "9V9408",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-04T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-04T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-06T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-06T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-01T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-01T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "646W",
+            "carrierExportVoyageNumber": "649E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9786085",
+          "name": "MAERSK ZAMBEZI",
+          "flag": "MH",
+          "callSign": "V7A4151",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-06T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-06T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-08T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-08T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-04T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-03T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "644W",
+            "carrierExportVoyageNumber": "648E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9218674",
+          "name": "APL HOLLAND",
+          "flag": "SG",
+          "callSign": "9VKQ2",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-08T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-08T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-10T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-10T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-06T09:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "647S",
+            "carrierExportVoyageNumber": "650N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525479",
+          "name": "MAERSK CAIRO",
+          "flag": "HK",
+          "callSign": "VRJV2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-11T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-11T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-13T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-13T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-08T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-08T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "647W",
+            "carrierExportVoyageNumber": "650E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9938303",
+          "name": "ALS Ceres",
+          "flag": "SG",
+          "callSign": "9V8621",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-13T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-13T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-15T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-15T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-11T10:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "645W",
+            "carrierExportVoyageNumber": "649E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "1013365",
+          "name": "Maersk Frio",
+          "flag": "SG",
+          "callSign": "9V9727",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-15T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-15T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-17T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-17T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-12T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "648S",
+            "carrierExportVoyageNumber": "651N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9529255",
+          "name": "MAERSK CARDIFF",
+          "flag": "SG",
+          "callSign": "9V7632",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-18T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-18T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-20T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-20T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-15T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-15T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "648W",
+            "carrierExportVoyageNumber": "651E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525467",
+          "name": "MAERSK CASABLANCA",
+          "flag": "HK",
+          "callSign": "VRJU9",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-20T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-20T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-22T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-22T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-18T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-17T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "646W",
+            "carrierExportVoyageNumber": "650E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525481",
+          "name": "MAERSK CUBANGO",
+          "flag": "HK",
+          "callSign": "VRJV3",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-22T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-22T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-24T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-24T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-12T18:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-12-15T16:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "649S",
+            "carrierExportVoyageNumber": "652N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9561485",
+          "name": "MAERSK CUNENE",
+          "flag": "SG",
+          "callSign": "9V9541",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-25T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-25T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-27T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-27T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-22T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-22T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "649W",
+            "carrierExportVoyageNumber": "652E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525285",
+          "name": "MAERSK CONAKRY",
+          "flag": "SG",
+          "callSign": "9V9267",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-27T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-27T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2026-12-29T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2026-12-29T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-25T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-24T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "650S",
+            "carrierExportVoyageNumber": "653N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9526459",
+          "name": "MAERSK CADIZ",
+          "flag": "SG",
+          "callSign": "9V7639",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-01T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-01T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-03T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-03T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2026-12-29T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-29T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "650W",
+            "carrierExportVoyageNumber": "653E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525314",
+          "name": "MAERSK CAPE COAST",
+          "flag": "SG",
+          "callSign": "9V9407",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-03T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-03T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-05T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-05T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-01T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2026-12-31T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "651S",
+            "carrierExportVoyageNumber": "701N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525302",
+          "name": "MAERSK CALABAR",
+          "flag": "SG",
+          "callSign": "9V9269",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-08T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-08T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-10T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-10T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-05T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-05T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "651W",
+            "carrierExportVoyageNumber": "701E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525493",
+          "name": "MAERSK CABINDA",
+          "flag": "SG",
+          "callSign": "9V7037",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-10T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-10T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-12T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-12T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-08T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-07T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "648W",
+            "carrierExportVoyageNumber": "652E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9969053",
+          "name": "Maersk Florence",
+          "flag": "SG",
+          "callSign": "9V8566",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-12T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-05T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-14T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-07T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-09T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "652S",
+            "carrierExportVoyageNumber": "702N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525390",
+          "name": "MAERSK COLOMBO",
+          "flag": "SG",
+          "callSign": "S6AN5",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-15T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-15T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-17T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-17T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-12T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-12T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "652W",
+            "carrierExportVoyageNumber": "702E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9618599",
+          "name": "KYPARISSIA",
+          "flag": "MT",
+          "callSign": "9HA3484",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-17T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-17T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-19T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-19T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-15T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-14T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "650W",
+            "carrierExportVoyageNumber": "701E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9925825",
+          "name": "CMA CGM MASAI MARA",
+          "flag": "BE",
+          "callSign": "ONAA",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-19T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-19T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-21T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-21T22:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "653S",
+            "carrierExportVoyageNumber": "703N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525405",
+          "name": "MAERSK COPENHAGEN",
+          "flag": "SG",
+          "callSign": "S6NY3",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-22T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-22T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-24T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-24T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-18T22:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2027-01-21T12:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-18T14:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "549W",
+            "carrierExportVoyageNumber": "552E"
+          }
+        ],
+        "vessel": {
+          "name": "MDV GHANA",
+          "callSign": "1XXXXX",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-24T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2025-12-28T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-26T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2025-12-30T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-22T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "VCO",
+            "cutOffDateTime": "2026-08-23T04:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "653W",
+            "carrierExportVoyageNumber": "703E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9938315",
+          "name": "ALS FIDES",
+          "flag": "SG",
+          "callSign": "9V8623",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-24T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-24T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-26T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-26T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-22T10:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "701S",
+            "carrierExportVoyageNumber": "704N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9456991",
+          "name": "RHINE MAERSK",
+          "flag": "DK",
+          "callSign": "OXPH2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-29T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-29T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-31T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-31T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-26T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-26T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "701W",
+            "carrierExportVoyageNumber": "704E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9457000",
+          "name": "Rhone Maersk",
+          "flag": "DK",
+          "callSign": "OXGX2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-01-31T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-01-31T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-02T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-02T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-01-29T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-28T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "652W",
+            "carrierExportVoyageNumber": "703E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9477799",
+          "name": "MEGALOPOLIS",
+          "flag": "MT",
+          "callSign": "9HA3403",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-02T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-02T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-04T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-04T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-01-30T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "702S",
+            "carrierExportVoyageNumber": "705N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525326",
+          "name": "MAERSK CAMEROUN",
+          "flag": "SG",
+          "callSign": "9V9408",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-05T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-05T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-07T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-07T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-02T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-02T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "702W",
+            "carrierExportVoyageNumber": "705E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9786085",
+          "name": "MAERSK ZAMBEZI",
+          "flag": "MH",
+          "callSign": "V7A4151",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-07T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-07T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-09T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-09T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-05T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-04T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "653W",
+            "carrierExportVoyageNumber": "704E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9694543",
+          "name": "CMA CGM Kribi",
+          "flag": "MT",
+          "callSign": "9HA5373",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-09T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-09T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-11T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-11T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-07T09:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "703S",
+            "carrierExportVoyageNumber": "706N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525479",
+          "name": "MAERSK CAIRO",
+          "flag": "HK",
+          "callSign": "VRJV2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-12T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-12T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-14T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-14T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-09T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-09T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "703W",
+            "carrierExportVoyageNumber": "706E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9938303",
+          "name": "ALS Ceres",
+          "flag": "SG",
+          "callSign": "9V8621",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-14T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-14T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-16T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-16T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-12T10:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "701W",
+            "carrierExportVoyageNumber": "705E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9218674",
+          "name": "APL HOLLAND",
+          "flag": "SG",
+          "callSign": "9VKQ2",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-16T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-16T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-18T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-18T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-14T09:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "704S",
+            "carrierExportVoyageNumber": "707N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9529255",
+          "name": "MAERSK CARDIFF",
+          "flag": "SG",
+          "callSign": "9V7632",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-19T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-19T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-21T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-21T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-16T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-16T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "704W",
+            "carrierExportVoyageNumber": "707E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525467",
+          "name": "MAERSK CASABLANCA",
+          "flag": "HK",
+          "callSign": "VRJU9",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-21T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-21T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-23T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-23T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-19T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-18T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "702W",
+            "carrierExportVoyageNumber": "706E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "1013365",
+          "name": "Maersk Frio",
+          "flag": "SG",
+          "callSign": "9V9727",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-23T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-23T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-25T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-25T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-20T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "705S",
+            "carrierExportVoyageNumber": "708N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9561485",
+          "name": "MAERSK CUNENE",
+          "flag": "SG",
+          "callSign": "9V9541",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-26T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-26T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-28T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-28T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-23T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-23T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "705W",
+            "carrierExportVoyageNumber": "708E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525285",
+          "name": "MAERSK CONAKRY",
+          "flag": "SG",
+          "callSign": "9V9267",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-02-28T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-02-28T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-02T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-02T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-02-26T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-25T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "703W",
+            "carrierExportVoyageNumber": "707E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525481",
+          "name": "MAERSK CUBANGO",
+          "flag": "HK",
+          "callSign": "VRJV3",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-02T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-02T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-04T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-04T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-02-27T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "706S",
+            "carrierExportVoyageNumber": "709N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9526459",
+          "name": "MAERSK CADIZ",
+          "flag": "SG",
+          "callSign": "9V7639",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-05T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-05T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-07T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-07T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-02T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-02T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "706W",
+            "carrierExportVoyageNumber": "709E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525314",
+          "name": "MAERSK CAPE COAST",
+          "flag": "SG",
+          "callSign": "9V9407",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-07T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-07T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-09T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-09T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-05T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-04T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "707S",
+            "carrierExportVoyageNumber": "710N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525302",
+          "name": "MAERSK CALABAR",
+          "flag": "SG",
+          "callSign": "9V9269",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-12T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-12T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-14T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-14T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-09T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-09T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "707W",
+            "carrierExportVoyageNumber": "710E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525493",
+          "name": "MAERSK CABINDA",
+          "flag": "SG",
+          "callSign": "9V7037",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-14T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-14T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-16T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-16T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-12T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-11T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "705W",
+            "carrierExportVoyageNumber": "709E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9969053",
+          "name": "Maersk Florence",
+          "flag": "SG",
+          "callSign": "9V8566",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-16T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-16T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-18T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-18T22:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "708S",
+            "carrierExportVoyageNumber": "711N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525390",
+          "name": "MAERSK COLOMBO",
+          "flag": "SG",
+          "callSign": "S6AN5",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-19T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-19T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-21T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-21T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-16T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-16T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "FEW2",
+            "carrierServiceCode": "FW2",
+            "carrierImportVoyageNumber": "708W",
+            "carrierExportVoyageNumber": "711E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9618599",
+          "name": "KYPARISSIA",
+          "flag": "MT",
+          "callSign": "9HA3484",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-21T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-21T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-23T20:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-23T20:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-19T10:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-18T06:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "709S",
+            "carrierExportVoyageNumber": "712N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525405",
+          "name": "MAERSK COPENHAGEN",
+          "flag": "SG",
+          "callSign": "S6NY3",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-26T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-26T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-28T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-28T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-23T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-23T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "707W",
+            "carrierExportVoyageNumber": "711E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9925825",
+          "name": "CMA CGM MASAI MARA",
+          "flag": "BE",
+          "callSign": "ONAA",
+          "operatorCarrierCode": "CMA",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-03-30T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-03-30T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-01T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-01T22:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "710S",
+            "carrierExportVoyageNumber": "713N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9456991",
+          "name": "RHINE MAERSK",
+          "flag": "DK",
+          "callSign": "OXPH2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-02T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-02T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-04T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-04T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-03-30T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-03-30T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "711S",
+            "carrierExportVoyageNumber": "714N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525326",
+          "name": "MAERSK CAMEROUN",
+          "flag": "SG",
+          "callSign": "9V9408",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-09T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-09T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-11T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-11T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-04-06T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-04-06T03:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "MESAWA",
+            "carrierServiceCode": "MW1",
+            "carrierImportVoyageNumber": "709W",
+            "carrierExportVoyageNumber": "713E"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9477799",
+          "name": "MEGALOPOLIS",
+          "flag": "MT",
+          "callSign": "9HA3403",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-13T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-13T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-15T22:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-15T22:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-04-10T18:00:00+01:00"
+          }
+        ]
+      },
+      {
+        "servicePartners": [
+          {
+            "carrierCode": "MAEU",
+            "carrierCodeListProvider": "NMFTA",
+            "carrierServiceName": "WAF6 W6A",
+            "carrierServiceCode": "W6A",
+            "carrierImportVoyageNumber": "712S",
+            "carrierExportVoyageNumber": "715N"
+          }
+        ],
+        "vessel": {
+          "vesselIMONumber": "9525479",
+          "name": "MAERSK CAIRO",
+          "flag": "HK",
+          "callSign": "VRJV2",
+          "operatorCarrierCode": "MSK",
+          "operatorCarrierCodeListProvider": "SMDG"
+        },
+        "isDummyVessel": false,
+        "timestamps": [
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-16T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "ARRI",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-16T10:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "EST",
+            "eventDateTime": "2027-04-18T23:00:00+01:00"
+          },
+          {
+            "eventTypeCode": "DEPA",
+            "eventClassifierCode": "PLN",
+            "eventDateTime": "2027-04-18T23:00:00+01:00"
+          }
+        ],
+        "cutOffTimes": [
+          {
+            "cutOffDateTimeCode": "DCO",
+            "cutOffDateTime": "2027-04-13T11:00:00+01:00"
+          },
+          {
+            "cutOffDateTimeCode": "FCO",
+            "cutOffDateTime": "2027-04-13T03:00:00+01:00"
+          }
+        ]
+      }
+    ]
+  }
+]

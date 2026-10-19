@@ -1,0 +1,196 @@
+[
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNDCB",
+    "cityName": "Da Chan Bay",
+    "portName": "Da Chan Bay",
+    "UNRegionCode": "GD",
+    "carrierCityGeoID": "0MBJWMXRK7H5S"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNDLC",
+    "cityName": "Dalian",
+    "portName": "Dalian",
+    "UNRegionCode": "LN",
+    "carrierCityGeoID": "0G5RI2I2X2U8P"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNFOC",
+    "cityName": "Fuzhou",
+    "portName": "Fuzhou",
+    "UNRegionCode": "FJ",
+    "carrierCityGeoID": "0D56BH9WK13ZY"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNLYG",
+    "cityName": "Lianyungang",
+    "portName": "Lianyungang",
+    "UNRegionCode": "JS",
+    "carrierCityGeoID": "38W5JVTS0IIKE"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNMAW",
+    "cityName": "Mawei",
+    "portName": "Mawei",
+    "UNRegionCode": "FJ",
+    "carrierCityGeoID": "2613G05THZDLI"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNKHN",
+    "cityName": "Nanchang",
+    "portName": "Nanchang",
+    "UNRegionCode": "JX",
+    "carrierCityGeoID": "01NDCJ05JQDMM"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNNSA",
+    "cityName": "Nansha New Port",
+    "portName": "Nansha New Port",
+    "UNRegionCode": "GD",
+    "carrierCityGeoID": "06AZ2N3T2FBMH"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNNGB",
+    "cityName": "Ningbo",
+    "portName": "Ningbo",
+    "UNRegionCode": "ZJ",
+    "carrierCityGeoID": "104T898SJZ6GU"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNZOS",
+    "cityName": "Ningbo(zhoushan)",
+    "portName": "Ningbo(zhoushan)",
+    "UNRegionCode": "ZJ",
+    "carrierCityGeoID": "3J0NCII3M61DQ"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNTAO",
+    "cityName": "Qingdao",
+    "portName": "Qingdao",
+    "UNRegionCode": "SD",
+    "carrierCityGeoID": "1YCLYW8V7RZB2"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNQZH",
+    "cityName": "Qinzhou",
+    "portName": "Qinzhou",
+    "UNRegionCode": "GX",
+    "carrierCityGeoID": "1MUWHM1ZFR2O6"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNSHA",
+    "cityName": "Shanghai",
+    "portName": "Shanghai",
+    "UNRegionCode": "SH",
+    "carrierCityGeoID": "2IW9P6J7XAW72"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNSHK",
+    "cityName": "Shekou",
+    "portName": "Shekou",
+    "UNRegionCode": "GD",
+    "carrierCityGeoID": "1PLJHUYRVY2ZD"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNXMN",
+    "cityName": "Xiamen",
+    "portName": "Xiamen",
+    "UNRegionCode": "FJ",
+    "carrierCityGeoID": "27EDDQ27KL27Y"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNTXG",
+    "cityName": "Xingang",
+    "portName": "Xingang",
+    "UNRegionCode": "TJ",
+    "carrierCityGeoID": "02GYFH4R8RVY6"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNYNT",
+    "cityName": "Yantai",
+    "portName": "Yantai",
+    "UNRegionCode": "SD",
+    "carrierCityGeoID": "03AT3KCOKS29Q"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNYTN",
+    "cityName": "Yantian",
+    "portName": "Yantian",
+    "UNRegionCode": "GD",
+    "carrierCityGeoID": "0L3DBFFJ3KZ9A"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "UNLocationCode": "CNZUH",
+    "cityName": "Zhuhai",
+    "portName": "Zhuhai",
+    "UNRegionCode": "GD",
+    "carrierCityGeoID": "0ZLPO5P9A3YBI"
+  },
+  {
+    "countryCode": "NG",
+    "countryName": "Nigeria",
+    "UNLocationCode": "NGAPP",
+    "cityName": "Apapa",
+    "portName": "Apapa",
+    "carrierCityGeoID": "0CVIORYS4ODJ3"
+  },
+  {
+    "countryCode": "NG",
+    "countryName": "Nigeria",
+    "UNLocationCode": "NGLKK",
+    "cityName": "Lekki",
+    "portName": "Lekki",
+    "carrierCityGeoID": "URXHENJHTX1KN"
+  },
+  {
+    "countryCode": "NG",
+    "countryName": "Nigeria",
+    "UNLocationCode": "NGONN",
+    "cityName": "Onne",
+    "portName": "Onne",
+    "carrierCityGeoID": "0AOUVQIRKPJLF"
+  },
+  {
+    "countryCode": "NG",
+    "countryName": "Nigeria",
+    "UNLocationCode": "NGTIN",
+    "cityName": "Tin Can Island Port",
+    "portName": "Tin Can Island Port",
+    "carrierCityGeoID": "1FH123AQ5G7RI"
+  }
+]

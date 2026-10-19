@@ -21,6 +21,7 @@ import invoiceRouter from "./routers/invoice.router.js";
 import kycRouter from "./routers/kyc.router.js";
 import locationRouter from "./routers/location.router.js";
 import pipelineRouter from "./routers/pipeline.router.js";
+import scheduleRouter from "./routers/schedule.router.js";
 import ticketRouter from "./routers/ticket.router.js";
 import trackingRouter from "./routers/tracking.router.js";
 import vesselRouter from "./routers/vessel.router.js";
@@ -68,6 +69,7 @@ const appConfig = async (app: Application) => {
   app.use("/api/v1/locations", locationRouter);
   app.use("/api/v1/commodities", commodityRouter);
   app.use("/api/v1/vessels", vesselRouter);
+  app.use("/api/v1/schedules", scheduleRouter);
   app.use("/api/v1/kyc", kycRouter);
 
   app.use((req, res, next) =>
