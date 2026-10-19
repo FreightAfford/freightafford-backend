@@ -1,0 +1,1072 @@
+[
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "APM 2 Terminal Maasvlakte II",
+        "facilityName": "APM 2 Terminal Maasvlakte II",
+        "address": {
+          "street": "APM 2 Terminal Maasvlakte II",
+          "city": "Rotterdam",
+          "countryCode": "NL"
+        },
+        "UNLocationCode": "NLRTM",
+        "facility": {
+          "facilityCode": "NLMVII",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-10-22T21:00:00+02:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Onne Port Terminal",
+        "facilityName": "Onne Port Terminal",
+        "address": {
+          "street": "Onne Port Terminal",
+          "city": "Onne",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGONN",
+        "facility": {
+          "facilityCode": "OMT",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-23T07:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DGC",
+        "cutOffDateTime": "2026-10-16T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-19T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-19T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-20T02:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-20T02:00:00+02:00"
+      }
+    ],
+    "solutionNumber": 1,
+    "routingReference": "v3~MSK~sail:MVS:NLROTTM:ESALRTM:1YM:642E:642E~sail:MVS:ESALRTM:CIABJCI:D83:643S:643S~sail:MVS:CIABJCI:NGON1PT:M5E:647S:647S",
+    "transitTime": 31,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE5",
+              "carrierCommercialServiceName": "AE5",
+              "carrierServiceCode": "415",
+              "carrierImportVoyageNumber": "642E",
+              "carrierExportVoyageNumber": "642E"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632143",
+            "name": "MARCHEN MAERSK",
+            "flag": "DK",
+            "callSign": "OWUJ2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "APM 2 Terminal Maasvlakte II",
+            "facilityName": "APM 2 Terminal Maasvlakte II",
+            "UNLocationCode": "NLRTM",
+            "facility": {
+              "facilityCode": "NLMVII",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-22T21:00:00+02:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-26T20:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF3",
+              "carrierCommercialServiceName": "WAF3",
+              "carrierServiceCode": "W3A",
+              "carrierImportVoyageNumber": "643S",
+              "carrierExportVoyageNumber": "643S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632832",
+            "name": "SEADREAM",
+            "flag": "MT",
+            "callSign": "9HA3399"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-30T05:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-15T09:00:00Z"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF5 W5A",
+              "carrierCommercialServiceName": "WAF5",
+              "carrierServiceCode": "W5A",
+              "carrierImportVoyageNumber": "647S",
+              "carrierExportVoyageNumber": "647S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9509138",
+            "name": "FLEUR N",
+            "flag": "LR",
+            "callSign": "D5WV5"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-17T16:00:00Z"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Onne Port Terminal",
+            "facilityName": "Onne Port Terminal",
+            "UNLocationCode": "NGONN",
+            "facility": {
+              "facilityCode": "OMT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-23T07:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "APM 2 Terminal Maasvlakte II",
+        "facilityName": "APM 2 Terminal Maasvlakte II",
+        "address": {
+          "street": "APM 2 Terminal Maasvlakte II",
+          "city": "Rotterdam",
+          "countryCode": "NL"
+        },
+        "UNLocationCode": "NLRTM",
+        "facility": {
+          "facilityCode": "NLMVII",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-10-29T05:00:00+01:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Onne Port Terminal",
+        "facilityName": "Onne Port Terminal",
+        "address": {
+          "street": "Onne Port Terminal",
+          "city": "Onne",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGONN",
+        "facility": {
+          "facilityCode": "OMT",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-30T07:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DGC",
+        "cutOffDateTime": "2026-10-23T12:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-23T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-23T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-26T10:45:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-26T10:45:00+01:00"
+      }
+    ],
+    "solutionNumber": 1,
+    "routingReference": "v3~MSK~sail:MVS:NLROTTM:ESALRTM:Y25:643E:643E~sail:MVS:ESALRTM:CIABJCI:022:644S:644S~sail:MVS:CIABJCI:NGON1PT:39R:648S:648S",
+    "transitTime": 32,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE5",
+              "carrierCommercialServiceName": "AE5",
+              "carrierServiceCode": "415",
+              "carrierImportVoyageNumber": "643E",
+              "carrierExportVoyageNumber": "643E"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9778806",
+            "name": "MUNICH MAERSK",
+            "flag": "DK",
+            "callSign": "OWCH2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "APM 2 Terminal Maasvlakte II",
+            "facilityName": "APM 2 Terminal Maasvlakte II",
+            "UNLocationCode": "NLRTM",
+            "facility": {
+              "facilityCode": "NLMVII",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-29T05:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-03T08:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF3",
+              "carrierCommercialServiceName": "WAF3",
+              "carrierServiceCode": "W3A",
+              "carrierImportVoyageNumber": "644S",
+              "carrierExportVoyageNumber": "644S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9235555",
+            "name": "MAERSK GIRONDE",
+            "flag": "SG",
+            "callSign": "9V6212"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-10T05:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-22T09:00:00Z"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF5 W5A",
+              "carrierCommercialServiceName": "WAF5",
+              "carrierServiceCode": "W5A",
+              "carrierImportVoyageNumber": "648S",
+              "carrierExportVoyageNumber": "648S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9256377",
+            "name": "BIG DOG",
+            "flag": "LR",
+            "callSign": "A8TL2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-24T16:00:00Z"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Onne Port Terminal",
+            "facilityName": "Onne Port Terminal",
+            "UNLocationCode": "NGONN",
+            "facility": {
+              "facilityCode": "OMT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-30T07:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "APM 2 Terminal Maasvlakte II",
+        "facilityName": "APM 2 Terminal Maasvlakte II",
+        "address": {
+          "street": "APM 2 Terminal Maasvlakte II",
+          "city": "Rotterdam",
+          "countryCode": "NL"
+        },
+        "UNLocationCode": "NLRTM",
+        "facility": {
+          "facilityCode": "NLMVII",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-10-29T05:00:00+01:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Onne Port Terminal",
+        "facilityName": "Onne Port Terminal",
+        "address": {
+          "street": "Onne Port Terminal",
+          "city": "Onne",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGONN",
+        "facility": {
+          "facilityCode": "OMT",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-30T07:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DGC",
+        "cutOffDateTime": "2026-10-23T12:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-23T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-23T17:00:00+02:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-26T10:45:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-26T10:45:00+01:00"
+      }
+    ],
+    "solutionNumber": 1,
+    "routingReference": "v3~MSK~sail:MVS:NLROTTM:ESALRTM:Y25:643E:643E~sail:MVS:ESALRTM:CIABJCI:830:639S:639S~sail:MVS:CIABJCI:NGON1PT:39R:648S:648S",
+    "transitTime": 32,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE5",
+              "carrierCommercialServiceName": "AE5",
+              "carrierServiceCode": "415",
+              "carrierImportVoyageNumber": "643E",
+              "carrierExportVoyageNumber": "643E"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9778806",
+            "name": "MUNICH MAERSK",
+            "flag": "DK",
+            "callSign": "OWCH2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "APM 2 Terminal Maasvlakte II",
+            "facilityName": "APM 2 Terminal Maasvlakte II",
+            "UNLocationCode": "NLRTM",
+            "facility": {
+              "facilityCode": "NLMVII",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-29T05:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-03T08:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF3",
+              "carrierCommercialServiceName": "WAF3",
+              "carrierServiceCode": "W3A",
+              "carrierImportVoyageNumber": "639S",
+              "carrierExportVoyageNumber": "639S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9313955",
+            "name": "MAERSK BROWNSVILLE",
+            "flag": "DK",
+            "callSign": "OXVD2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-05T21:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-22T09:00:00Z"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF5 W5A",
+              "carrierCommercialServiceName": "WAF5",
+              "carrierServiceCode": "W5A",
+              "carrierImportVoyageNumber": "648S",
+              "carrierExportVoyageNumber": "648S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9256377",
+            "name": "BIG DOG",
+            "flag": "LR",
+            "callSign": "A8TL2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-24T16:00:00Z"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Onne Port Terminal",
+            "facilityName": "Onne Port Terminal",
+            "UNLocationCode": "NGONN",
+            "facility": {
+              "facilityCode": "OMT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-30T07:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "APM 2 Terminal Maasvlakte II",
+        "facilityName": "APM 2 Terminal Maasvlakte II",
+        "address": {
+          "street": "APM 2 Terminal Maasvlakte II",
+          "city": "Rotterdam",
+          "countryCode": "NL"
+        },
+        "UNLocationCode": "NLRTM",
+        "facility": {
+          "facilityCode": "NLMVII",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-05T17:00:00+01:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Onne Port Terminal",
+        "facilityName": "Onne Port Terminal",
+        "address": {
+          "street": "Onne Port Terminal",
+          "city": "Onne",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGONN",
+        "facility": {
+          "facilityCode": "OMT",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-12-07T07:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DGC",
+        "cutOffDateTime": "2026-11-02T12:00:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-11-02T17:00:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-11-02T17:00:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-11-03T17:45:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-11-03T17:45:00+01:00"
+      }
+    ],
+    "solutionNumber": 1,
+    "routingReference": "v3~MSK~sail:MVS:NLROTTM:ESALRTM:2BM:644E:644E~sail:MVS:ESALRTM:CIABJCI:I6O:645S:645S~sail:MVS:CIABJCI:NGON1PT:M5E:649S:649S",
+    "transitTime": 32,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE5",
+              "carrierCommercialServiceName": "AE5",
+              "carrierServiceCode": "415",
+              "carrierImportVoyageNumber": "644E",
+              "carrierExportVoyageNumber": "644E"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632179",
+            "name": "MATHILDE MAERSK",
+            "flag": "DK",
+            "callSign": "OWZW2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "APM 2 Terminal Maasvlakte II",
+            "facilityName": "APM 2 Terminal Maasvlakte II",
+            "UNLocationCode": "NLRTM",
+            "facility": {
+              "facilityCode": "NLMVII",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-05T17:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-09T20:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF3",
+              "carrierCommercialServiceName": "WAF3",
+              "carrierServiceCode": "W3A",
+              "carrierImportVoyageNumber": "645S",
+              "carrierExportVoyageNumber": "645S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9418652",
+            "name": "LISA",
+            "flag": "LR",
+            "callSign": "D5UW8"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-13T05:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-29T09:00:00Z"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF5 W5A",
+              "carrierCommercialServiceName": "WAF5",
+              "carrierServiceCode": "W5A",
+              "carrierImportVoyageNumber": "649S",
+              "carrierExportVoyageNumber": "649S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9509138",
+            "name": "FLEUR N",
+            "flag": "LR",
+            "callSign": "D5WV5"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-01T16:00:00Z"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Onne Port Terminal",
+            "facilityName": "Onne Port Terminal",
+            "UNLocationCode": "NGONN",
+            "facility": {
+              "facilityCode": "OMT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-07T07:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "APM 2 Terminal Maasvlakte II",
+        "facilityName": "APM 2 Terminal Maasvlakte II",
+        "address": {
+          "street": "APM 2 Terminal Maasvlakte II",
+          "city": "Rotterdam",
+          "countryCode": "NL"
+        },
+        "UNLocationCode": "NLRTM",
+        "facility": {
+          "facilityCode": "NLMVII",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-11T11:00:00+01:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Onne Port Terminal",
+        "facilityName": "Onne Port Terminal",
+        "address": {
+          "street": "Onne Port Terminal",
+          "city": "Onne",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGONN",
+        "facility": {
+          "facilityCode": "OMT",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-12-14T07:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DGC",
+        "cutOffDateTime": "2026-11-06T12:00:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-11-09T09:00:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-11-09T10:00:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-11-09T11:45:00+01:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-11-09T11:45:00+01:00"
+      }
+    ],
+    "solutionNumber": 1,
+    "routingReference": "v3~MSK~sail:MVS:NLROTTM:ESALRTM:1UM:645E:645E~sail:MVS:ESALRTM:CIABJCI:767:646S:646S~sail:MVS:CIABJCI:NGON1PT:39R:650S:650S",
+    "transitTime": 33,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE5",
+              "carrierCommercialServiceName": "AE5",
+              "carrierServiceCode": "415",
+              "carrierImportVoyageNumber": "645E",
+              "carrierExportVoyageNumber": "645E"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632117",
+            "name": "MUNKEBO MAERSK",
+            "flag": "DK",
+            "callSign": "OWUQ2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "APM 2 Terminal Maasvlakte II",
+            "facilityName": "APM 2 Terminal Maasvlakte II",
+            "UNLocationCode": "NLRTM",
+            "facility": {
+              "facilityCode": "NLMVII",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-11T11:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-16T20:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF3",
+              "carrierCommercialServiceName": "WAF3",
+              "carrierServiceCode": "W3A",
+              "carrierImportVoyageNumber": "646S",
+              "carrierExportVoyageNumber": "646S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9193276",
+            "name": "GRASMERE MAERSK",
+            "flag": "SG",
+            "callSign": "9V3820"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Algeciras - ML Terminal",
+            "facilityName": "Algeciras - ML Terminal",
+            "UNLocationCode": "ESALG",
+            "facility": {
+              "facilityCode": "APM",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-20T05:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-06T09:00:00Z"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "WAF5 W5A",
+              "carrierCommercialServiceName": "WAF5",
+              "carrierServiceCode": "W5A",
+              "carrierImportVoyageNumber": "650S",
+              "carrierExportVoyageNumber": "650S"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9256377",
+            "name": "BIG DOG",
+            "flag": "LR",
+            "callSign": "A8TL2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Cote d Ivoire Terminal",
+            "facilityName": "Cote d Ivoire Terminal",
+            "UNLocationCode": "CIABJ",
+            "facility": {
+              "facilityCode": "CIT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-08T16:00:00Z"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Onne Port Terminal",
+            "facilityName": "Onne Port Terminal",
+            "UNLocationCode": "NGONN",
+            "facility": {
+              "facilityCode": "OMT",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-14T07:00:00+01:00"
+        }
+      }
+    ]
+  }
+]

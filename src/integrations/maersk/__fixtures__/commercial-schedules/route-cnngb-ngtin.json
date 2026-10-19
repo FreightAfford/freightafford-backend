@@ -1,0 +1,1297 @@
+[
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-10-26T14:00:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2026-12-03T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-21T15:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-21T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-22T04:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-22T15:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:1VM:641W:641W~sail:MVS:MYTPPTM:NGAPPPT:KC4:645W:645W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 38,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "641W",
+              "carrierExportVoyageNumber": "641W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632129",
+            "name": "MAREN MAERSK",
+            "flag": "DK",
+            "callSign": "OWTG2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-26T14:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-31T08:00:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "645W",
+              "carrierExportVoyageNumber": "645W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9457000",
+            "name": "RHONE MAERSK",
+            "flag": "DK",
+            "callSign": "OXGX2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-09T23:30:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-29T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-01T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2026-12-03T00:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-10-26T15:00:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2026-12-03T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-22T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-23T01:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-23T14:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-23T14:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:1KM:642W:642W~sail:MVS:MYTPPTM:NGAPPPT:KC4:645W:645W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 38,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "642W",
+              "carrierExportVoyageNumber": "642W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9619945",
+            "name": "MADISON MAERSK",
+            "flag": "DK",
+            "callSign": "OWJG2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-26T15:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-31T15:00:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "645W",
+              "carrierExportVoyageNumber": "645W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9457000",
+            "name": "RHONE MAERSK",
+            "flag": "DK",
+            "callSign": "OXGX2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-09T23:30:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-29T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-01T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2026-12-03T00:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-10-29T12:00:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2026-12-03T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-25T04:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-25T09:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-25T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-26T01:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:1SM:643W:643W~sail:MVS:MYTPPTM:NGAPPPT:KC4:645W:645W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 35,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "643W",
+              "carrierExportVoyageNumber": "643W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632105",
+            "name": "MORTEN MAERSK",
+            "flag": "DK",
+            "callSign": "OWLW2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-10-29T12:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-03T14:01:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "645W",
+              "carrierExportVoyageNumber": "645W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9457000",
+            "name": "RHONE MAERSK",
+            "flag": "DK",
+            "callSign": "OXGX2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-09T23:30:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-29T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-01T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2026-12-03T00:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-06T12:01:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2026-12-17T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-10-30T04:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-10-30T11:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-10-30T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-10-31T03:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:1JM:644W:644W~sail:MVS:MYTPPTM:NGAPPPT:EE1:647W:647W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 41,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "644W",
+              "carrierExportVoyageNumber": "644W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9619933",
+            "name": "MARIE MAERSK",
+            "flag": "DK",
+            "callSign": "OWJF2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-06T12:01:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-11T07:01:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "647W",
+              "carrierExportVoyageNumber": "647W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9938303",
+            "name": "ALS CERES",
+            "flag": "SG",
+            "callSign": "9V8621"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-18T16:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-13T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-15T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2026-12-17T00:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-09T23:00:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2026-12-24T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-11-06T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-11-06T22:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-11-07T11:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-11-07T11:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:1XM:645W:645W~sail:MVS:MYTPPTM:NGAPPPT:417:648W:648W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 44,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "645W",
+              "carrierExportVoyageNumber": "645W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632131",
+            "name": "MARGRETHE MAERSK",
+            "flag": "DK",
+            "callSign": "OWYZ2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-09T23:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-16T15:00:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "648W",
+              "carrierExportVoyageNumber": "648W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9525467",
+            "name": "MAERSK CASABLANCA",
+            "flag": "HK",
+            "callSign": "VRJU9"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-25T16:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-20T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-22T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2026-12-24T00:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-16T15:00:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2026-12-31T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-11-13T04:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-11-13T11:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-11-13T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-11-14T03:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:1HM:646W:646W~sail:MVS:MYTPPTM:NGAPPPT:008:649W:649W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 45,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "646W",
+              "carrierExportVoyageNumber": "646W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9619919",
+            "name": "MAJESTIC MAERSK",
+            "flag": "DK",
+            "callSign": "OWJD2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-16T15:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-23T15:00:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "649W",
+              "carrierExportVoyageNumber": "649W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9525285",
+            "name": "MAERSK CONAKRY",
+            "flag": "SG",
+            "callSign": "9V9267"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-02T16:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-27T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-29T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2026-12-31T00:00:00+01:00"
+        }
+      }
+    ]
+  },
+  {
+    "placeOfReceipt": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Ningbo Meishan Terminal",
+        "facilityName": "Ningbo Meishan Terminal",
+        "address": {
+          "street": "Ningbo Meishan Terminal",
+          "city": "Ningbo",
+          "countryCode": "CN"
+        },
+        "UNLocationCode": "CNNGB",
+        "facility": {
+          "facilityCode": "BLCT6",
+          "facilityCodeListProvider": "SMDG"
+        }
+      },
+      "dateTime": "2026-11-30T15:00:00+08:00"
+    },
+    "placeOfDelivery": {
+      "facilityTypeCode": "POTE",
+      "location": {
+        "locationName": "Tin Can Island Sifax Terminal",
+        "facilityName": "Tin Can Island Sifax Terminal",
+        "address": {
+          "street": "Tin Can Island Sifax Terminal",
+          "city": "Tin Can Island Port",
+          "countryCode": "NG"
+        },
+        "UNLocationCode": "NGTIN"
+      },
+      "dateTime": "2027-01-14T00:00:00+01:00"
+    },
+    "receiptTypeAtOrigin": "CY",
+    "deliveryTypeAtDestination": "CY",
+    "cutOffTimes": [
+      {
+        "cutOffDateTimeCode": "DCO",
+        "cutOffDateTime": "2026-11-27T04:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "ECP",
+        "cutOffDateTime": "2026-11-27T11:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "VCO",
+        "cutOffDateTime": "2026-11-27T17:00:00+08:00"
+      },
+      {
+        "cutOffDateTimeCode": "FCO",
+        "cutOffDateTime": "2026-11-28T03:00:00+08:00"
+      }
+    ],
+    "solutionNumber": 2,
+    "routingReference": "v3~MSK~sail:MVS:CNNPOMT:MYTPPTM:2AM:648W:648W~sail:MVS:MYTPPTM:NGAPPPT:465:651W:651W~link:BAR:NGAPPPT:NGVU2SF:2695850",
+    "transitTime": 45,
+    "legs": [
+      {
+        "sequenceNumber": 1,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "AE15",
+              "carrierCommercialServiceName": "MED04",
+              "carrierServiceCode": "425",
+              "carrierImportVoyageNumber": "648W",
+              "carrierExportVoyageNumber": "648W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9632167",
+            "name": "MARIT MAERSK",
+            "flag": "DK",
+            "callSign": "OWYH2"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Ningbo Meishan Terminal",
+            "facilityName": "Ningbo Meishan Terminal",
+            "UNLocationCode": "CNNGB",
+            "facility": {
+              "facilityCode": "BLCT6",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-11-30T15:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-07T15:00:00+08:00"
+        }
+      },
+      {
+        "sequenceNumber": 2,
+        "transport": {
+          "modeOfTransport": "VESSEL",
+          "servicePartners": [
+            {
+              "carrierCode": "MAEU",
+              "carrierCodeListProvider": "NMFTA",
+              "carrierServiceName": "FEW2",
+              "carrierCommercialServiceName": "FEW2",
+              "carrierServiceCode": "FW2",
+              "carrierImportVoyageNumber": "651W",
+              "carrierExportVoyageNumber": "651W"
+            }
+          ],
+          "vessel": {
+            "vesselIMONumber": "9525493",
+            "name": "MAERSK CABINDA",
+            "flag": "SG",
+            "callSign": "9V7037"
+          }
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Pelabuhan Tanjung Pelepas Terminal",
+            "facilityName": "Pelabuhan Tanjung Pelepas Terminal",
+            "UNLocationCode": "MYTPP",
+            "facility": {
+              "facilityCode": "PTP",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2026-12-16T16:00:00+08:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2027-01-10T10:00:00+01:00"
+        }
+      },
+      {
+        "sequenceNumber": 3,
+        "transport": {
+          "modeOfTransport": "BARGE"
+        },
+        "departure": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Apapa Port",
+            "facilityName": "Apapa Port",
+            "UNLocationCode": "NGAPP",
+            "facility": {
+              "facilityCode": "APMTER",
+              "facilityCodeListProvider": "SMDG"
+            }
+          },
+          "dateTime": "2027-01-12T20:00:00+01:00"
+        },
+        "arrival": {
+          "facilityTypeCode": "POTE",
+          "location": {
+            "locationName": "Tin Can Island Sifax Terminal",
+            "facilityName": "Tin Can Island Sifax Terminal",
+            "UNLocationCode": "NGTIN"
+          },
+          "dateTime": "2027-01-14T00:00:00+01:00"
+        }
+      }
+    ]
+  }
+]

@@ -3,10 +3,13 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import {
   filterWindow,
+  routesInWindow,
   toActivePorts,
   toPortCalls,
+  toRoutes,
   toTerminals,
   type MaerskPortSchedule,
+  type MaerskRoute,
 } from "./schedules.client.js";
 
 // Real Commercial Schedules responses, captured 19 Oct 2026 (date=2026-10-20)
@@ -139,5 +142,83 @@ describe("toActivePorts", () => {
       nigeria.map((p) => p.code),
       ["NGAPP", "NGLKK", "NGONN", "NGTIN"],
     );
+  });
+});
+
+// Real point-to-point responses, departing 19 Oct to 13 Dec 2026
+const NAMES = { MYTPP: "Tanjung Pelepas", CNSHA: "Shanghai", NGAPP: "Apapa" };
+const routes = (name: string) =>
+  toRoutes(fixture<MaerskRoute[]>(name), NAMES);
+
+describe("toRoutes", () => {
+  it("maps a two-vessel route with its stops, vessels and cut-offs", () => {
+    const route = routes("route-cnsha-ngapp").find(
+      (r) => r.legs[0].vessel?.name === "ESSEN EXPRESS",
+    );
+    assert.equal(route.departs.code, "CNSHA");
+    assert.equal(route.departs.name, "Shanghai");
+    assert.equal(route.departs.terminal, "YANGSHAN SGH GUANDONG TERMINAL");
+    assert.equal(route.departs.at, "2026-10-20T12:30:00+08:00");
+    assert.equal(route.arrives.terminal, "Apapa Port");
+    assert.equal(route.transitDays, 33);
+    assert.deepEqual(route.legs[0].vessel, {
+      name: "ESSEN EXPRESS",
+      imo: "9501370",
+      flag: "LR",
+      callSign: "5LVY4",
+    });
+    assert.equal(route.legs[0].service, "AE3");
+    assert.equal(route.legs[0].voyage, "641W");
+    assert.equal(route.legs[1].from.name, "Tanjung Pelepas");
+    assert.equal(route.legs[1].vessel?.name, "ALS FIDES");
+    assert.deepEqual(
+      route.cutOffs.map((c) => c.code).sort(),
+      ["DCO", "ECP", "FCO", "VCO"],
+    );
+  });
+
+  it("keeps a barge leg, with no vessel", () => {
+    const barge = routes("route-cnngb-ngtin")
+      .flatMap((r) => r.legs)
+      .find((l) => l.mode === "BARGE");
+    assert.equal(barge.vessel, null);
+    assert.equal(barge.from.code, "NGAPP");
+    assert.equal(barge.to.code, "NGTIN");
+  });
+
+  it("orders legs and falls back to the terminal for unknown ports", () => {
+    const route = routes("route-nlrtm-ngonn")[0];
+    assert.deepEqual(
+      route.legs.map((l) => l.from.code),
+      ["NLRTM", "ESALG", "CIABJ"],
+    );
+    // ESALG isn't in NAMES: the terminal name stands in
+    assert.equal(route.legs[1].from.name, route.legs[1].from.terminal);
+    assert.ok(route.cutOffs.some((c) => c.code === "DGC"));
+  });
+});
+
+describe("routesInWindow", () => {
+  const all = () => routes("route-cnsha-ngapp");
+
+  it("keeps departures in the four weeks from the date", () => {
+    const days = routesInWindow(all(), "departing", "2026-10-25").map((r) =>
+      r.departs.at.slice(0, 10),
+    );
+    assert.ok(days.length > 0);
+    assert.ok(days.every((d) => d >= "2026-10-25" && d < "2026-11-22"));
+  });
+
+  it("keeps arrivals in the four weeks up to the date", () => {
+    const days = routesInWindow(all(), "arriving", "2026-12-10").map((r) =>
+      r.arrives.at.slice(0, 10),
+    );
+    assert.deepEqual(days, [
+      "2026-11-22",
+      "2026-11-22",
+      "2026-11-22",
+      "2026-11-29",
+      "2026-12-06",
+    ]);
   });
 });

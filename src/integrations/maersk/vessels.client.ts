@@ -124,3 +124,40 @@ export const searchVessels = async (query: string): Promise<Vessel[]> => {
   setCached(key, results, SEARCH_TTL);
   return results;
 };
+
+// Build years by IMO, for the vessels on sailing routes (the schedules
+// don't carry them). Kept a month, since they never change; null records a
+// vessel Maersk has no year for, so it isn't asked again.
+const BUILT_TTL = 30 * 24 * 60 * 60 * 1000;
+const builtCache = createTtlCache(2000);
+
+export const getBuiltYears = async (
+  imos: string[],
+): Promise<Record<string, number>> => {
+  const wanted = [...new Set(imos.filter((imo) => VESSEL_IMO_REGEX.test(imo)))];
+  const missing = wanted.filter(
+    (imo) => builtCache.get<number | null>(imo) === undefined,
+  );
+
+  if (missing.length) {
+    try {
+      const found = await fetchVessels({ vesselIMONumbers: missing.join(",") });
+      const years = new Map(
+        found
+          .filter((v) => v.vesselIMONumber && v.vesselBuiltYear)
+          .map((v) => [String(v.vesselIMONumber), v.vesselBuiltYear!]),
+      );
+      for (const imo of missing)
+        builtCache.set(imo, years.get(imo) ?? null, BUILT_TTL);
+    } catch {
+      // A route without build years is still a route: leave them out
+    }
+  }
+
+  return Object.fromEntries(
+    wanted.flatMap((imo) => {
+      const year = builtCache.get<number | null>(imo);
+      return year ? [[imo, year]] : [];
+    }),
+  );
+};

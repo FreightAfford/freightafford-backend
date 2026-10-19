@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import envConfig from "../../configurations/env.configuration.js";
 import AppError from "../../errors/app.error.js";
 import { createTtlCache } from "./cache.js";
-import { isPlaceholderVessel } from "./vessels.client.js";
+import { getBuiltYears, isPlaceholderVessel } from "./vessels.client.js";
 
 // Maersk Ocean – Commercial Schedules [DCSA]. Auth is the Consumer-Key header
 // only (no OAuth). Used here: GET /v1/active-ports (every port Maersk calls
@@ -147,6 +147,7 @@ const spendCall = () => {
 const request = async <T>(
   path: string,
   params: Record<string, string | number>,
+  options: { headers?: Record<string, string>; timeout?: number } = {},
 ): Promise<{ data: T | null; nextCursor?: string }> => {
   if (!envConfig.MAERSK_API_KEY) {
     console.error("[maersk] MAERSK_API_KEY is not configured");
@@ -158,7 +159,7 @@ const request = async <T>(
   );
 
   try {
-    const res = await maerskSchedules.get<T>(path, { params });
+    const res = await maerskSchedules.get<T>(path, { params, ...options });
     const cursor = res.headers["next-page-cursor"];
     return { data: res.data, nextCursor: cursor ? String(cursor) : undefined };
   } catch (error) {
@@ -432,6 +433,318 @@ export const getPortSchedule = async (
       utcOffset: utcOffset(source.terminals),
     },
     terminals,
+    fetchedAt: new Date(source.fetchedAt).toISOString(),
+  };
+};
+
+// ---- Point to point routes -------------------------------------------------
+//
+// GET /v1/point-to-point-routes: every route between two places for a
+// departure window (up to 56 days, at most 7 days back), for one container
+// type. The type only goes through with the Carrier-Extensions-Version
+// header, and reefers also need cargoType=REEFER. Maersk answers every
+// arrival-date query with a 500, so "arriving by" is worked out here from
+// departures. Answers can take around 8 seconds.
+
+// Maersk's 14 container types, as its own schedule search lists them
+export const CONTAINER_CODES = [
+  "22G1", "42G1", "45G1", "L5G1", "22R1", "45R1", "22U1",
+  "42U1", "45U1", "42P1", "45P3", "22P1", "22T3", "42T3",
+];
+const REEFER_CODES = ["22R1", "45R1"];
+export const DEFAULT_CONTAINER = "45G1";
+
+export type RouteDateMode = "departing" | "arriving";
+
+// Every search covers four weeks from (or up to) its date
+export const ROUTE_WINDOW_DAYS = 28;
+// The longest departure range one Maersk call takes
+const ROUTE_FETCH_DAYS = 56;
+// How far back Maersk returns departures
+export const ROUTE_PAST_DAYS = 7;
+const ROUTE_TIMEOUT = 30_000;
+
+interface MaerskPlace {
+  location?: { locationName?: string; UNLocationCode?: string };
+  dateTime?: string;
+}
+
+interface MaerskLeg {
+  sequenceNumber?: number;
+  transport?: {
+    modeOfTransport?: string;
+    servicePartners?: {
+      carrierServiceName?: string;
+      carrierImportVoyageNumber?: string;
+      carrierExportVoyageNumber?: string;
+    }[];
+    vessel?: {
+      vesselIMONumber?: string;
+      name?: string;
+      flag?: string;
+      callSign?: string;
+    };
+  };
+  departure: MaerskPlace;
+  arrival: MaerskPlace;
+}
+
+export interface MaerskRoute {
+  placeOfReceipt: MaerskPlace;
+  placeOfDelivery: MaerskPlace;
+  transitTime?: number;
+  routingReference?: string;
+  cutOffTimes?: { cutOffDateTimeCode: string; cutOffDateTime: string }[];
+  legs?: MaerskLeg[];
+}
+
+// A port on a route; `at` keeps the port's own UTC offset
+export interface RouteStop {
+  code: string;
+  name: string;
+  terminal?: string;
+  at: string;
+}
+
+export interface RouteLeg {
+  // VESSEL, BARGE, RAIL, TRUCK, …
+  mode: string;
+  vessel: {
+    name: string;
+    imo?: string;
+    flag?: string;
+    callSign?: string;
+    builtYear?: number;
+  } | null;
+  service?: string;
+  voyage?: string;
+  from: RouteStop;
+  to: RouteStop;
+}
+
+export interface RouteOption {
+  // Maersk's routingReference, which booking will need later
+  id: string;
+  departs: RouteStop;
+  arrives: RouteStop;
+  transitDays: number;
+  legs: RouteLeg[];
+  cutOffs: { code: string; at: string }[];
+}
+
+export interface RouteSearchResult {
+  origin: string;
+  destination: string;
+  routes: RouteOption[];
+  fetchedAt: string;
+}
+
+const toStop = (
+  place: MaerskPlace,
+  names: Record<string, string>,
+): RouteStop => {
+  const code = place.location?.UNLocationCode ?? "";
+  const terminal = place.location?.locationName?.trim();
+  return {
+    code,
+    // The port's name from Maersk's port list, else the terminal's
+    name: names[code] ?? terminal ?? code,
+    ...(terminal && { terminal }),
+    at: place.dateTime ?? "",
+  };
+};
+
+const toLeg = (leg: MaerskLeg, names: Record<string, string>): RouteLeg => {
+  const t = leg.transport ?? {};
+  const partner = t.servicePartners?.[0];
+  const v = t.vessel;
+  const named = !!v?.name && !isPlaceholderVessel(v.name, v.callSign);
+  const voyage =
+    partner?.carrierExportVoyageNumber || partner?.carrierImportVoyageNumber;
+  return {
+    mode: t.modeOfTransport ?? "VESSEL",
+    vessel: named
+      ? {
+          name: v!.name!.trim(),
+          ...(v!.vesselIMONumber && { imo: v!.vesselIMONumber }),
+          ...(v!.flag && { flag: v!.flag }),
+          ...(v!.callSign && { callSign: v!.callSign }),
+        }
+      : null,
+    ...(partner?.carrierServiceName && { service: partner.carrierServiceName }),
+    ...(voyage && { voyage }),
+    from: toStop(leg.departure, names),
+    to: toStop(leg.arrival, names),
+  };
+};
+
+// Maersk's routes in the shape the Point to point tab shows. `names` maps
+// port codes to names, e.g. MYTPP → "Tanjung Pelepas".
+export const toRoutes = (
+  raw: MaerskRoute[],
+  names: Record<string, string> = {},
+): RouteOption[] =>
+  raw
+    .filter(
+      (r) =>
+        !isPlaceholderDate(r.placeOfReceipt?.dateTime) &&
+        !isPlaceholderDate(r.placeOfDelivery?.dateTime),
+    )
+    .map((r) => {
+      const departs = toStop(r.placeOfReceipt, names);
+      const arrives = toStop(r.placeOfDelivery, names);
+      return {
+        id:
+          r.routingReference || `${departs.code}|${arrives.code}|${departs.at}`,
+        departs,
+        arrives,
+        transitDays: r.transitTime ?? 0,
+        legs: [...(r.legs ?? [])]
+          .sort((a, b) => (a.sequenceNumber ?? 0) - (b.sequenceNumber ?? 0))
+          .map((leg) => toLeg(leg, names)),
+        cutOffs: (r.cutOffTimes ?? [])
+          .filter((c) => !isPlaceholderDate(c.cutOffDateTime))
+          .map((c) => ({ code: c.cutOffDateTimeCode, at: c.cutOffDateTime })),
+      };
+    });
+
+// Routes departing on or after `date` for four weeks, or arriving on or
+// before it within four weeks (port-local days)
+export const routesInWindow = (
+  routes: RouteOption[],
+  by: RouteDateMode,
+  date: string,
+) =>
+  routes.filter((r) => {
+    if (by === "arriving") {
+      const day = localDay(r.arrives.at)!;
+      return day <= date && day > addDays(date, -ROUTE_WINDOW_DAYS);
+    }
+    const day = localDay(r.departs.at)!;
+    return day >= date && day < addDays(date, ROUTE_WINDOW_DAYS);
+  });
+
+const latest = (a: string, b: string) => (a > b ? a : b);
+const todayIso = () => new Date().toISOString().slice(0, 10);
+
+// The departures a search needs, and the (wider) range fetched for it. For
+// "arriving by", departures are taken from the 56 days before the date
+// (never more than a week back): a route with a transit over about four
+// weeks that arrives early in the window can fall outside that and be
+// missed, which is accepted to keep it to one call.
+const routeWindows = (by: RouteDateMode, date: string) => {
+  if (by === "arriving") {
+    const start = addDays(date, -(ROUTE_FETCH_DAYS - 1));
+    return {
+      // Sailings that left before today are past booking, so a fetch made
+      // for "departing today" can answer this too
+      need: { from: latest(start, todayIso()), to: date },
+      fetch: {
+        from: latest(start, addDays(todayIso(), -ROUTE_PAST_DAYS)),
+        to: date,
+      },
+    };
+  }
+  return {
+    need: { from: date, to: addDays(date, ROUTE_WINDOW_DAYS - 1) },
+    fetch: { from: date, to: addDays(date, ROUTE_FETCH_DAYS - 1) },
+  };
+};
+
+interface RouteFetch {
+  from: string;
+  to: string;
+  routes: RouteOption[];
+  fetchedAt: number;
+}
+
+// "origin|destination|container" → its recent fetches, newest first
+const routeCache = createTtlCache(MAX_CACHE_ENTRIES);
+
+const portNames = (): Record<string, string> =>
+  Object.fromEntries(
+    (
+      portsCache.get<ActivePort[]>("all") ??
+      portsStale.get<ActivePort[]>("all") ??
+      []
+    ).map((p) => [p.code, p.name]),
+  );
+
+const fetchRoutes = async (
+  origin: string,
+  destination: string,
+  container: string,
+  window: { from: string; to: string },
+): Promise<RouteFetch> => {
+  const { data } = await request<MaerskRoute[]>(
+    "/v1/point-to-point-routes",
+    {
+      placeOfReceipt: origin,
+      placeOfDelivery: destination,
+      departureStartDate: window.from,
+      departureEndDate: window.to,
+      ISOEquipmentCode: container,
+      ...(REEFER_CODES.includes(container) && { cargoType: "REEFER" }),
+    },
+    {
+      headers: { "Carrier-Extensions-Version": "1" },
+      timeout: ROUTE_TIMEOUT,
+    },
+  );
+  const routes = toRoutes(Array.isArray(data) ? data : [], portNames());
+
+  // Build years come from the Vessels API, in one call for the new IMOs
+  const years = await getBuiltYears(
+    routes.flatMap((r) =>
+      r.legs.flatMap((l) => (l.vessel?.imo ? [l.vessel.imo] : [])),
+    ),
+  );
+  for (const route of routes)
+    for (const leg of route.legs)
+      if (leg.vessel?.imo && years[leg.vessel.imo])
+        leg.vessel.builtYear = years[leg.vessel.imo];
+
+  return { ...window, routes, fetchedAt: Date.now() };
+};
+
+// Every route from `origin` to `destination` for a container, departing in
+// the four weeks from `date` or arriving in the four weeks up to it. A
+// cached fetch that covers the search answers it, so moving the date within
+// eight weeks costs no Maersk call.
+export const getRoutes = async (
+  origin: string,
+  destination: string,
+  by: RouteDateMode,
+  date: string,
+  container: string,
+): Promise<RouteSearchResult> => {
+  const key = `${origin}|${destination}|${container}`;
+  const { need, fetch } = routeWindows(by, date);
+  const fetches = routeCache.get<RouteFetch[]>(key) ?? [];
+  const covering = fetches.filter(
+    (f) => f.from <= need.from && f.to >= need.to,
+  );
+  const fresh = covering.find((f) => Date.now() - f.fetchedAt < SCHEDULE_TTL);
+
+  const source =
+    fresh ??
+    (await withFallback(async () => {
+      const fetched = await fetchRoutes(origin, destination, container, fetch);
+      routeCache.set(
+        key,
+        [
+          fetched,
+          ...fetches.filter((f) => f.from !== fetch.from || f.to !== fetch.to),
+        ].slice(0, 4),
+        STALE_TTL,
+      );
+      return fetched;
+    }, covering[0]));
+
+  return {
+    origin,
+    destination,
+    routes: routesInWindow(source.routes, by, date),
     fetchedAt: new Date(source.fetchedAt).toISOString(),
   };
 };
