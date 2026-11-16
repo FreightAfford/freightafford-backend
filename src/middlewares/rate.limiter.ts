@@ -36,6 +36,13 @@ export const scheduleRateLimiter = rateLimit({
   message: { message: "Too many schedule searches. Please slow down." },
 });
 
+// Customers asking for contract rates; each one emails the team.
+export const rateRequestLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 20,
+  message: { message: "Too many rate requests. Please try again later." },
+});
+
 export const kycUploadRateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 40,
