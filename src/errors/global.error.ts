@@ -44,6 +44,11 @@ const globalErrorHandler = (
     if (error.name === "ValidationError")
       error = handleValidationError(error as MongooseError.ValidationError);
     if ((error as any).code === 11000) error = handleDuplicateKeyError(error);
+    // From express.json(): a body over its size limit, or one that isn't JSON
+    if ((error as any).type === "entity.too.large")
+      error = new AppError("That's too much data to send at once.", 413);
+    if ((error as any).type === "entity.parse.failed")
+      error = new AppError("The request body isn't valid JSON.", 400);
   }
 
   // DEVELOPMENT MODE
