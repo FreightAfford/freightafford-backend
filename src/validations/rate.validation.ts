@@ -142,6 +142,55 @@ export const rateRequestInputSchema = z
 
 export type RateRequestInput = z.output<typeof rateRequestInputSchema>;
 
+// ---- Import ------------------------------------------------------------------
+// Rates are checked one by one in the service, so one bad rate is reported
+// as that rate's problem rather than a failed request.
+
+const MAX_RATES = 1000;
+const MAX_NAMES = 500;
+
+const importPortRefSchema = z.object({
+  raw: z.string().trim().min(1).max(200),
+  code: z.string().trim().toUpperCase().regex(UN_LOCODE).optional().catch(undefined),
+  city: z.string().trim().max(100).optional(),
+  country: z.string().trim().max(100).optional(),
+});
+export type ImportPortRef = z.output<typeof importPortRefSchema>;
+
+const importCommodityRefSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("maersk"), code: z.string().trim().min(1).max(60) }),
+  z.object({ kind: z.literal("text"), text: z.string().trim().min(1).max(200) }),
+]);
+export type ImportCommodityRef = z.output<typeof importCommodityRefSchema>;
+
+export const importMatchSchema = z.object({
+  ports: z.array(importPortRefSchema).max(MAX_NAMES, "Too many ports in one file"),
+  commodities: z.array(importCommodityRefSchema).max(MAX_NAMES, "Too many commodities in one file"),
+});
+
+export const importCheckSchema = z.object({
+  rates: z.array(z.unknown()).max(MAX_RATES, `Import up to ${MAX_RATES} rates at a time`),
+});
+
+const mappingKey = z.string().trim().min(1).max(200);
+export const importMappingsSchema = z.object({
+  ports: z
+    .record(mappingKey, ratePortSchema)
+    .refine((m) => Object.keys(m).length <= MAX_NAMES, "Too many port choices"),
+  commodities: z
+    .record(mappingKey.regex(/^(maersk|text):./, "Unknown commodity key"), rateCommoditySchema)
+    .refine((m) => Object.keys(m).length <= MAX_NAMES, "Too many commodity choices"),
+});
+export type ImportMappingsInput = z.output<typeof importMappingsSchema>;
+
+export const importCommitSchema = z.object({
+  rates: z
+    .array(z.object({ rate: z.unknown(), replaces: z.string().nullable().optional() }))
+    .min(1, "There are no rates to import")
+    .max(MAX_RATES, `Import up to ${MAX_RATES} rates at a time`),
+  mappings: importMappingsSchema.default({ ports: {}, commodities: {} }),
+});
+
 // ---- Query strings -----------------------------------------------------------
 
 const page = z.coerce.number().int().min(1).catch(1);

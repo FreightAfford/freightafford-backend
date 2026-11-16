@@ -301,6 +301,20 @@ export const importMessage = (
   return `Import done: ${parts.join(", ") || "nothing to import"}.`;
 };
 
+// ---- Import keys ----------------------------------------------------------------
+// The same keys as the frontend (useRateImport's portKey and rate.ts's
+// commodityRefKey): matches come back under them and admin's choices are
+// remembered under them.
+
+export const portKey = (raw: string) => norm(raw);
+
+export const commodityRefKey = (
+  ref: { kind: "maersk"; code: string } | { kind: "text"; text: string },
+) =>
+  ref.kind === "maersk"
+    ? `maersk:${ref.code.trim().toUpperCase()}`
+    : `text:${norm(ref.text)}`;
+
 // Text typed into a search box, safe to use inside a regular expression.
 export const escapeRegex = (text: string) =>
   text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

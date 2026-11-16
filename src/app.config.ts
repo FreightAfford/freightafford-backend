@@ -42,6 +42,9 @@ const appConfig = async (app: Application) => {
       }),
     )
     .use(helmet())
+    // A rates import sends a few hundred rates at once; everything else
+    // keeps the 100 KB default. Parsed here first, the global parser skips it.
+    .use("/api/v1/rates/import", express.json({ limit: "5mb" }))
     .use(express.json())
     .use(cookieParser())
     .set("trust proxy", 1);

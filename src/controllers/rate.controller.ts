@@ -4,6 +4,7 @@ import AppError from "../errors/app.error.js";
 import Rate from "../models/rate.model.js";
 import RateRequest from "../models/rate-request.model.js";
 import { sendRateRequestAdminEmail } from "../services/rate-email.service.js";
+import { checkImport, commitImport, matchImport } from "../services/rates/import.js";
 import { listRatesQuery, listRequestsQuery } from "../services/rates/list.js";
 import { resolveRateCommodity, resolveRatePort } from "../services/rates/maersk-refs.js";
 import { presentRate, presentRateRequest } from "../services/rates/present.js";
@@ -231,6 +232,27 @@ export const deleteRate = async (req: AuthenticateRequest, res: Response) => {
   const rate = await findRate(String(req.params.id));
   await rate.deleteOne();
   res.status(200).json({ status: "success", message: "Rate deleted" });
+};
+
+// ---- Admin: import -----------------------------------------------------------------
+
+// ADMIN: what the file's ports and commodities match.
+export const matchRateImport = async (req: AuthenticateRequest, res: Response) => {
+  const data = await matchImport(req.body);
+  res.status(200).json({ status: "success", data });
+};
+
+// ADMIN: how each rate sits against the saved ones (replaces, overlaps,
+// problems), in the order sent.
+export const checkRateImport = async (req: AuthenticateRequest, res: Response) => {
+  const data = await checkImport(req.body.rates, req.user!);
+  res.status(200).json({ status: "success", data });
+};
+
+// ADMIN: save the rates, all or nothing.
+export const commitRateImport = async (req: AuthenticateRequest, res: Response) => {
+  const result = await commitImport(req.body, req.user!);
+  res.status(200).json({ status: "success", ...result });
 };
 
 // ---- Admin: rate requests ----------------------------------------------------------

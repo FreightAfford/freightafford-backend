@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 import type { IRateCharge } from "../../utils/interface.js";
 import {
   addDays,
+  commodityRefKey,
   answersRequest,
   escapeRegex,
   expiredDates,
@@ -16,6 +17,7 @@ import {
   matchAnswered,
   overlaps,
   pageOf,
+  portKey,
   rateStatus,
   sameCommodity,
   savedMessage,
@@ -232,6 +234,13 @@ describe("paging and messages", () => {
     assert.equal(savedMessage("updated", 1), "Rate updated. 1 rate request resolved.");
     assert.equal(importMessage(90, 6, 2), "Import done: 90 added, 6 replaced, 2 rate requests resolved.");
     assert.equal(importMessage(0, 0, 0), "Import done: nothing to import.");
+  });
+
+  it("keys import names the way the frontend does", () => {
+    assert.equal(portKey("  Apapa,   Nigeria "), "apapa, nigeria");
+    assert.equal(commodityRefKey({ kind: "maersk", code: " mine_iro_ore_oth_met" }), "maersk:MINE_IRO_ORE_OTH_MET");
+    // Words keep their s: the frontend once split on the letter s
+    assert.equal(commodityRefKey({ kind: "text", text: " Glass  Bottles " }), "text:glass bottles");
   });
 
   it("escapes search text for a regular expression", () => {

@@ -1,5 +1,7 @@
 import { Router } from "express";
 import {
+  checkRateImport,
+  commitRateImport,
   createRate,
   deleteRate,
   expireRate,
@@ -7,6 +9,7 @@ import {
   getRateLanes,
   listRateRequests,
   listRates,
+  matchRateImport,
   requestRate,
   resolveRateRequest,
   searchRates,
@@ -18,6 +21,9 @@ import { rateRequestLimiter } from "../middlewares/rate.limiter.js";
 import { validate } from "../middlewares/validate.js";
 import catchAsync from "../utils/catch-async.js";
 import {
+  importCheckSchema,
+  importCommitSchema,
+  importMatchSchema,
   rateInputSchema,
   rateRequestInputSchema,
 } from "../validations/rate.validation.js";
@@ -47,6 +53,11 @@ rateRouter
     catchAsync(requestRate),
   );
 rateRouter.patch("/requests/:id/resolve", admin, catchAsync(resolveRateRequest));
+
+// ---- Admin: import (bodies up to 5 MB, see app.config.ts) ----
+rateRouter.post("/import/match", admin, validate(importMatchSchema), catchAsync(matchRateImport));
+rateRouter.post("/import/check", admin, validate(importCheckSchema), catchAsync(checkRateImport));
+rateRouter.post("/import", admin, validate(importCommitSchema), catchAsync(commitRateImport));
 
 // ---- Admin: rates ----
 rateRouter
