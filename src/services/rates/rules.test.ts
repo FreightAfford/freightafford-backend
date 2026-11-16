@@ -13,6 +13,7 @@ import {
   isValidOn,
   lagosToday,
   lanesFrom,
+  matchAnswered,
   overlaps,
   pageOf,
   rateStatus,
@@ -165,6 +166,18 @@ describe("rate requests", () => {
     assert.ok(!answersRequest(rate({ commodity: "Cashew nuts" }), request()));
     assert.ok(!answersRequest(rate({ commodityCode: "080131" }), request()));
     assert.ok(!answersRequest(rate(), request({ status: "resolved" })));
+  });
+
+  it("matches each request to the rate starting soonest, never an expired one", () => {
+    const now = rate({ _id: "now" });
+    const december = rate({ _id: "dec", validFrom: "2026-12-01", validTo: "2026-12-31" });
+    const old = rate({ _id: "old", validFrom: "2026-10-01", validTo: "2026-10-31" });
+    const any = request();
+    const twenty = request({ containerSize: "20ft Std" });
+    const matched = matchAnswered([december, now, old], [any, twenty], TODAY);
+    assert.deepEqual(matched.map((m) => [m.request, m.rate._id]), [[any, "now"]]);
+    assert.deepEqual(matchAnswered([december], [any], TODAY).map((m) => m.rate._id), ["dec"]);
+    assert.deepEqual(matchAnswered([old], [any], TODAY), []);
   });
 });
 

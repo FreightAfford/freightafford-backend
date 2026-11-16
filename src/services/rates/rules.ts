@@ -155,6 +155,25 @@ export const answersRequest = (rate: RateLike, request: RequestLike) =>
   }) &&
   (!request.containerSize || request.containerSize === rate.containerSize);
 
+// Which open requests these saved rates answer, and by which rate. An
+// expired rate answers nothing (the customer couldn't use it); when several
+// answer one request, the one starting soonest wins.
+export const matchAnswered = <R extends RateLike, Q extends RequestLike>(
+  rates: R[],
+  requests: Q[],
+  today: string,
+) => {
+  const usable = rates.filter((r) => r.validTo >= today);
+  const matched: { request: Q; rate: R }[] = [];
+  for (const request of requests) {
+    const rate = usable
+      .filter((r) => answersRequest(r, request))
+      .sort((a, b) => a.validFrom.localeCompare(b.validFrom))[0];
+    if (rate) matched.push({ request, rate });
+  }
+  return matched;
+};
+
 // ---- Customer search ----------------------------------------------------------
 
 export const sizeOrder = (size: string) =>
