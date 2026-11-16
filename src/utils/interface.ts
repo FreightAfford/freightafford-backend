@@ -206,3 +206,100 @@ export interface IInvoice extends Document {
   amount: number;
   description: string;
 }
+
+// ---- Contract rates -------------------------------------------------------
+// FreightAfford's Maersk contract rates (no Maersk API offers them), kept by
+// admin. Plain shapes live in services/rates/rules.ts; these are the stored
+// documents.
+
+export const RATE_CONTAINER_SIZES = [
+  "20ft Std",
+  "40ft Std",
+  "40ft HC",
+  "45ft HC",
+] as const;
+export type RateContainerSize = (typeof RATE_CONTAINER_SIZES)[number];
+
+export interface IRatePort {
+  code: string; // UN/LOCODE
+  city: string;
+  country: string;
+}
+
+export interface IRateCharge {
+  code: string; // Maersk charge code: BAS, EBS, DHC…
+  name: string;
+  amount: number;
+  currency: string; // ISO 4217
+  basis: "container" | "document";
+  stage: "freight" | "origin" | "destination";
+  payTerm: "prepaid" | "collect" | "either";
+  structure: "fixed" | "floating";
+}
+
+export interface IFreeTimeTier {
+  fromDay: number;
+  toDay?: number; // empty for the last, open-ended step
+  amount: number;
+  currency: string;
+}
+
+export interface IFreeTime {
+  type: string;
+  days: number;
+  dayType: string;
+  startEvent: string;
+  endEvent: string;
+  tiers: IFreeTimeTier[];
+  note?: string;
+}
+
+export interface IRate extends Document {
+  origin: IRatePort;
+  destination: IRatePort;
+  containerSize: RateContainerSize;
+  validFrom: string; // YYYY-MM-DD, inclusive
+  validTo: string; // YYYY-MM-DD, inclusive
+  commodity: string; // as Maersk names it
+  commodityCode?: string; // Maersk commodity code, 6 digits
+  serviceMode?: string;
+  transitHours?: number;
+  remarks?: string;
+  charges: IRateCharge[];
+  freeTime: IFreeTime[];
+  createdBy: Types.ObjectId;
+  updatedBy: Types.ObjectId;
+  updatedByName: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IRateRequest extends Document {
+  origin: IRatePort;
+  destination: IRatePort;
+  commodity: { code: string; name: string };
+  containerSize?: RateContainerSize; // none = any size
+  note?: string;
+  customer: Types.ObjectId;
+  customerName: string;
+  customerCompany?: string;
+  customerEmail: string;
+  status: "open" | "resolved";
+  resolvedAt?: Date;
+  resolvedBy?: Types.ObjectId;
+  resolvedByRate?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Admin's choice for a port or commodity name an import file used, so the
+// next import of the same name matches on its own.
+export interface IImportMapping extends Document {
+  kind: "port" | "commodity";
+  key: string; // the normalised name, or "maersk:CODE" / "text:name"
+  port?: IRatePort;
+  commodity?: { code: string; name: string };
+  updatedBy: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
