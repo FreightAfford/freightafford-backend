@@ -7,6 +7,7 @@ import Invoice from "../models/invoice.model.js";
 import User from "../models/user.model.js";
 import { passwordResetEmail, resendOTPEmail, sendOTPEmail, } from "../services/auth-email.service.js";
 import ApiFeatures from "../utils/api-features.js";
+import { CUSTOMER_TIERS } from "../utils/interface.js";
 import { generateJWT } from "../utils/jwt.js";
 import { generateOTP, hashToken } from "../utils/otp.js";
 import { comparePassword, hashPassword } from "../utils/password.js";
@@ -300,6 +301,15 @@ export const updateUserByAdmin = async (req, res, next) => {
         updateData.email = email;
     if (status)
         updateData.status = status;
+    // Commission or premium: only customers have one
+    const { customerTier } = req.body;
+    if (customerTier !== undefined) {
+        if (!CUSTOMER_TIERS.includes(customerTier))
+            return next(new AppError("Customer type must be commission or premium", 400));
+        if (user.role !== "customer")
+            return next(new AppError("Only customers have a customer type", 400));
+        updateData.customerTier = customerTier;
+    }
     const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
         new: true,
         runValidators: true,

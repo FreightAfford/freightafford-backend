@@ -1,6 +1,7 @@
 import envConfig from "../configurations/env.configuration.js";
 import AppError from "../errors/app.error.js";
 import Kyc from "../models/kyc.model.js";
+import { rateAccess } from "../services/rates/rules.js";
 /** Whether verification-only features are locked (KYC_ENFORCEMENT=on). */
 export const isKycEnforced = () => envConfig.KYC_ENFORCEMENT?.trim().toLowerCase() === "on";
 // Live tracking is the one feature kept for verified businesses: anyone can
@@ -33,17 +34,22 @@ export const requireVerifiedForSchedules = async (req, res, next) => {
         return next(new AppError("Verify your business to see sailing schedules.", 403));
     next();
 };
-// Contract rates are for verified businesses only, whether or not
-// KYC_ENFORCEMENT is on, like sailing schedules. Staff are never blocked.
+// Contract rates are for commission customers with a verified business,
+// whether or not KYC_ENFORCEMENT is on. Premium customers don't get them.
+// Staff are never blocked. The rule itself is rateAccess (services/rates).
 export const requireVerifiedForRates = async (req, res, next) => {
-    if (req.user.role !== "customer")
-        return next();
-    const verified = await Kyc.exists({
-        user: req.user._id,
-        status: "approved",
-    });
-    if (!verified)
-        return next(new AppError("Verify your business to see contract rates.", 403));
-    next();
+    const user = req.user;
+    // Only commission customers need their verification looked up
+    const verified = user.role === "customer" && user.customerTier !== "premium"
+        ? !!(await Kyc.exists({ user: user._id, status: "approved" }))
+        : false;
+    switch (rateAccess(user, verified)) {
+        case "premium":
+            return next(new AppError("Contract rates aren't part of your account.", 403));
+        case "unverified":
+            return next(new AppError("Verify your business to see contract rates.", 403));
+        default:
+            next();
+    }
 };
 //# sourceMappingURL=kyc.js.map

@@ -62,6 +62,13 @@ export const expiredDates = (rate, today) => {
         validTo: yesterday,
     };
 };
+export const rateAccess = (user, verified) => {
+    if (user.role !== "customer")
+        return "allowed";
+    if (user.customerTier === "premium")
+        return "premium";
+    return verified ? "allowed" : "unverified";
+};
 const norm = (value) => value.trim().toLowerCase().replace(/\s+/g, " ");
 export const sameLane = (a, b) => a.origin.code === b.origin.code && a.destination.code === b.destination.code;
 // The same commodity: by Maersk code when both have one, else by name.
