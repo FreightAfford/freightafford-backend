@@ -207,6 +207,8 @@ export const rateSearchQuerySchema = z.object({
     .union([queryPort("Choose an origin port from the list"), z.literal("")])
     .optional()
     .transform((o) => o || undefined),
+  // YYYY-MM; checked against this month by the controller
+  month: z.string().trim().max(7).optional(),
   q: z.string().trim().max(100).catch(""),
   page,
   limit: limit(50, 10),

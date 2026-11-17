@@ -15,6 +15,8 @@ import {
   lagosToday,
   lanesFrom,
   matchAnswered,
+  monthWindow,
+  monthsWithRates,
   overlaps,
   pageOf,
   rateAccess,
@@ -204,19 +206,21 @@ describe("rate requests", () => {
 });
 
 describe("customer search", () => {
-  it("groups by lane and commodity, one rate per size, the latest save winning", () => {
+  it("groups by lane and commodity, keeping every period of a size in order", () => {
     const { groups, totalAll } = groupRates([
-      rate({ _id: "old", charges: [charge("BAS", 1300)], updatedAt: "2026-11-01T10:00:00Z" }),
-      rate({ _id: "new", charges: [charge("BAS", 1250)], updatedAt: "2026-11-10T10:00:00Z" }),
-      rate({ _id: "20", containerSize: "20ft Std", charges: [charge("BAS", 990)], validTo: "2026-11-20" }),
+      rate({ _id: "second", validFrom: "2026-12-15", validTo: "2026-12-31", charges: [charge("BAS", 1250)] }),
+      rate({ _id: "first", validFrom: "2026-12-01", validTo: "2026-12-14", charges: [charge("BAS", 1300)] }),
+      rate({ _id: "20", containerSize: "20ft Std", charges: [charge("BAS", 990)], validFrom: "2026-12-01", validTo: "2026-12-20" }),
       rate({ _id: "cashew", commodity: "Cashew nuts" }),
       rate({ _id: "tc", origin: TINCAN }),
     ]);
     assert.equal(totalAll, 3);
     const cocoa = groups.find((g) => g.origin.code === "NGAPP" && g.commodity === "Cocoa beans")!;
-    assert.deepEqual(cocoa.rates.map((r) => r._id), ["20", "new"]); // size order
+    // size order, then each size's periods by start date
+    assert.deepEqual(cocoa.rates.map((r) => r._id), ["20", "first", "second"]);
     assert.deepEqual(cocoa.fromBasic, { amount: 990, currency: "USD" });
-    assert.equal(cocoa.validTo, "2026-11-20");
+    assert.equal(cocoa.validFrom, "2026-12-01");
+    assert.equal(cocoa.validTo, "2026-12-31");
     assert.equal(cocoa.key, "NGAPP|BEANR|Cocoa beans");
   });
 
@@ -240,6 +244,39 @@ describe("customer search", () => {
     const apapa = lanes.find((l) => l.origin.code === "NGAPP")!;
     assert.deepEqual(apapa.sizes, ["20ft Std", "40ft HC"]);
     assert.equal(apapa.commodities, 2);
+  });
+});
+
+describe("months", () => {
+  it("covers today to the month's end for this month, all of a later month", () => {
+    assert.deepEqual(monthWindow("2026-11", TODAY), { from: "2026-11-15", to: "2026-11-30" });
+    assert.deepEqual(monthWindow("2026-12", TODAY), { from: "2026-12-01", to: "2026-12-31" });
+    assert.deepEqual(monthWindow("2027-02", TODAY), { from: "2027-02-01", to: "2027-02-28" });
+    assert.deepEqual(monthWindow("2028-02", TODAY), { from: "2028-02-01", to: "2028-02-29" }); // leap year
+  });
+
+  it("refuses past months and anything that isn't YYYY-MM", () => {
+    for (const bad of ["2026-10", "2025-12", "2026-13", "2026-1", "december", ""])
+      assert.equal(monthWindow(bad, TODAY), null, bad);
+  });
+
+  it("lists this month, then each later month with a rate, never ended ones", () => {
+    const months = monthsWithRates(
+      [
+        { validFrom: "2026-10-01", validTo: "2026-11-10" }, // ended
+        { validFrom: "2026-12-01", validTo: "2026-12-31" },
+        { validFrom: "2027-01-20", validTo: "2027-03-05" },
+      ],
+      TODAY,
+    );
+    assert.deepEqual(months, ["2026-11", "2026-12", "2027-01", "2027-02", "2027-03"]);
+    assert.deepEqual(monthsWithRates([], TODAY), ["2026-11"]);
+  });
+
+  it("stops listing two years ahead", () => {
+    const months = monthsWithRates([{ validFrom: "2026-11-01", validTo: "2035-12-31" }], TODAY);
+    assert.equal(months.length, 24);
+    assert.equal(months.at(-1), "2028-10");
   });
 });
 

@@ -59,13 +59,15 @@ export const sendRateRequestAdminEmail = (request: {
   });
 };
 
-// The customer Rates page opened on a lane, as its URL reads it.
-const laneLink = (origin: IRatePort, destination: IRatePort) => {
+// The customer Rates page opened on a lane (and on the month a later rate
+// starts in), as its URL reads it.
+const laneLink = (origin: IRatePort, destination: IRatePort, startsOn?: string) => {
   const params = new URLSearchParams({
     from: origin.code,
     fromName: `${origin.city}, ${origin.country}`,
     to: destination.code,
     toName: `${destination.city}, ${destination.country}`,
+    ...(startsOn && { month: startsOn.slice(0, 7) }),
   });
   return `${APP_URL}/app/customer/rates?${params}`;
 };
@@ -114,7 +116,7 @@ export const sendRateReadyEmail = (
           .join("") +
         button(
           oneLane ? "View the rate" : "View rates",
-          oneLane ? laneLink(first.origin, first.destination) : `${APP_URL}/app/customer/rates`,
+          oneLane ? laneLink(first.origin, first.destination, first.startsOn) : `${APP_URL}/app/customer/rates`,
         ),
     }),
   });
