@@ -17,6 +17,7 @@ import {
   matchAnswered,
   overlaps,
   pageOf,
+  rateAccess,
   portKey,
   rateStatus,
   sameCommodity,
@@ -116,6 +117,25 @@ describe("dates", () => {
       expiredDates(rate({ validFrom: "2026-12-01", validTo: "2026-12-31" }), TODAY),
       { validFrom: "2026-11-14", validTo: "2026-11-14" },
     );
+  });
+});
+
+describe("who can use rates", () => {
+  it("lets staff in, whatever else is true", () => {
+    assert.equal(rateAccess({ role: "admin" }, false), "allowed");
+    assert.equal(rateAccess({ role: "admin", customerTier: "premium" }, false), "allowed");
+  });
+
+  it("lets verified commission customers in, counting old accounts as commission", () => {
+    assert.equal(rateAccess({ role: "customer", customerTier: "commission" }, true), "allowed");
+    assert.equal(rateAccess({ role: "customer" }, true), "allowed");
+    assert.equal(rateAccess({ role: "customer", customerTier: null }, true), "allowed");
+  });
+
+  it("keeps premium customers out even when verified, before asking for verification", () => {
+    assert.equal(rateAccess({ role: "customer", customerTier: "premium" }, true), "premium");
+    assert.equal(rateAccess({ role: "customer", customerTier: "premium" }, false), "premium");
+    assert.equal(rateAccess({ role: "customer", customerTier: "commission" }, false), "unverified");
   });
 });
 

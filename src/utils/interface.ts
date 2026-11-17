@@ -27,7 +27,12 @@ export interface IUser extends Document {
   country: string;
   status: string;
   accountType: KycAccountType;
+  customerTier: CustomerTier;
 }
+
+// Commission customers can use contract rates; premium customers can't.
+export const CUSTOMER_TIERS = ["commission", "premium"] as const;
+export type CustomerTier = (typeof CUSTOMER_TIERS)[number];
 
 export type KycAccountType = "export_agent" | "exporter";
 

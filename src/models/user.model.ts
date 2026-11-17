@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import type { IUser } from "../utils/interface.js";
+import { CUSTOMER_TIERS, type IUser } from "../utils/interface.js";
 
 const userSchema = new Schema<IUser>(
   {
@@ -50,6 +50,13 @@ const userSchema = new Schema<IUser>(
       type: String,
       enum: ["export_agent", "exporter"],
       default: "export_agent",
+    },
+    // Customers only. Commission customers can use contract rates; premium
+    // customers don't see them. Admin switches it on the customer's page.
+    customerTier: {
+      type: String,
+      enum: CUSTOMER_TIERS,
+      default: "commission",
     },
   },
   { timestamps: true },

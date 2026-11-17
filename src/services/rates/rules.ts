@@ -86,6 +86,23 @@ export const expiredDates = (rate: Dated, today: string): Dated => {
   };
 };
 
+// ---- Who can use rates ------------------------------------------------------
+// Staff always. Customers only when they're commission customers with a
+// verified business. Premium comes first, so a premium customer is never told
+// to verify for rates they can't have. An account saved before customer
+// types existed counts as commission.
+
+export type RateAccess = "allowed" | "premium" | "unverified";
+
+export const rateAccess = (
+  user: { role: string; customerTier?: string | null },
+  verified: boolean,
+): RateAccess => {
+  if (user.role !== "customer") return "allowed";
+  if (user.customerTier === "premium") return "premium";
+  return verified ? "allowed" : "unverified";
+};
+
 // ---- Which rate is which ----------------------------------------------------
 
 export interface RateLike extends Dated {
