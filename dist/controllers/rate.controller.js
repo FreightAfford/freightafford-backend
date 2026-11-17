@@ -7,30 +7,42 @@ import { checkImport, commitImport, matchImport } from "../services/rates/import
 import { listRatesQuery, listRequestsQuery } from "../services/rates/list.js";
 import { resolveRateCommodity, resolveRatePort } from "../services/rates/maersk-refs.js";
 import { presentRate, presentRateRequest } from "../services/rates/present.js";
-import { expiredDates, groupRates, lagosToday, lanesFrom, pageOf, savedMessage, } from "../services/rates/rules.js";
+import { expiredDates, groupRates, lagosToday, lanesFrom, monthOf, monthsWithRates, monthWindow, pageOf, savedMessage, } from "../services/rates/rules.js";
 import { emailAnsweredCustomers, resolveAnsweredRequests, toRateDoc, } from "../services/rates/save.js";
 import { titleCase } from "../templates/email/layout.js";
 import { listQuerySchema, queryProblem, rateSearchQuerySchema, } from "../validations/rate.validation.js";
 // Contract rates: FreightAfford's Maersk contract rates, kept by admin.
 // Verified customers look a lane up and ask for a rate when there's none.
-// Rates valid today (both end days count), as a database filter.
-const validToday = () => {
+// Rates valid on at least one day of a customer's month (both end days
+// count), as a database filter. This month runs from today, so rates that
+// have ended stay hidden. Null for a past or malformed month.
+const validInMonth = (month) => {
     const today = lagosToday();
-    return { validFrom: { $lte: today }, validTo: { $gte: today } };
+    const window = monthWindow(typeof month === "string" && month ? month : monthOf(today), today);
+    return window && { validFrom: { $lte: window.to }, validTo: { $gte: window.from } };
 };
+const BAD_MONTH = "Choose this month or a later one";
 // ---- Customer ------------------------------------------------------------------
-// VERIFIED CUSTOMER, ADMIN: rates valid today into a destination, by
-// commodity, e.g. /rates/search?destination=BEANR&origin=NGAPP&q=cocoa&page=1
+// VERIFIED CUSTOMER, ADMIN: rates valid in a month (this one by default)
+// into a destination, by commodity, with the months that have rates, e.g.
+// /rates/search?destination=BEANR&origin=NGAPP&month=2026-12&q=cocoa&page=1
 export const searchRates = async (req, res, next) => {
     const parsed = rateSearchQuerySchema.safeParse(req.query);
     if (!parsed.success)
         return next(new AppError(queryProblem(parsed.error), 400));
-    const { destination, origin, q, page, limit } = parsed.data;
-    const rates = await Rate.find({
+    const { destination, origin, month, q, page, limit } = parsed.data;
+    const inMonth = validInMonth(month);
+    if (!inMonth)
+        return next(new AppError(BAD_MONTH, 400));
+    const lane = {
         "destination.code": destination,
         ...(origin && { "origin.code": origin }),
-        ...validToday(),
-    }).lean();
+    };
+    const [rates, upcoming] = await Promise.all([
+        Rate.find({ ...lane, ...inMonth }).lean(),
+        // Every rate on the lane not yet ended, for the month picker
+        Rate.find({ ...lane, validTo: { $gte: lagosToday() } }, { validFrom: 1, validTo: 1 }).lean(),
+    ]);
     const { groups, totalAll } = groupRates(rates.map(presentRate), q);
     // The caller's open request for the lane, so "Requested on …" survives a
     // reload. Only with an origin: without one there's no single lane.
@@ -50,24 +62,39 @@ export const searchRates = async (req, res, next) => {
             groups: pageOf(groups, page, limit),
             total: groups.length,
             totalAll,
+            months: monthsWithRates(upcoming, lagosToday()),
             request: request ? presentRateRequest(request) : null,
         },
     });
 };
-// VERIFIED CUSTOMER, ADMIN: lanes with a rate valid today, for quick picks.
-export const getRateLanes = async (_req, res) => {
-    const rates = await Rate.find(validToday(), {
-        origin: 1,
-        destination: 1,
-        containerSize: 1,
-        commodity: 1,
-        commodityCode: 1,
-        validFrom: 1,
-        validTo: 1,
-    }).lean();
+// VERIFIED CUSTOMER, ADMIN: lanes with a rate in a month (this one by
+// default), for quick picks, with the months that have any rate, e.g.
+// /rates/lanes?month=2026-12
+export const getRateLanes = async (req, res, next) => {
+    const inMonth = validInMonth(req.query.month);
+    if (!inMonth)
+        return next(new AppError(BAD_MONTH, 400));
+    const [rates, upcoming] = await Promise.all([
+        Rate.find(inMonth, {
+            origin: 1,
+            destination: 1,
+            containerSize: 1,
+            commodity: 1,
+            commodityCode: 1,
+            validFrom: 1,
+            validTo: 1,
+        }).lean(),
+        // Every rate not yet ended, for the month picker
+        Rate.find({ validTo: { $gte: lagosToday() } }, { validFrom: 1, validTo: 1 }).lean(),
+    ]);
     const data = lanesFrom(rates).sort((a, b) => a.origin.city.localeCompare(b.origin.city) ||
         a.destination.city.localeCompare(b.destination.city));
-    res.status(200).json({ status: "success", results: data.length, data });
+    res.status(200).json({
+        status: "success",
+        results: data.length,
+        data,
+        months: monthsWithRates(upcoming, lagosToday()),
+    });
 };
 // VERIFIED CUSTOMER: ask for a rate on a lane. Asking again for the same
 // lane, commodity and size while the first is open returns that one.

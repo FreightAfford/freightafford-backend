@@ -62,6 +62,44 @@ export const expiredDates = (rate, today) => {
         validTo: yesterday,
     };
 };
+// ---- Months -------------------------------------------------------------------
+// Customers look rates up a month at a time, from this month on. This month
+// runs from today to its last day (rates that have ended stay hidden); a later
+// month covers all of its days.
+const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
+// The furthest ahead the month picker lists, so a long rate can't list years.
+const MAX_MONTHS = 24;
+export const monthOf = (isoDate) => isoDate.slice(0, 7);
+const lastDayOf = (month) => addDays(`${addMonths(month, 1)}-01`, -1);
+const addMonths = (month, n) => {
+    const [y, m] = month.split("-").map(Number);
+    const d = new Date(Date.UTC(y, m - 1 + n, 1));
+    return d.toISOString().slice(0, 7);
+};
+/** The days a month covers for customers, or null for a past or bad month. */
+export const monthWindow = (month, today) => {
+    if (!MONTH.test(month) || month < monthOf(today))
+        return null;
+    return {
+        from: month === monthOf(today) ? today : `${month}-01`,
+        to: lastDayOf(month),
+    };
+};
+/** This month, then every later month at least one of these rates is valid in. */
+export const monthsWithRates = (rates, today) => {
+    const first = monthOf(today);
+    const last = addMonths(first, MAX_MONTHS - 1);
+    const months = new Set([first]);
+    for (const r of rates) {
+        if (r.validTo < today)
+            continue;
+        let m = monthOf(r.validFrom > today ? r.validFrom : today);
+        const end = monthOf(r.validTo) < last ? monthOf(r.validTo) : last;
+        for (; m <= end; m = addMonths(m, 1))
+            months.add(m);
+    }
+    return [...months].sort();
+};
 export const rateAccess = (user, verified) => {
     if (user.role !== "customer")
         return "allowed";
@@ -111,9 +149,9 @@ export const matchAnswered = (rates, requests, today) => {
 };
 // ---- Customer search ----------------------------------------------------------
 export const sizeOrder = (size) => RATE_CONTAINER_SIZES.indexOf(size);
-const time = (value) => value ? new Date(value).getTime() : 0;
-// Rates valid today, one commodity on one lane per group, one rate per size:
-// when two are valid for the same size, the one saved last wins. Groups come
+// Rates valid in a month, one commodity on one lane per group. Every rate is
+// kept: a size can have two in a month (1–14 Dec, then 15–31 Dec), each shown
+// with its dates. Rates come in size order, then by start date; groups come
 // back filtered by the commodity words and sorted by origin, then commodity.
 export const groupRates = (rates, q = "") => {
     const groups = new Map();
@@ -126,17 +164,15 @@ export const groupRates = (rates, q = "") => {
             commodity: r.commodity,
             rates: [],
             fromBasic: null,
+            validFrom: r.validFrom,
             validTo: r.validTo,
         };
-        const held = group.rates.findIndex((x) => x.containerSize === r.containerSize);
-        if (held < 0)
-            group.rates.push(r);
-        else if (time(group.rates[held].updatedAt) < time(r.updatedAt))
-            group.rates[held] = r;
+        group.rates.push(r);
         groups.set(key, group);
     }
     const all = [...groups.values()].map((g) => {
-        const sorted = [...g.rates].sort((a, b) => sizeOrder(a.containerSize) - sizeOrder(b.containerSize));
+        const sorted = [...g.rates].sort((a, b) => sizeOrder(a.containerSize) - sizeOrder(b.containerSize) ||
+            a.validFrom.localeCompare(b.validFrom));
         const cheapest = sorted
             .map((r) => r.charges.find((c) => c.code === "BAS"))
             .filter((c) => !!c)
@@ -147,7 +183,8 @@ export const groupRates = (rates, q = "") => {
             fromBasic: cheapest
                 ? { amount: cheapest.amount, currency: cheapest.currency }
                 : null,
-            validTo: sorted.map((r) => r.validTo).sort()[0],
+            validFrom: sorted.map((r) => r.validFrom).sort()[0],
+            validTo: sorted.map((r) => r.validTo).sort().reverse()[0],
         };
     });
     const words = norm(q).split(" ").filter(Boolean);
@@ -157,7 +194,7 @@ export const groupRates = (rates, q = "") => {
         a.commodity.localeCompare(b.commodity));
     return { groups: matching, totalAll: all.length };
 };
-// Lanes with a rate valid today, for the customer's quick picks.
+// Lanes with a rate in the chosen month, for the customer's quick picks.
 export const lanesFrom = (rates) => {
     const lanes = new Map();
     for (const r of rates) {
