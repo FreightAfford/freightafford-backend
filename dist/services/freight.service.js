@@ -1,6 +1,7 @@
 import { APP_URL, FROM, button, details, emailLayout, escapeHtml, formatDate, formatMoney, greeting, mono, paragraph, priceComparison, reason as reasonNote, route, titleCase, } from "../templates/email/layout.js";
 import { resend } from "./email.service.js";
-const ADMIN_RECIPIENTS = [
+// Who hears about new freight requests and rate requests.
+export const ADMIN_RECIPIENTS = [
     "freightaffords@gmail.com",
     "devfranklinandrew@gmail.com",
     "alonsokelvin1@gmail.com",

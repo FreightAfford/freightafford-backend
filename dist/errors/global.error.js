@@ -26,6 +26,11 @@ const globalErrorHandler = (err, req, res, next) => {
             error = handleValidationError(error);
         if (error.code === 11000)
             error = handleDuplicateKeyError(error);
+        // From express.json(): a body over its size limit, or one that isn't JSON
+        if (error.type === "entity.too.large")
+            error = new AppError("That's too much data to send at once.", 413);
+        if (error.type === "entity.parse.failed")
+            error = new AppError("The request body isn't valid JSON.", 400);
     }
     // DEVELOPMENT MODE
     if (envConfig.NODE_ENV === "development") {

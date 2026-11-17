@@ -17,6 +17,7 @@ import invoiceRouter from "./routers/invoice.router.js";
 import kycRouter from "./routers/kyc.router.js";
 import locationRouter from "./routers/location.router.js";
 import pipelineRouter from "./routers/pipeline.router.js";
+import rateRouter from "./routers/rate.router.js";
 import scheduleRouter from "./routers/schedule.router.js";
 import ticketRouter from "./routers/ticket.router.js";
 import trackingRouter from "./routers/tracking.router.js";
@@ -34,6 +35,9 @@ const appConfig = async (app) => {
         ],
     }))
         .use(helmet())
+        // A rates import sends a few hundred rates at once; everything else
+        // keeps the 100 KB default. Parsed here first, the global parser skips it.
+        .use("/api/v1/rates/import", express.json({ limit: "5mb" }))
         .use(express.json())
         .use(cookieParser())
         .set("trust proxy", 1);
@@ -59,6 +63,7 @@ const appConfig = async (app) => {
     app.use("/api/v1/vessels", vesselRouter);
     app.use("/api/v1/schedules", scheduleRouter);
     app.use("/api/v1/kyc", kycRouter);
+    app.use("/api/v1/rates", rateRouter);
     app.use((req, res, next) => next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)));
     app.use(globalErrorHandler);
 };

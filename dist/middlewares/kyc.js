@@ -33,4 +33,17 @@ export const requireVerifiedForSchedules = async (req, res, next) => {
         return next(new AppError("Verify your business to see sailing schedules.", 403));
     next();
 };
+// Contract rates are for verified businesses only, whether or not
+// KYC_ENFORCEMENT is on, like sailing schedules. Staff are never blocked.
+export const requireVerifiedForRates = async (req, res, next) => {
+    if (req.user.role !== "customer")
+        return next();
+    const verified = await Kyc.exists({
+        user: req.user._id,
+        status: "approved",
+    });
+    if (!verified)
+        return next(new AppError("Verify your business to see contract rates.", 403));
+    next();
+};
 //# sourceMappingURL=kyc.js.map
